@@ -1,0 +1,16 @@
+1,Which of these is necessary condition for automatic type conversion in Java?,a) The destination type is smaller than source type,b) The destination type is larger than source type.,c) The destination type can be larger or smaller than source type.,d) None of the mentioned,b
+2,What is the prototype of the default constructor of this class?public class prototype { },a) prototype( ),b) prototype(void),c) public prototype(void),d) public prototype( ),d
+3,What is the error in this code?byte b = 50;b = b * 50;,a) b can not contain value 100  limited by its range.,b) * operator has converted b * 50 into int  which can not be converted to byte without casting.,c) b can not contain value 50.,d) No error in this code,b
+4,If an expression contains double int float long then whole expression will promoted into which of these data types?,a) long,b) int,c) double,d) float,c
+5,What is Truncation is Java?,a) Floating-point value assigned to an integer type.,b) Integer value assigned to floating type.,c) Floating-point value assigned to an Floating type.,d) Integer value assigned to floating type.,a
+6,What is the stored in the object obj in following lines of code?box obj;,a) Memory address of allocated memory of object.,b) NULL,c) Any arbitrary pointer,d) Garbage,b
+7,Which of these keywords is used to make a class?,a) class,b) struct,c) int,d) None of the mentioned,a
+8,Which of the following is a valid declaration of an object of class Box?,a) Box obj = new Box();,b) Box obj = new Box;,c) obj = new Box();,d) new Box obj;,a
+9,Which of these operators is used to allocate memory for an object?,a) malloc,b) alloc,c) new,d) give,c
+10,Which of these statement is incorrect?,a) Every class must contain a main() method.,b) Applets do not require a main() method at all.,c) There can be only one main() method in a program.,d) main() method must be made public.,a
+11,Why are generics used?,a) Generics make code more fast.,b) Generics make code more optimised and readable.,c) Generics add stability to your code by making more of your bugs detectable at compile time.,d) Generics add stability to your code by making more of your bugs detectable at run time.,c
+12,Which of these type parameters is used for a generic class to return and accept any type of object?,a) K,b) N,c) T,d) V,c
+13,Which of these type parameters is used for a generic class to return and accept a number?,a) K,b) N,c) T,d) V,b
+14,Which of these selection statements test only for equality?,a) if,b) switch,c) if & switch,d) None of the mentioned,b
+15,Which of the following is incorrect statement regarding the use of generics and parameterized types in Java?,a) Generics provide type safety by shifting more type checking responsibilities to the compiler.,b) Generics and parameterized types eliminate the need for down casts when using Java Collections.,c) When designing your own collections class (say a linked list) generics and parameterized types allow you to achieve type safety with just a single class definition as opposed to defining multiple classes.,d) All of the mentioned,c
+16,Which of the following reference types cannot be generic?,a) Anonymous inner class,b) Interface,c) Inner class,d) All of the mentioned,a

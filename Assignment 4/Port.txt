@@ -1,0 +1,100 @@
+Saint-Prime,Cook Islands,892145,Yes
+Naro,Monaco,532736,Yes
+Velaine-sur-Sambre,Guinea,296721,No
+Paranaguá,Iceland,731026,No
+Okara,Tunisia,351768,No
+Dorchester,Kuwait,141816,Yes
+Calais,Burundi,562948,No
+İslahiye,United Kingdom (Great Britain),294859,Yes
+OugrŽe,Peru,287096,No
+Pozo Almonte,Cocos (Keeling) Islands,560402,No
+Smithers,Zambia,833026,Yes
+Etterbeek,Philippines,684659,Yes
+Castletown,France,170177,Yes
+Griesheim,Mauritania,617484,No
+Sh�diac,Timor-Leste,183560,Yes
+Donnas,"Virgin Islands British",306390,Yes
+Araban,Yemen,613075,No
+Mogi das Cruzes,Saint Lucia,580079,Yes
+White Rock,Aruba,423890,Yes
+Vegreville,Brazil,648941,Yes
+Oudekapelle,Dominica,767981,Yes
+Gaspé,Germany,98157,Yes
+Little Rock,Germany,701971,Yes
+Okpoko,Nepal,426513,No
+Pievepelago,Vanuatu,227236,Yes
+Dégelis,Western Sahara,396809,No
+Kallo,Kenya,694286,Yes
+Bouge,Belgium,645999,Yes
+Mühlheim am Main,Czech Republic,394243,Yes
+Knighton,Oman,797389,No
+Stockport,Macao,788372,No
+Stilo,Namibia,342132,Yes
+Hollange,Aruba,558403,Yes
+Harrisburg,Botswana,532131,No
+Rueil-Malmaison,"Bonaire Sint Eustatius and Saba",732455,No
+Nieuwkerken-Waas,Fiji,165562,No
+Gorinchem,Russian Federation,250986,No
+Sint-Martens-Bodegem,Tajikistan,768490,Yes
+Cartagena,British Indian Ocean Territory,184711,No
+Sint-Michiels,Wallis and Futuna,828363,No
+Cherain,Malta,608243,Yes
+Guwahati,Holy See (Vatican City State),126675,No
+Lumaco,Cyprus,154709,No
+Sioux City,Antarctica,270890,No
+Malartic,Isle of Man,473742,No
+Brandon,Faroe Islands,281661,Yes
+Roubaix,Tunisia,215397,No
+Lustin,Trinidad and Tobago,748031,Yes
+Mayerthorpe,Netherlands,171241,Yes
+Newark,Moldova,293939,Yes
+Deutschkreutz,Paraguay,401226,No
+Denderbelle,Bhutan,586882,Yes
+Port Blair,Isle of Man,356152,No
+Pirque,Yemen,615182,Yes
+Etroubles,French Polynesia,503728,Yes
+Worms,United States Minor Outlying Islands,760388,No
+Sudbury,Finland,897070,Yes
+La Serena,Marshall Islands,585500,No
+Latronico,Congo (Brazzaville),319204,No
+Corroy-le-Grand,Kiribati,162056,Yes
+Cedar Rapids,Northern Mariana Islands,213385,Yes
+Bear,Hungary,256503,Yes
+Mumbai,Holy See (Vatican City State),685855,Yes
+Itapipoca,Poland,610182,Yes
+Tire,United States Minor Outlying Islands,425641,Yes
+Sitapur,Djibouti,491335,Yes
+Kington,"Virgin Islands British",461859,Yes
+Ortonovo,Namibia,737259,No
+Waiheke Island,Mozambique,781470,Yes
+Darmstadt,Ireland,749030,No
+Hattiesburg,Lithuania,734926,Yes
+Schwaz,Timor-Leste,173128,No
+Sint-Stevens-Woluwe,Tajikistan,497439,No
+Aylmer,Iraq,82639,Yes
+Maransart,Lebanon,537526,Yes
+Picinisco,Gambia,442593,Yes
+Aurora,Algeria,624632,Yes
+Narbonne,Eritrea,55942,Yes
+Ferrere,Cyprus,165894,Yes
+Rouvroy,Maldives,233101,No
+Walhain,Djibouti,609321,Yes
+Port Harcourt,Macedonia,268085,Yes
+Esen,Suriname,545872,Yes
+Westmount,Comoros,263673,No
+Saalfelden am Steinernen Meer,Angola,460964,Yes
+Tejar,Macedonia,676563,Yes
+Booischot,Saint Barthélemy,368919,Yes
+Rajkot,"Virgin Islands British",199173,Yes
+Rum,Germany,890437,Yes
+Vlezenbeek,Guernsey,520973,No
+Peterborough,Madagascar,211733,Yes
+Yeotmal,Guatemala,762733,No
+Scarborough,North Korea,883102,Yes
+Rüsselsheim,Tokelau,782676,No
+St. Albert,Dominica,327345,Yes
+B.S.D.,Montserrat,744577,Yes
+Ipswich,Egypt,880523,Yes
+Tallahassee,El Salvador,394054,Yes
+Sanzeno,Congo (Brazzaville),802830,Yes
+Montemilone,Heard Island and Mcdonald Islands,856023,No

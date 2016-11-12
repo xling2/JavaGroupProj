@@ -27,11 +27,11 @@
          </GridPane.margin>
       </TextField>
       <Group GridPane.columnIndex="1" />
-      <TextField fx:id="passwordTextField" GridPane.columnIndex="2" GridPane.rowIndex="2">
+      <PasswordField fx:id="passwordField" GridPane.columnIndex="2" GridPane.rowIndex="2">
          <GridPane.margin>
             <Insets left="25.0" right="40.0" />
          </GridPane.margin>
-      </TextField>
+      </PasswordField>
       <Label text="ExamID" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
       <Label text="Password" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
       <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
@@ -62,7 +62,7 @@
       </ImageView>
       <Label text="Welcome to QCAS" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
          <font>
-            <Font name="Times New Roman Bold" size="21.0" />
+            <Font name="Arial Bold" size="21.0" />
          </font>
          <GridPane.margin>
             <Insets bottom="31.0" />

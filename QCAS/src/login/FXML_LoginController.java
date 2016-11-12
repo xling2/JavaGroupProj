@@ -22,6 +22,7 @@ import javafx.animation.PauseTransition;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.PasswordField;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -40,7 +41,7 @@ public class FXML_LoginController implements Initializable {
     private TextField examIDTextField;
 
     @FXML
-    private TextField passwordTextField;
+    private PasswordField passwordField;
 
     @FXML
     private Button loginButton;
@@ -53,7 +54,7 @@ public class FXML_LoginController implements Initializable {
         Parent root;
 
         String username = examIDTextField.getText();
-        String passwd = passwordTextField.getText();
+        String passwd = passwordField.getText();
 
         MessageDigest md = MessageDigest.getInstance("MD5");
         md.update(passwd.getBytes(), 0, passwd.length());

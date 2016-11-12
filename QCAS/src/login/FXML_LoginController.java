@@ -5,6 +5,7 @@
  */
 package login;
 
+import qcas.SceneSwitcher;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
@@ -23,6 +24,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -47,11 +50,19 @@ public class FXML_LoginController implements Initializable {
     private Button loginButton;
 
     @FXML
-    private void loginButtonAction(ActionEvent event) throws
-            NoSuchAlgorithmException, IOException {
+    private void loginButtonAction(ActionEvent event) throws NoSuchAlgorithmException, IOException {
+        login();
+    }
 
-        Stage stage;
-        Parent root;
+    @FXML
+    private void enterPressed(KeyEvent event) throws NoSuchAlgorithmException, IOException {
+        if (event.getCode() == KeyCode.ENTER) {
+            login();
+        }
+    }
+
+    private void login() throws
+            NoSuchAlgorithmException, IOException {
 
         String username = examIDTextField.getText();
         String passwd = passwordField.getText();
@@ -73,19 +84,11 @@ public class FXML_LoginController implements Initializable {
             if (userRS.next()) {
                 loginSuccess = true;
                 if (username.equals("instructor")) {
-                    root = FXMLLoader.load(getClass().getResource(
-                            "FXML_Instructor_Dashboard.fxml"));
-                    Scene scene = new Scene(root);
-                    stage = (Stage) loginButton.getScene().getWindow();
-                    stage.setScene(scene);
-                    stage.show();
+                    SceneSwitcher.goToScene(FXMLLoader.load(getClass().getResource(
+                            "/FXML_Instructor_Dashboard.fxml")), loginButton.getScene());
                 } else {
-                    root = FXMLLoader.load(getClass().getResource(
-                            "/FXML_Student_Dashboard.fxml"));
-                    Scene scene = new Scene(root);
-                    stage = (Stage) loginButton.getScene().getWindow();
-                    stage.setScene(scene);
-                    stage.show();
+                    SceneSwitcher.goToScene(FXMLLoader.load(getClass().getResource(
+                            "/FXML_Student_Dashboard.fxml")), loginButton.getScene());
                 }
             } else {
                 incorrectMsg.setVisible(true);

@@ -1,0 +1,5 @@
+.split-pane:vertical .split-pane-divider {
+   -fx-border-color:  white;
+   -fx-background-color: transparent;
+   -fx-background-insets: 0;
+}

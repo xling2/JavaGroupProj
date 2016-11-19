@@ -1,11 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Student.FXML_Student_DashboardController">
-    
-</AnchorPane>
+
+<SplitPane id="SplitPane" dividerPositions="0.3411371237458194" prefHeight="400.0" prefWidth="600.0" stylesheets="@no-divider.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Student.FXML_Student_DashboardController">
+   <items>
+      <AnchorPane id="AnchorPane" maxHeight="400.0" maxWidth="190.0" minHeight="400.0" minWidth="190.0" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: rgb(187,0,0);">
+         <children>
+            <ImageView fitHeight="498.0" fitWidth="527.0" layoutX="-58.0" layoutY="-31.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@bg-seal.png" />
+               </image>
+            </ImageView>
+            <Label alignment="TOP_RIGHT" layoutX="45.0" layoutY="61.0" prefHeight="33.0" prefWidth="100.0" text="History" textFill="WHITE">
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="28.0" />
+               </font>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </Label>
+            <Button fx:id="backButton" layoutX="70.0" layoutY="308.0" mnemonicParsing="false" onAction="#backAction" style="-fx-background-color: white;" text="Back" textFill="#bb0000" />
+         </children>
+      </AnchorPane>
+      <AnchorPane prefHeight="400.0" prefWidth="341.0" style="-fx-background-color: rgb(51,51,51);">
+         <children>
+            <ListView fx:id="historyListView" layoutX="59.0" layoutY="63.0" prefHeight="184.0" prefWidth="281.0" />
+            <Button fx:id="viewReportButton" layoutX="226.0" layoutY="291.0" mnemonicParsing="false" onAction="#viewReportButtonAction" prefHeight="56.0" prefWidth="112.0" style="-fx-background-color: rgb(51,51,51); -fx-border-color: white; -fx-border-radius: 7;" text="View Report" textFill="WHITE" />
+            <Button fx:id="generateReportButton" layoutX="59.0" layoutY="291.0" mnemonicParsing="false" onAction="#generalReportButtonAction" prefHeight="56.0" prefWidth="113.0" style="-fx-background-color: rgb(51,51,51); -fx-border-color: white; -fx-border-radius: 7;" text="General Report" textFill="WHITE" />
+         </children>
+      </AnchorPane>
+   </items>
+</SplitPane>

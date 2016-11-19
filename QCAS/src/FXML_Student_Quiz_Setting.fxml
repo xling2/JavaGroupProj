@@ -7,8 +7,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="200.0" prefWidth="350.0" style="-fx-background-color: rgb(51,51,51);" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="Student.FXML_Student_Quiz_SettingController">
+<AnchorPane id="AnchorPane" prefHeight="200.0" prefWidth="350.0" style="-fx-background-color: rgb(51,51,51);" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Student.FXML_Student_Quiz_SettingController">
    <children>
       <Button fx:id="startQuizButton" layoutX="149.0" layoutY="151.0" mnemonicParsing="false" onAction="#startQuizButtonAction" style="-fx-background-color: rgb(150,0,0); -fx-text-fill: white;" text="Start!" />
       <Label layoutX="23.0" layoutY="49.0" text="Number of questions" textFill="WHITE">
@@ -22,6 +21,6 @@
          </font>
       </Label>
       <TextField fx:id="questionNumberTextField" layoutX="183.0" layoutY="47.0" prefHeight="27.0" prefWidth="137.0" promptText="&lt;50 recommended" style="-fx-background-color: white;" />
-      <ChoiceBox fx:id="diffChoice" layoutX="183.0" layoutY="94.0" prefHeight="27.0" prefWidth="137.0" style="-fx-background-color: white;" />
+      <ChoiceBox fx:id="difficultyBox" layoutX="183.0" layoutY="94.0" prefHeight="27.0" prefWidth="137.0" style="-fx-background-color: white;" />
    </children>
 </AnchorPane>

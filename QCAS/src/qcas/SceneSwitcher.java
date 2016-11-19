@@ -9,6 +9,7 @@ import java.io.IOException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 /**
@@ -24,5 +25,9 @@ public abstract class SceneSwitcher {
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
+    }
+
+    public static void goToScene(String view_historyfxml, Button back, int i) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

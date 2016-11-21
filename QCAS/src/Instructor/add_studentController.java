@@ -38,7 +38,7 @@ public class add_studentController implements Initializable {
     @FXML
     private void backAction(ActionEvent event) throws IOException {
         SceneSwitcher.goToScene(FXMLLoader.load(getClass().getResource(
-                "/Instructer_panel.fxml.fxml")), back.getScene());
+                "/Instructer_panel.fxml")), back.getScene());
 
     }
 

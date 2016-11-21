@@ -77,32 +77,32 @@ public class FXML_LoginController implements Initializable {
         String pQuery = "SELECT * FROM QCASUSER WHERE username LIKE '"
                 + username + "' AND password LIKE '" + encryptedPwd + "'";
 
-        try (Connection con = DriverManager.getConnection(url,
-                userDBusernm, userDBpasswd);
-                PreparedStatement pStmt = con.prepareStatement(pQuery);) {
-            ResultSet userRS = pStmt.executeQuery();
-            if (userRS.next()) {
-                loginSuccess = true;
+//        try (Connection con = DriverManager.getConnection(url,
+//                userDBusernm, userDBpasswd);
+//                PreparedStatement pStmt = con.prepareStatement(pQuery);) {
+//            ResultSet userRS = pStmt.executeQuery();
+//            if (userRS.next()) {
+//                loginSuccess = true;
                 if (username.equals("instructor")) {
                     SceneSwitcher.goToScene(FXMLLoader.load(getClass().getResource(
-                            "/FXML_Instructor_Dashboard.fxml")), loginButton.getScene());
+                            "/Instructer_panel.fxml")), loginButton.getScene());
                 } else {
                     SceneSwitcher.goToScene(FXMLLoader.load(getClass().getResource(
                             "/FXML_Student_Dashboard.fxml")), loginButton.getScene());
                 }
-            } else {
-                incorrectMsg.setVisible(true);
-                PauseTransition visiblePause
-                        = new PauseTransition(Duration.seconds(3));
-                visiblePause.setOnFinished(e -> {
-                    incorrectMsg.setVisible(false);
-                });
-                visiblePause.play();
-            }
+//            } else {
+//                incorrectMsg.setVisible(true);
+//                PauseTransition visiblePause
+//                        = new PauseTransition(Duration.seconds(3));
+//                visiblePause.setOnFinished(e -> {
+//                    incorrectMsg.setVisible(false);
+//                });
+//                visiblePause.play();
+//            }
 
-        } catch (SQLException e) {
-            System.out.println("SQL Exception @ login: " + e);
-        }
+//        } catch (SQLException e) {
+//            System.out.println("SQL Exception @ login: " + e);
+//        }
     }
 
     @Override

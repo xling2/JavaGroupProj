@@ -9,7 +9,7 @@
 
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" 
-      xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxapplication1.Instructer_panelController">
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="Instructor.Instructer_panelController">
    <children>
       <Button fx:id="logout" layoutX="489.0" layoutY="50.0" mnemonicParsing="false" onAction="#logoutAction" text="Log out" />
       <Button fx:id="review" layoutX="382.0" layoutY="328.0" mnemonicParsing="false" onAction="#reviewAciton" text="Review quizzes" />

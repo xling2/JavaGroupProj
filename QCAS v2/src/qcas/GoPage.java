@@ -78,14 +78,13 @@ public class GoPage {
 	}
 
 	// quiz_setting.
-	public void getRandomQuiz() {
+	public void getRandomQuiz() { 
 		Answer[] answerOfStudent = new Answer[questionNumberFromQuizSetting];
 		for (int i = 0; i < answerOfStudent.length; i++) {
 			answerOfStudent[i] = new Answer();
 		}
 		Date startDate = new Date();
-		quizOfCurrentCheck = new QuizOfStudent(student, answerOfStudent, startDate, startDate, quizDifficultyOfUserSelect,
-                        questionNumberFromQuizSetting );
+		quizOfCurrentCheck = new QuizOfStudent(student, questionsIdOfQuiz, answerOfStudent, startDate, startDate);
 		quizOfCurrentCheck.getQuestionFromServe(communicateWithServe);
 	}
 	public void recordQuizResultToServe() {

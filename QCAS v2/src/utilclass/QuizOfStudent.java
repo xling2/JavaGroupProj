@@ -5,28 +5,30 @@ import interfacewithserve.CommunicateWithServe;
 
 public class QuizOfStudent {
 	public User student;
+	public int[] questionsIdOfQuiz;
 	public Question[] questionsOfQuiz;
 	public Answer[] answerOfStudent;
+        public int[] diff;
 	public Date startDate;
 	public Date finishDate;
 	public String duration;
-	public int totalScore, diff, num;
+	public int totalScore;
 	public int[] scoreOfDifficulty = new int[3];
         
 
-	public QuizOfStudent(User student,  Answer[] answerOfStudent, Date startDate,
-			Date finishDate, int difficulty, int number) {
+	public QuizOfStudent(User student, int[] questionsIdOfQuiz, int[] difficulty, Answer[] answerOfStudent, Date startDate,
+			Date finishDate) {
 		// TODO Auto-generated constructor stub
 		this.student = student;
-		this.startDate = startDate;
+		this.questionsIdOfQuiz = questionsIdOfQuiz;
+		this.diff = difficulty;
+                this.startDate = startDate;
 		this.answerOfStudent = answerOfStudent;
 		this.finishDate = finishDate;
-                this.diff = difficulty;
-                this.num = number;
 	}
 
 	public void getQuestionFromServe(CommunicateWithServe communicateWithServe) {
-		this.questionsOfQuiz = communicateWithServe.getRandomQuestionListOfQuiz(diff, num);
+		this.questionsOfQuiz = communicateWithServe.getRandomQuestionListOfQuiz(diff, this.questionsIdOfQuiz.length);
 		getQuizScore();
 		getDuration();
 	}

@@ -1,10 +1,21 @@
 package interfacewithserve;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
-
+import com.opencsv.CSVReader;
+import java.math.BigInteger;
+import java.security.MessageDigest;
 import utilclass.Answer;
 import utilclass.HistoryRecord;
 import utilclass.Question;
@@ -12,16 +23,36 @@ import utilclass.QuizOfStudent;
 import utilclass.User;
 
 public class TestCommunicate implements CommunicateWithServe {
-
-	@Override
-	public Question[] questionsOfQuizByIds(int[] questionsId) {
+        private String questionUrl = "jdbc:derby:Question;"
+                + "create=true";
+        private String questionUsername = "question";
+        private String questionPassword = "question";
+        private File csvFile;
+        private String studentUrl = "jdbc:derby:Student; create=true";
+        private String studentUsername = "student";
+        private String studentPassword = "student";
+        private String passW;
+	
+        @Override
+	public Question[] getRandomQuestionListOfQuiz(int quizDifficulty, int questionNumber) {
 		// TODO Auto-generated method stub
-		Question[] questions = new Question[questionsId.length];
-		Random rd = new Random();
-		for (int i = 0; i < questions.length; i++) {
-			questions[i] = new Question(rd.nextInt(4), questionsId[i], rd.nextInt(3), "this is a question",
-					new String[] { "A.choices1", "B.choices2", "C.choices3", "D.choices4" }, "A");
+		 Question[] questions = new Question[questionNumber];
+                
+                 try (Connection con = DriverManager.getConnection(questionUrl,
+                        questionUsername, questionPassword)){
+            Statement stmt = con.createStatement();
+            String sql = "Select * from Question where difficulty = '" + quizDifficulty +
+                    "' order by Random() fetch first " +  questionNumber + " rows only";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+               
 		}
+             
+             
+                }catch (SQLException se) {
+            System.out.println("Exception: " + se);
+            
+        }
 		return questions;
 	}
 
@@ -49,22 +80,82 @@ public class TestCommunicate implements CommunicateWithServe {
 		System.out.println("delete");
 	}
         
-	@Override
-	public int[] getRandomQuestionIdListOfQuiz(int quizDifficultyOfUserSelect, int questionNumber) {
-		// TODO Auto-generated method stub
-		Random rd = new Random();
-		int[] questionIds = new int[questionNumber];
-		for (int i = 0; i < questionNumber; i++) {
-			questionIds[i] = rd.nextInt(20);
-		}
-		return questionIds;
-	}
+
 
 	@Override
 	public boolean importQuestionFromCSV(File CSVFile) {
-		// TODO Auto-generated method stub
-		return false;
+		 csvFile = CSVFile;
+                 createTableQuestion();
+                 insertQuestion();
+                 return true;
 	}
+        
+        public void createTableQuestion(){
+            
+            
+            try (Connection con = DriverManager.getConnection(questionUrl, 
+                    questionUsername, questionPassword)) {
+            Statement stmt = con.createStatement();
+            // check if the table exsit
+            DatabaseMetaData dbmd = con.getMetaData();
+            ResultSet rs = dbmd.getTables(null, null, "Question".toUpperCase(),null);
+             if(!rs.next()){
+            // create the table question
+            stmt.execute("create table Question(number int, type varchar(40), "
+                    + "difficulty varchar(40), description long varchar, "
+                    + "choice1 varchar(255), correct1 varchar(255), "
+                    + "choice2 varchar(255), correct2 varchar(255),"
+                    + "choice3 varchar(255), correct3 varchar(255),"
+                    + "choice4 varchar(255), correct4 varchar(255),"
+                    + "answer varchar(255))");
+             }
+        } catch (SQLException se) {
+            System.out.println("Exception: " + se);
+        }
+    }
+        
+        
+        public void insertQuestion(){
+            
+            try (Connection con = DriverManager.getConnection(questionUrl, 
+                    questionUsername, questionPassword)) {
+            Statement stmt = con.createStatement();
+             CSVReader reader = new CSVReader(new FileReader(csvFile));
+            String[] line;
+            int count = 1;
+            while ((line = reader.readNext()) != null) {
+                // import data from file into database
+                // import MA and MC
+                if(line[0].equals("MA") | line[0].equals("MC")){
+                String sql = "insert into Question values (" + count + ", '";
+                for(int i = 0; i < line.length-1; i++)  {     
+                    sql =  sql + line[i] + "', '";    
+                }
+                sql = sql + line[line.length-1] + "', '')";
+                stmt.execute(sql);
+        }
+                else {
+                // import FIB and TF
+                String sql = "insert into Question values (" + count + ", '" +
+                        line[0] +"', '" + line[1] + "', '" + line[2] + "', '"; 
+                for(int i = 3; i < 11; i++) {       
+                sql = sql + "" + "', '" ;
+                }    
+                sql = sql + line[3] +"')";
+                //System.out.println(sql);
+                stmt.execute(sql);
+                }
+                 count ++; 
+            }
+            }catch (SQLException se) {
+            System.out.println("Exception: " + se);
+            } catch (FileNotFoundException e) {
+            e.printStackTrace();
+}
+            catch (IOException e) {
+            e.printStackTrace();
+        }
+        }
 
 	@Override
 	public HistoryRecord[] getHistoryRecordFromServeByStudentID(int studentUserId) {
@@ -229,10 +320,72 @@ public class TestCommunicate implements CommunicateWithServe {
 
 	@Override
 	public boolean addStudent(String text) {
-		// TODO Auto-generated method stub
-		System.out.println("addStudent");
-		return false;
+                 createTable();
+                 createPassword();
+                 insertStudent(encryptPassW(), text);
+                 boolean success = true;
+                 return success;
+                
+ 
 	}
+        
+         public void createTable(){
+            try (Connection con = DriverManager.getConnection(studentUrl, studentUsername, 
+                    studentPassword)) {
+            Statement stmt = con.createStatement(); 
+            DatabaseMetaData dbmd = con.getMetaData();
+            ResultSet rs = dbmd.getTables(null, null, "Students".toUpperCase(),null);
+            if(!rs.next()){
+            // create the table question
+            stmt.execute("create table Students(andrewID varchar(40), "
+                    + "password varchar(40))");
+            }
+        } catch (SQLException se) {
+            System.out.println("Exception: " + se);
+        }
+        }
+         
+        public void createPassword(){
+            
+            Random rand = new Random();
+            int num = rand.nextInt(8999) + 1000;    
+            String letters = "";
+            for (int i = 0; i < 3; i++) {
+            int index = 97 + rand.nextInt(25);
+            letters = letters + (char)index;
+        } 
+            passW = letters + num;
+        }
+        
+        public String encryptPassW(){
+            
+            String pass = null;
+            try{
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.reset();
+            md.update(passW.getBytes());
+            byte[] digest = md.digest();
+            BigInteger bigInt = new BigInteger(1,digest);
+            pass = bigInt.toString();
+        
+        }catch(Exception e) {
+           
+            System.out.println("Exception: " + e);
+        
+}       return pass;
+        }
+
+        public void insertStudent(String pass, String ID){
+            
+            
+            try (Connection con = DriverManager.getConnection(studentUrl, studentUsername, studentPassword)) {
+            Statement stmt = con.createStatement(); 
+             String sql = "insert into Students values ('" + ID  +  "', '" + pass + "')";
+             stmt.execute(sql);
+             } catch (SQLException se) {
+            System.out.println("Exception: " + se);
+        }
+         }
 
 	@Override
 	public int[] getLastNumberOfALLQuizzes() {

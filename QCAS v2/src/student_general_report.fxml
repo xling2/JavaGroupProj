@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="438.0" style="-fx-background-color: rgb(51,51,51);" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="student.student_general_reportController">
+   <children>
+      <Label layoutX="30.0" layoutY="44.0" text="General Report" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="31.0" />
+         </font>
+      </Label>
+      <Button fx:id="back" layoutX="-3.0" layoutY="-3.0" mnemonicParsing="false" onAction="#backAction" prefHeight="28.0" prefWidth="76.0" stylesheets="@no-divider.css" text="&lt;&lt;back" />
+      <Label layoutX="30.0" layoutY="99.0" text="student" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="30.0" layoutY="127.0" text="Number of quizzes taken" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="30.0" layoutY="157.0" text="Average score" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="studentID" layoutX="170.0" layoutY="99.0" text="AAA" textFill="WHITE">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="quizzesNumber" layoutX="250.0" layoutY="127.0" text="3" textFill="WHITE">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="averageScore" layoutX="168.0" layoutY="157.0" text="3" textFill="WHITE">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="30.0" layoutY="203.0" text="Score vs. Difficulty" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="23.0" />
+         </font>
+      </Label>
+      <Button fx:id="export" layoutX="157.0" layoutY="761.0" mnemonicParsing="false" onAction="#export" stylesheets="@no-divider.css" text="Export toPDF" />
+      <Label layoutX="30.0" layoutY="445.0" text="Quiz Record" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="23.0" />
+         </font>
+      </Label>
+      <Label fx:id="questionLabel" alignment="TOP_LEFT" layoutX="28.0" layoutY="39.0" prefHeight="197.0" prefWidth="385.0" style="-fx-background-color: rgb(51,51,51); -fx-border-color: white; -fx-border-radius: 5;" textFill="WHITE" visible="false" />
+      <BarChart fx:id="difficultyChart" focusTraversable="false" horizontalGridLinesVisible="true" horizontalZeroLineVisible="true" layoutX="-275.0" layoutY="133.0" legendVisible="false" mouseTransparent="false" prefHeight="297.0" prefWidth="696.0" verticalGridLinesVisible="false" verticalZeroLineVisible="true">
+         <xAxis>
+            <NumberAxis animated="false" autoRanging="false" minorTickCount="2" minorTickLength="2.0" prefHeight="125.0" prefWidth="28.0" side="TOP" tickLabelFill="WHITE" tickUnit="50.0" />
+         </xAxis>
+         <yAxis>
+            <CategoryAxis prefHeight="26.0" prefWidth="311.0" side="LEFT" tickLabelFill="WHITE" />
+         </yAxis>
+      </BarChart>
+      <LineChart fx:id="quizRecord" layoutX="13.0" layoutY="487.0" legendVisible="false" prefHeight="204.0" prefWidth="409.0">
+        <xAxis>
+          <CategoryAxis side="BOTTOM" tickLabelFill="WHITE" />
+        </xAxis>
+        <yAxis>
+          <NumberAxis animated="false" autoRanging="false" minorTickCount="50" minorTickLength="0.0" side="LEFT" tickLabelFill="WHITE" tickUnit="20.0" />
+        </yAxis>
+      </LineChart>
+      <Label fx:id="successedTips" alignment="CENTER" layoutX="21.0" layoutY="698.0" prefHeight="67.0" prefWidth="402.0" text="success" textFill="LIME" wrapText="true" />
+      <Label fx:id="tips" alignment="CENTER" layoutX="21.0" layoutY="700.0" prefHeight="61.0" prefWidth="394.0" text="failed" textFill="RED" visible="false" wrapText="true" />
+   </children>
+</Pane>

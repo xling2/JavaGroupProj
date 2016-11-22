@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="311.0" style="-fx-background-color: rgb(51,51,51);" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="student.view_historyController">
+   <children>
+      <Label layoutX="30.0" layoutY="44.0" text="History" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="31.0" />
+         </font>
+      </Label>
+      <ListView fx:id="historyList" layoutX="30.0" layoutY="90.0" prefHeight="200.0" prefWidth="267.0" />
+      <Button fx:id="viewReport" layoutX="34.0" layoutY="326.0" mnemonicParsing="false" onAction="#viewReport" prefHeight="38.0" prefWidth="91.0" style="-fx-background-color: rgb(150,0,0); -fx-text-fill: white;" text="View report" />
+      <Button fx:id="viewGenerateReport" layoutX="143.0" layoutY="326.0" mnemonicParsing="false" onAction="#viewGenerateReport" prefHeight="38.0" prefWidth="137.0" style="-fx-background-color: rgb(150,0,0); -fx-text-fill: white;" text="View generate report..." />
+      <Label fx:id="tips" layoutX="33.0" layoutY="301.0" text="please select a record first" textFill="RED" />
+      <Button fx:id="back" layoutX="-2.0" layoutY="-3.0" mnemonicParsing="false" onAction="#backAction" prefHeight="27.0" prefWidth="75.0" style="-fx-background-color: rgb(150,0,0); -fx-text-fill: white;" text="&lt;&lt;Back" />
+   </children>
+</Pane>

@@ -22,7 +22,7 @@ public interface CommunicateWithServe {
 	
 	
         // xingyu
-        public abstract Question[] importQuestionFromCSV(File CSVFile);//success->true  fail->false;
+        public abstract boolean importQuestionFromCSV(File CSVFile);//success->true  fail->false;
         
         public abstract void deleteById(int questionID);
         

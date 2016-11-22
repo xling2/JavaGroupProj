@@ -8,8 +8,8 @@ import utilclass.QuizOfStudent;
 import utilclass.User;
 
 public interface CommunicateWithServe {
-    // xingyu	
-    public abstract Question[] getRandomQuestionListOfQuiz(int quizDifficulty, int questionNumber);
+         // xingyu ok
+       public abstract Question[] getRandomQuestionListOfQuiz(int quizDifficulty, int questionNumber);
         
         // xingyu
 	public void recordQuizResultToServe(QuizOfStudent quizResult);
@@ -21,7 +21,7 @@ public interface CommunicateWithServe {
 	//creat a quiz question list for student   quizDifficultyOfUserSelect:0-easy 1-Medium 2-Hard 3-Mixed
 	
 	
-        // xingyu
+        // xingyu ok
         public abstract boolean importQuestionFromCSV(File CSVFile);//success->true  fail->false;
         
         public abstract void deleteById(int questionID);
@@ -49,7 +49,9 @@ public interface CommunicateWithServe {
         
         // xingyu
         public abstract QuizOfStudent getQuizByStudentIdAndTimeType(int id, int timeType);//timeType:0-LastMouth,1:Last Quarter,2:Last Year
-	// xingyu
+	
+
+         // xingyu ok
         public abstract boolean addStudent(String text);
       
 	public abstract int[] getLastNumberOfALLQuizzes();

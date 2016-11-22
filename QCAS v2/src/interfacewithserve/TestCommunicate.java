@@ -21,6 +21,8 @@ import utilclass.HistoryRecord;
 import utilclass.Question;
 import utilclass.QuizOfStudent;
 import utilclass.User;
+import utilclass.StringToInt;
+import java.util.ArrayList;
 
 public class TestCommunicate implements CommunicateWithServe {
         private String questionUrl = "jdbc:derby:Question;"
@@ -37,7 +39,10 @@ public class TestCommunicate implements CommunicateWithServe {
 	public Question[] getRandomQuestionListOfQuiz(int quizDifficulty, int questionNumber) {
 		// TODO Auto-generated method stub
 		 Question[] questions = new Question[questionNumber];
-                
+                 String[] choice = new String[4];
+                 String  answer = null;
+                 ArrayList<Question> question = new ArrayList();
+                 StringToInt sti = new StringToInt();
                  try (Connection con = DriverManager.getConnection(questionUrl,
                         questionUsername, questionPassword)){
             Statement stmt = con.createStatement();
@@ -45,15 +50,31 @@ public class TestCommunicate implements CommunicateWithServe {
                     "' order by Random() fetch first " +  questionNumber + " rows only";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
+               for(int i = 0; i < 4; i++){
+                   if(rs.getString(2*(i+1) + 3).equals("correct")){
+                       answer = answer + rs.getString(2 + 2*(i+1));
+                   }
+               }
                
-		}
-             
-             
+               for(int i = 0; i < 4; i++){
+                   
+                    choice[i] = rs.getString(2 + 2*(i+1));
+                   }
+               
+            Question ques = new Question(sti.toIntType(rs.getString("type")), 
+                    rs.getInt("number"), sti.toIntDiff(rs.getString("difficulty")),
+                    rs.getString("description"), choice, rs.getString(answer));  
+		question.add(ques);
+            }
+            
                 }catch (SQLException se) {
             System.out.println("Exception: " + se);
             
         }
-		return questions;
+		for(int i = 0; i < questionNumber; i++){
+                questions[i] = question.get(i);
+                }
+                 return questions;
 	}
 
 	@Override

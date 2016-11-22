@@ -1,11 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Student.FXML_Student_DashboardController">
-    
-</AnchorPane>
+<SplitPane id="SplitPane" dividerPositions="0.5" maxHeight="400.0" maxWidth="600.0" minHeight="400.0" minWidth="600.0" orientation="VERTICAL" prefHeight="400.0" prefWidth="600.0" stylesheets="@no-divider.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Student.FXML_Student_DashboardController">
+   <items>
+      <AnchorPane maxHeight="263.0" maxWidth="600.0" minHeight="254.0" minWidth="599.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: rgb(187,0,0);" SplitPane.resizableWithParent="false">
+         <children>
+            <ImageView fitHeight="575.0" fitWidth="599.0" layoutX="81.0" layoutY="-122.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@bg-seal.png" />
+               </image>
+            </ImageView>
+            <Label alignment="TOP_RIGHT" layoutX="42.0" layoutY="51.0" prefHeight="30.0" prefWidth="165.0" text="Dashboard" textFill="WHITE">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="28.0" />
+               </font>
+            </Label>
+            <Button fx:id="logoutButton" layoutX="494.0" layoutY="55.0" mnemonicParsing="false" onAction="#logoutButtonAction" style="-fx-background-color: white; -fx-text-fill: rgb(187,0,0);" text="Log out" AnchorPane.rightAnchor="40.0" />
+         </children>
+      </AnchorPane>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: rgb(51,51,51);">
+         <children>
+            <Button fx:id="takeQuizButton" layoutX="82.0" layoutY="33.0" mnemonicParsing="false" onAction="#takeQuizButtonAction" prefHeight="69.0" prefWidth="143.0" style="-fx-background-color: rgb(51,51,51); -fx-border-color: white; -fx-border-radius: 10; -fx-text-fill: white;" text="Take a quiz!">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Button>
+            <Button fx:id="viewHistoryButton" layoutX="376.0" layoutY="33.0" mnemonicParsing="false" onAction="#viewHistoryButtonAction" prefHeight="69.0" prefWidth="143.0" style="-fx-background-color: rgb(51,51,51); -fx-border-color: white; -fx-border-radius: 10; -fx-text-fill: white;" text="View history">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Button>
+         </children>
+      </AnchorPane>
+   </items>
+</SplitPane>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxapplication1.indexController">
+   <children>
+      <Button fx:id="login" layoutX="383.0" layoutY="303.0" mnemonicParsing="false" onAction="#loginAction" prefHeight="46.0" prefWidth="138.0" text="Log in" />
+      <Label layoutX="183.0" layoutY="39.0" text="Welcome to QCAS">
+         <font>
+            <Font name="System Bold" size="37.0" />
+         </font>
+      </Label>
+      <TextField fx:id="id" layoutX="203.0" layoutY="142.0" prefHeight="27.0" prefWidth="288.0" />
+      <TextField fx:id="pawd" layoutX="203.0" layoutY="179.0" prefHeight="27.0" prefWidth="288.0" />
+      <Label layoutX="124.0" layoutY="147.0" text="Andrew ID">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+      <Label layoutX="127.0" layoutY="184.0" text="Password">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+      <Label layoutX="145.0" layoutY="243.0" text="Log as">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+      <RadioButton fx:id="student" layoutX="211.0" layoutY="243.0" mnemonicParsing="false" selected="true" text="Student">
+         <toggleGroup>
+            <ToggleGroup fx:id="selectType" />
+         </toggleGroup>
+      </RadioButton>
+      <RadioButton fx:id="instructor" layoutX="352.0" layoutY="243.0" mnemonicParsing="false" text="Instructor" toggleGroup="$selectType" />
+      <ImageView fitHeight="115.0" fitWidth="138.0" layoutX="39.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@1.jpg" />
+         </image>
+      </ImageView>
+      <Button fx:id="test" layoutX="45.0" layoutY="303.0" mnemonicParsing="false" onAction="#test" prefHeight="46.0" prefWidth="138.0" text="test" />
+   </children>
+</Pane>

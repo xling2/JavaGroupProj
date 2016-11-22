@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="308.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxapplication1.quiz_settingController">
+   <children>
+      <Label layoutX="30.0" layoutY="44.0" text="Quiz Setting">
+         <font>
+            <Font name="System Bold" size="31.0" />
+         </font>
+      </Label>
+      <Button fx:id="back" layoutX="498.0" layoutY="40.0" mnemonicParsing="false" onAction="#backAction" prefHeight="46.0" prefWidth="72.0" text="Back" />
+      <Button fx:id="start" layoutX="238.0" layoutY="241.0" mnemonicParsing="false" onAction="#start" prefHeight="38.0" prefWidth="91.0" text="Start" />
+      <Label fx:id="tips" layoutX="210.0" layoutY="212.0" text="please fill the blank first" textFill="RED" />
+      <Label layoutX="92.0" layoutY="118.0" text="Number of question" />
+      <Label layoutX="92.0" layoutY="154.0" text="Select Difficulty" />
+      <TextField fx:id="number" layoutX="238.0" layoutY="113.0" />
+      <ChoiceBox fx:id="difficulty" layoutX="238.0" layoutY="149.0" prefHeight="27.0" prefWidth="167.0" />
+   </children>
+</Pane>

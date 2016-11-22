@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="200.0" prefWidth="300.0" style="-fx-background-color: rgb(51,51,51);" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="Report.FXML_Export_ResultController">
+   <children>
+      <Button layoutX="210.0" layoutY="150.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="57.0" text="OK" />
+      <Label layoutX="42.0" layoutY="58.0" text="Export successfully to desktop" textFill="WHITE" />
+   </children>
+</AnchorPane>

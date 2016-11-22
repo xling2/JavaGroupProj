@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Instructor.add_studentController">
+   <children>
+      <Button fx:id="add" layoutX="429.0" layoutY="306.0" mnemonicParsing="false" onAction="#addAction" prefHeight="46.0" prefWidth="138.0" text="Add" />
+      <Label layoutX="30.0" layoutY="44.0" text="Andrew ID">
+         <font>
+            <Font name="System Bold" size="31.0" />
+         </font>
+      </Label>
+      <TextArea fx:id="text" layoutX="207.0" layoutY="50.0" prefHeight="194.0" prefWidth="361.0" />
+      <Label layoutX="30.0" layoutY="82.0" prefHeight="85.0" prefWidth="88.0" text="Use &quot;,&quot; to seperate multiple input" wrapText="true" />
+      <Button fx:id="back" layoutX="30.0" layoutY="306.0" mnemonicParsing="false" onAction="#backAction" prefHeight="46.0" prefWidth="138.0" text="Back" />
+   </children>
+</Pane>

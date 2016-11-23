@@ -112,7 +112,7 @@ public class instructor_review_quizzs_detailController implements Initializable 
             goPage.back = "/instructor_review_quizzs_detail.fxml";
             goPage.backX = tips.getScene().getWidth();
             goPage.backY = tips.getScene().getHeight();
-            goPage.goPage("/student_quiz_report_onetime.fxml", tips, 438, 800);
+            goPage.goPage("/student_quiz_report_onetime.fxml", tips, 438, 1000);
         } else {
             checkTips.setTextFill(Color.RED);
             checkTips.setText("Check failed, Please select a student first");

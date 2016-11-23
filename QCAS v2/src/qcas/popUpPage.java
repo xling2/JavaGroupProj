@@ -23,8 +23,8 @@ public class popUpPage {
 
     private static popUpPage pup = new popUpPage();
 
-    public static Scene parentScene;
-    public static Scene popUpScene;
+    private static Scene parentScene;
+    private static Scene popUpScene;
 
     public popUpPage() {
 

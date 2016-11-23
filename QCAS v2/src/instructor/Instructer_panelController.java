@@ -12,13 +12,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import qcas.GoPage;
+import qcas.popUpPage;
 
 /**
  *
  * @author mica
  */
 public class Instructer_panelController implements Initializable {
-    
+
     @FXML
     private Button logout;
     @FXML
@@ -27,30 +28,33 @@ public class Instructer_panelController implements Initializable {
     private Button importquestions;
     @FXML
     private Button add;
-    
+
+    private popUpPage pup = new popUpPage();
+
     @FXML
     private void logoutAction(ActionEvent event) {
-        GoPage.getGoPage().goPage("/login.fxml", logout, 0);
+        GoPage.getGoPage().goPage("/login.fxml", logout);
     }
-    
+
     @FXML
     private void reviewAciton(ActionEvent event) {
-        GoPage.getGoPage().goPage("/instructer_review_quizzs.fxml", review, 350, 157);
+        popUpPage.setParentScene(review);
+        pup.open("/instructer_review_quizzs.fxml");
     }
-    
+
     @FXML
     private void importAction(ActionEvent event) {
-        GoPage.getGoPage().goPage("/import_question.fxml", importquestions, 406, 211);
+        GoPage.getGoPage().goPage("/import_question.fxml", add);
     }
-    
+
     @FXML
     private void addAction(ActionEvent event) {
-        GoPage.getGoPage().goPage("/add_student.fxml", add, 0);
+        GoPage.getGoPage().goPage("/add_student.fxml", add);
     }
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
-    
+    }
+
 }

@@ -36,7 +36,7 @@ public class student_general_reportController implements Initializable {
 	@FXML
 	private Label tips;
 	@FXML
-	private Label studentID;
+	private Label studentName;
     @FXML
     private Label quizzesNumber;
     @FXML
@@ -61,7 +61,7 @@ public class student_general_reportController implements Initializable {
 		if(!folder.exists())folder.mkdirs();
 		Document document = new Document();
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd-hh-mm");
-		String documentName = goPage.student.id + df.format(new Date()) + "_general_report" + ".PDF";
+		String documentName = goPage.studentName + df.format(new Date()) + "_general_report" + ".PDF";
 		File exportPDF = new File(folder+"/"+documentName);
 		if(exportPDF.exists()){
 			successedTips.setVisible(false);
@@ -74,9 +74,9 @@ public class student_general_reportController implements Initializable {
 				PDFGeneral.addTitleLine(document, "Quiz Report");
 				df = new SimpleDateFormat("yyyy-MM-dd hh:mm");
 				PDFGeneral.addContentLine(document, String.format("%s%s", 
-						"StudentID:", goPage.student.id));
+						"studentName:", goPage.studentName));
 				PDFGeneral.addContentLine(document, String.format("%s%s", 
-						"StudentName:", goPage.student.name));
+						"StudentName:", goPage.studentName));
 				PDFGeneral.addContentLine(document, String.format("%s%s", 
 						"Number of quizzes taken:", quizzesNumber.getText()));
 				PDFGeneral.addContentLine(document, String.format("%s%s", 
@@ -123,7 +123,7 @@ public class student_general_reportController implements Initializable {
         tips.setVisible(false);
         successedTips.setVisible(false);
         goPage = GoPage.getGoPage(); 
-        studentID.setText(goPage.student.name);
+        studentName.setText(goPage.studentName);
         quizzesNumber.setText(goPage.getOneStudentScoresOfAllRecord().length+"");
         int totalScore = 0;
         for (int i = 0; i < goPage.getOneStudentScoresOfAllRecord().length; i++) {

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
@@ -7,17 +9,38 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: rgb(51,51,51);" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="instructor.add_studentController">
-   <children>
-      <Button fx:id="add" layoutX="430.0" layoutY="337.0" mnemonicParsing="false" onAction="#addAction" prefHeight="33.0" prefWidth="138.0" stylesheets="@no-divider.css" text="Add" />
-      <Label layoutX="30.0" layoutY="44.0" text="Andrew ID" textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="31.0" />
-         </font>
-      </Label>
-      <TextArea fx:id="text" layoutX="207.0" layoutY="50.0" prefHeight="252.0" prefWidth="361.0" />
-      <Label layoutX="30.0" layoutY="82.0" prefHeight="85.0" prefWidth="88.0" text="Use &quot;,&quot; to seperate multiple input" textFill="WHITE" wrapText="true" />
-      <Button fx:id="back" layoutX="-1.0" layoutY="-2.0" mnemonicParsing="false" onAction="#backAction" prefHeight="27.0" prefWidth="75.0" style="-fx-background-color: rgb(150,0,0); -fx-text-fill: white;" text="&lt;&lt;Back" />
-      <Label fx:id="tips" layoutX="430.0" layoutY="313.0" text="Label" visible="false" />
-   </children>
-</Pane>
+<SplitPane id="SplitPane" dividerPositions="0.3411371237458194" prefHeight="400.0" prefWidth="600.0" stylesheets="@no-divider.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="instructor.add_studentController">
+   <items>
+      <AnchorPane id="AnchorPane" maxHeight="400.0" maxWidth="190.0" minHeight="400.0" minWidth="190.0" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: rgb(187,0,0);">
+         <children>
+            <ImageView fitHeight="498.0" fitWidth="527.0" layoutX="-56.0" layoutY="-31.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@bg-seal.png" />
+               </image>
+            </ImageView>
+            
+            <Label alignment="TOP_RIGHT" layoutX="30.0" layoutY="79.0" prefHeight="33.0" prefWidth="118.0" text="Student" textFill="WHITE">
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="28.0" />
+               </font>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </Label>
+         </children>
+      </AnchorPane>
+      <AnchorPane prefHeight="400.0" prefWidth="341.0" style="-fx-background-color: rgb(51,51,51);">
+         <children>
+            <Button fx:id="addButton" layoutX="66.0" layoutY="35.0" mnemonicParsing="false" onAction="#addAction" prefHeight="30.0" prefWidth="62.0" style="-fx-background-color: white; -fx-text-fill: rgb(187,0,0);" text="Add" />
+            <Button fx:id="deleteButton" layoutX="138.0" layoutY="34.0" mnemonicParsing="false" onAction="#addAction" prefHeight="33.0" prefWidth="65.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-radius: 3;" stylesheets="@no-divider.css" text="Delete" />
+            <Button fx:id="viewButton" layoutX="224.0" layoutY="34.0" mnemonicParsing="false" onAction="#addAction" prefHeight="33.0" prefWidth="131.0" stylesheets="@no-divider.css" text="View performance" />
+            <TableView layoutX="82.0" layoutY="95.0" prefHeight="261.0" prefWidth="253.0">
+              <columns>
+                <TableColumn prefWidth="89.853271484375" text="Selected" />
+                <TableColumn prefWidth="231.14675903320312" text="Andrew ID" />
+              </columns>
+            </TableView>
+         </children>
+      </AnchorPane>
+   </items>
+</SplitPane>

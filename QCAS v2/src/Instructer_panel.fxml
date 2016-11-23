@@ -32,7 +32,7 @@
       </AnchorPane>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: rgb(51,51,51);">
          <children>
-            <Button fx:id="add" layoutX="36.0" layoutY="33.0" mnemonicParsing="false" onAction="#addAction" prefHeight="69.0" prefWidth="158.0" style="-fx-background-color: rgb(51,51,51); -fx-border-color: white; -fx-border-radius: 10; -fx-text-fill: white;" text="Add student">
+            <Button fx:id="add" layoutX="36.0" layoutY="33.0" mnemonicParsing="false" onAction="#addAction" prefHeight="69.0" prefWidth="158.0" style="-fx-background-color: rgb(51,51,51); -fx-border-color: white; -fx-border-radius: 10; -fx-text-fill: white;" text="View student">
                <font>
                   <Font size="17.0" />
                </font>
@@ -42,7 +42,7 @@
                   <Font size="17.0" />
                </font>
             </Button>
-            <Button fx:id="importquestions" layoutX="220.0" layoutY="33.0" mnemonicParsing="false" onAction="#importAction" prefHeight="69.0" prefWidth="158.0" style="-fx-background-color: rgb(51,51,51); -fx-border-color: white; -fx-border-radius: 10; -fx-text-fill: white;" text="Import question">
+            <Button fx:id="importquestions" layoutX="220.0" layoutY="33.0" mnemonicParsing="false" onAction="#importAction" prefHeight="69.0" prefWidth="158.0" style="-fx-background-color: rgb(51,51,51); -fx-border-color: white; -fx-border-radius: 10; -fx-text-fill: white;" text="Question bank">
                <font>
                   <Font size="17.0" />
                </font>

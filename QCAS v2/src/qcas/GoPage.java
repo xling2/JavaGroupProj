@@ -19,7 +19,6 @@ import javafx.stage.Stage;
 import utilclass.Answer;
 import utilclass.HistoryRecord;
 import utilclass.QuizOfStudent;
-import utilclass.User;
 
 /**
  *
@@ -29,18 +28,18 @@ import utilclass.User;
 public class GoPage {
 	private static GoPage gopage = new GoPage();
 	// some global date
-	public User student;
-	public User user;
+	public String studentName;
+	public String userName;
 	public QuizOfStudent quizOfCurrentCheck;
 	public int numberOfCurrentQuiz = 1;
 	public CommunicateWithServe communicateWithServe = new TestCommunicate();
 	// some select date between pages
 	public int quizzsReviewSelectOfInstructor = -1;
-	public int quizDifficultyOfUserSelect = -1;// 0-easy 1-Mediem 2-Hard 3-Mixed
+	public int quizDifficultyOfStringSelect = -1;// 0-easy 1-Mediem 2-Hard 3-Mixed
 												// -1-nochoice
 	public int questionNumberFromQuizSetting = 10;
 	public HistoryRecord[] historyRecordItems;
-	public User[] studentViewListForInstructor;//instructor_reviw_quizzs_detail,student passed and failed
+	public String[] studentViewListForInstructor;//instructor_reviw_quizzs_detail,student passed and failed
 	//instructor_review_quizzes
 	public int[] numberOfQuizzesTakenOfAll;
 	public int[] averageScoreOfAll;
@@ -78,14 +77,14 @@ public class GoPage {
 	}
 
 	// quiz_setting.
-	public void getRandomQuiz() { 
+	public void getRandomQuiz() {
 		Answer[] answerOfStudent = new Answer[questionNumberFromQuizSetting];
 		for (int i = 0; i < answerOfStudent.length; i++) {
 			answerOfStudent[i] = new Answer();
 		}
 		Date startDate = new Date();
-		quizOfCurrentCheck = new QuizOfStudent(student, questionsIdOfQuiz, answerOfStudent, startDate, startDate);
-		quizOfCurrentCheck.getQuestionFromServe(communicateWithServe);
+		quizOfCurrentCheck = new QuizOfStudent(studentName, communicateWithServe.getRandomQuestionListOfQuiz(
+				quizDifficultyOfStringSelect, questionNumberFromQuizSetting), answerOfStudent, startDate, startDate);
 	}
 	public void recordQuizResultToServe() {
 		communicateWithServe.recordQuizResultToServe(quizOfCurrentCheck);
@@ -93,26 +92,25 @@ public class GoPage {
 	
 	// Student_view_history
 	public void getStudentHistoryRecordFromServe() {
-		historyRecordItems = communicateWithServe.getHistoryRecordFromServeByStudentID(student.id);
+		historyRecordItems = communicateWithServe.getHistoryRecordFromServeByStudentName(studentName);
 	}
 
 	public void getQuizFromServeById(int quizId) {
 		quizOfCurrentCheck = communicateWithServe.getQuizByQuizId(quizId);
-		quizOfCurrentCheck.getQuestionFromServe(communicateWithServe);
 	}
 	
 	//student_general_report
 	public int[] getOneStudentScoresOfAllRecord() {
-		return communicateWithServe.getStudentAllRecordScoreById(student.id);
+		return communicateWithServe.getStudentAllRecordScoreByStudentName(studentName);
 	}
 
 	public String[] getOneStudentRecordDate() {
-		return communicateWithServe.getStudentRecordDateById(student.id);
+		return communicateWithServe.getStudentRecordDateByStudentName(studentName);
 	}
 	
 	public int[] getStudentAverageScoreOfAllDifficulty() {
 		//three difficulty average score
-		return communicateWithServe.getStudentAverageScoreOfThreeDifficultyById(student.id);
+		return communicateWithServe.getStudentAverageScoreOfThreeDifficultyByStudentName(studentName);
 	}
 	
 	//Instructor Quizzes review
@@ -185,7 +183,7 @@ public class GoPage {
 	}
 
 	// instructor student quiz report check
-	public void checkStudentQuizReport(User user, int indexOfDuration) {
-		quizOfCurrentCheck = communicateWithServe.getQuizByStudentIdAndTimeType(user.id, indexOfDuration);
+	public void checkStudentQuizReport(String studentName, int indexOfDuration) {
+		quizOfCurrentCheck = communicateWithServe.getQuizByStudentNameAndTimeType(studentName, indexOfDuration);
 	}
 }

@@ -84,7 +84,7 @@ public class instructor_review_quizzs_general_detailController implements Initia
         }
         Document document = new Document();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd-hh-mm");
-        String documentName = goPage.user.id + df.format(new Date()) + "general_report" + ".PDF";
+		String documentName = goPage.userName + df.format(new Date()) + "general_report" + ".PDF";
         File exportPDF = new File(folder + "/" + documentName);
         if (exportPDF.exists()) {
             successedTips.setVisible(false);

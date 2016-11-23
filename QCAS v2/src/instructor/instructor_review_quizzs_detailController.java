@@ -34,7 +34,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import qcas.GoPage;
 import pdfutil.PDFGeneral;
-import utilclass.User;
 
 /**
  *
@@ -75,7 +74,7 @@ public class instructor_review_quizzs_detailController implements Initializable 
         }
         Document document = new Document();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd-hh-mm");
-        String documentName = goPage.user.id + df.format(new Date()) + "quizzes_review"
+		String documentName = goPage.userName + df.format(new Date()) + "quizzes_review"
                 + TIMESTRING[selectDetail.getSelectionModel().getSelectedIndex()] + ".PDF";
         File exportPDF = new File(folder + "/" + documentName);
         if (exportPDF.exists()) {
@@ -138,7 +137,7 @@ public class instructor_review_quizzs_detailController implements Initializable 
     }
 
     @FXML
-    private ListView<User> studentList;
+	private ListView<String> studentList;
 
     @FXML
     private ChoiceBox<String> passOrFail;

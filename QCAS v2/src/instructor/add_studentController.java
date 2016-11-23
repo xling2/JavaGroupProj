@@ -24,10 +24,10 @@ public class add_studentController implements Initializable {
 
 	@FXML
 	private Button add;
+        
 	@FXML
 	private TextArea text;
-	@FXML
-	private Button back;
+
 	@FXML
 	private Label tips;
 
@@ -44,10 +44,7 @@ public class add_studentController implements Initializable {
 		}
 	}
 
-	@FXML
-	private void backAction(ActionEvent event) {
-		GoPage.getGoPage().goPage("/Instructer_panel.fxml", back, 0);
-	}
+	
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {

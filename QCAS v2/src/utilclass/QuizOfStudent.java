@@ -1,34 +1,25 @@
 package utilclass;
 
 import java.util.Date;
-import interfacewithserve.CommunicateWithServe;
 
 public class QuizOfStudent {
-	public User student;
-	public int[] questionsIdOfQuiz;
+	public String studentName;
 	public Question[] questionsOfQuiz;
 	public Answer[] answerOfStudent;
-        public int[] diff;
 	public Date startDate;
 	public Date finishDate;
 	public String duration;
 	public int totalScore;
 	public int[] scoreOfDifficulty = new int[3];
-        
 
-	public QuizOfStudent(User student, int[] questionsIdOfQuiz, int[] difficulty, Answer[] answerOfStudent, Date startDate,
+	public QuizOfStudent(String student, Question[] questions, Answer[] answerOfStudent, Date startDate,
 			Date finishDate) {
 		// TODO Auto-generated constructor stub
-		this.student = student;
-		this.questionsIdOfQuiz = questionsIdOfQuiz;
-		this.diff = difficulty;
-                this.startDate = startDate;
+		this.studentName = student;
+		this.questionsOfQuiz = questions;
+		this.startDate = startDate;
 		this.answerOfStudent = answerOfStudent;
 		this.finishDate = finishDate;
-	}
-
-	public void getQuestionFromServe(CommunicateWithServe communicateWithServe) {
-		this.questionsOfQuiz = communicateWithServe.getRandomQuestionListOfQuiz(diff, this.questionsIdOfQuiz.length);
 		getQuizScore();
 		getDuration();
 	}

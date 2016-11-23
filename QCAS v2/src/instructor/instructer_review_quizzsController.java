@@ -20,6 +20,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import qcas.GoPage;
+import qcas.popUpPage;
 
 /**
  *
@@ -34,31 +35,38 @@ public class instructer_review_quizzsController implements Initializable {
     @FXML
     private ChoiceBox<String> select;
     @FXML
-    private Button back;
+    private Button enterButton;
+
+    private popUpPage pup = new popUpPage();
+
+    private GoPage goPage;
 
     @FXML
-    private void backAction(ActionEvent event) throws IOException {
-        goPage.goPage("/Instructer_panel.fxml", pane);
+    private void enterButtonAction(ActionEvent ae) {
+
+        if (goPage.quizzsReviewSelectOfInstructor == 3) {
+            pup.open("/instructor_review_quizzs_general.fxml");
+        } else {
+            pup.open("/instructor_review_quizzs_detail.fxml");
+        }
     }
-    private GoPage goPage;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         goPage = GoPage.getGoPage();
-        select.setItems(FXCollections.observableArrayList("Last month record", "Last quarter record",
-                "Last year record", "General record"));
+        select.setItems(FXCollections.observableArrayList(
+                "Last month record",
+                "Last quarter record",
+                "Last year record",
+                "General record"));
         goPage.quizzsReviewSelectOfInstructor = -1;
         //select initial
         select.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
             public void changed(@SuppressWarnings("rawtypes") ObservableValue ov, Number value, Number new_value) {
                 listDefaultLabel.setVisible(false);
                 goPage.quizzsReviewSelectOfInstructor = new_value.intValue();
-                if (new_value.intValue() == 3) {
-                    goPage.goPage("/instructor_review_quizzs_general.fxml", pane, 438, 800);
-                } else {
-                    goPage.goPage("/instructor_review_quizzs_detail.fxml", pane, 438, 800);
-                }
+                
             }
         });
     }

@@ -49,7 +49,12 @@ public class add_studentController implements Initializable {
         
         @FXML
         private void backButtonAction(ActionEvent event) {
-            GoPage.getGoPage().goPage("/Instructor_panel.fxml", backButton);
+            GoPage.getGoPage().goPage("/Instructer_panel.fxml", backButton);
+        }
+        
+        @FXML
+        private void deleteAction(ActionEvent event) {
+            
         }
 
 	

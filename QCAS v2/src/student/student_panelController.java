@@ -42,11 +42,11 @@ public class student_panelController implements Initializable {
 
     @FXML
     private void viewHistory(ActionEvent event) {
-        GoPage.getGoPage().goPage("/view_history.fxml", logout, 0);
+        GoPage.getGoPage().goPage("/view_history.fxml", logout);
     }
 
     @FXML
-    private void quiz(ActionEvent event) throws IOException {
+    private void quiz(ActionEvent event){
 
         popUpPage.setParentScene(logout);
         pup.open("/quiz_setting.fxml");

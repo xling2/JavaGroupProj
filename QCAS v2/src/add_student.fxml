@@ -32,10 +32,10 @@
       </AnchorPane>
       <AnchorPane prefHeight="400.0" prefWidth="341.0" style="-fx-background-color: rgb(51,51,51);">
          <children>
-            <Button fx:id="addButton" layoutX="66.0" layoutY="35.0" mnemonicParsing="false" onAction="#addAction" prefHeight="30.0" prefWidth="62.0" style="-fx-background-color: white; -fx-text-fill: rgb(187,0,0);" text="Add" />
-            <Button fx:id="deleteButton" layoutX="138.0" layoutY="34.0" mnemonicParsing="false" onAction="#addAction" prefHeight="33.0" prefWidth="65.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-radius: 3;" stylesheets="@no-divider.css" text="Delete" />
-            <Button fx:id="viewButton" layoutX="224.0" layoutY="34.0" mnemonicParsing="false" onAction="#addAction" prefHeight="33.0" prefWidth="131.0" stylesheets="@no-divider.css" text="View performance" />
-            <TableView layoutX="71.0" layoutY="96.0" prefHeight="261.0" prefWidth="279.0">
+            <Button fx:id="addButton" layoutX="42.0" layoutY="45.0" mnemonicParsing="false" onAction="#addAction" prefHeight="30.0" prefWidth="62.0" style="-fx-background-color: white; -fx-text-fill: rgb(187,0,0);" text="Add" />
+            <Button fx:id="deleteButton" layoutX="114.0" layoutY="44.0" mnemonicParsing="false" onAction="#deleteAction" prefHeight="33.0" prefWidth="65.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-radius: 3;" stylesheets="@no-divider.css" text="Delete" />
+            <Button fx:id="viewButton" layoutX="229.0" layoutY="44.0" mnemonicParsing="false" onAction="#addAction" prefHeight="33.0" prefWidth="131.0" stylesheets="@no-divider.css" text="View performance" />
+            <TableView fx:id="studentTable" layoutX="42.0" layoutY="108.0" prefHeight="261.0" prefWidth="318.0">
               <columns>
                 <TableColumn prefWidth="89.853271484375" text="Select" />
                 <TableColumn prefWidth="231.14675903320312" text="Andrew ID" />

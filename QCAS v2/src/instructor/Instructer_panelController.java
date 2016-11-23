@@ -44,7 +44,7 @@ public class Instructer_panelController implements Initializable {
 
     @FXML
     private void importAction(ActionEvent event) {
-        GoPage.getGoPage().goPage("/import_question.fxml", add);
+        GoPage.getGoPage().goPage("/question_bank.fxml", add);
     }
 
     @FXML

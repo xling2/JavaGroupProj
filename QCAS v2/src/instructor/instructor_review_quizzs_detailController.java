@@ -165,9 +165,9 @@ public class instructor_review_quizzs_detailController implements Initializable 
             public void changed(@SuppressWarnings("rawtypes") ObservableValue ov, Number value, Number new_value) {
                 goPage.quizzsReviewSelectOfInstructor = new_value.intValue();
                 if (new_value.intValue() == 3) {
-                    goPage.goPage("/instructor_review_quizzs_general.fxml", pane, 438, 800);
+                    goPage.goPage("/instructor_review_quizzs_general.fxml", pane, 438, 1000);
                 } else {
-                    goPage.goPage("/instructor_review_quizzs_detail.fxml", pane, 438, 800);
+                    goPage.goPage("/instructor_review_quizzs_detail.fxml", pane, 438, 1000);
                 }
             }
         });

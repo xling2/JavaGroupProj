@@ -11,6 +11,7 @@ import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ResourceBundle;
+import javafx.animation.PauseTransition;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -26,6 +27,7 @@ import javafx.scene.control.TextField;
 import qcas.GoPage;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.util.Duration;
 
 /**
  *
@@ -65,40 +67,24 @@ public class loginController implements Initializable {
         String username = examIDTextField.getText();
         String passwd = passwordField.getText();
 
-        MessageDigest md = MessageDigest.getInstance("MD5");
-        md.update(passwd.getBytes(), 0, passwd.length());
-        String encryptedPwd = new BigInteger(1, md.digest()).toString(16);
+        loginDetector detector = new loginDetector(username, passwd);
 
-        String url = "jdbc:derby://localhost:1527/UserDB";
-        final String userDBusernm = "administrator";
-        final String userDBpasswd = "admin@QCAS";
-        String pQuery = "SELECT * FROM QCASUSER WHERE username LIKE '"
-                + username + "' AND password LIKE '" + encryptedPwd + "'";
-
-//        try (Connection con = DriverManager.getConnection(url,
-//                userDBusernm, userDBpasswd);
-//                PreparedStatement pStmt = con.prepareStatement(pQuery);) {
-//            ResultSet userRS = pStmt.executeQuery();
-//            if (userRS.next()) {
-//                loginSuccess = true;
-        if (username.equals("instructor")) {
-            goPage.goPage("/Instructer_panel.fxml", loginButton);
+        if (detector.getLoginSuccess()) {
+            if (username.equals("instructor")) {
+                goPage.goPage("/Instructer_panel.fxml", loginButton);
+            } else {
+                goPage.goPage("/student_panel.fxml", loginButton);
+            }
         } else {
-            goPage.goPage("/student_panel.fxml", loginButton);
+            incorrectMsg.setVisible(true);
+            PauseTransition visiblePause
+                    = new PauseTransition(Duration.seconds(3));
+            visiblePause.setOnFinished(e -> {
+                incorrectMsg.setVisible(false);
+            });
+            visiblePause.play();
         }
-//            } else {
-//                incorrectMsg.setVisible(true);
-//                PauseTransition visiblePause
-//                        = new PauseTransition(Duration.seconds(3));
-//                visiblePause.setOnFinished(e -> {
-//                    incorrectMsg.setVisible(false);
-//                });
-//                visiblePause.play();
-//            }
 
-//        } catch (SQLException e) {
-//            System.out.println("SQL Exception @ login: " + e);
-//        }
     }
 
     @Override

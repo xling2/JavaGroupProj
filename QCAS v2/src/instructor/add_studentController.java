@@ -30,6 +30,9 @@ public class add_studentController implements Initializable {
 
 	@FXML
 	private Label tips;
+        
+        @FXML
+        private Button backButton;
 
 	@FXML
 	private void addAction(ActionEvent event) {
@@ -43,6 +46,11 @@ public class add_studentController implements Initializable {
 			tips.setVisible(true);
 		}
 	}
+        
+        @FXML
+        private void backButtonAction(ActionEvent event) {
+            GoPage.getGoPage().goPage("/student_panel.fxml", backButton);
+        }
 
 	
 

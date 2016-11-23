@@ -11,8 +11,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.stage.Stage;
 
 /**
  *
@@ -36,12 +34,12 @@ public class Instructer_panelController implements Initializable {
     
     @FXML
     private void reviewAciton(ActionEvent event) {
-        GoPage.getGoPage().goPage("review_quizzs.fxml", review, 0);
+        GoPage.getGoPage().goPage("instructer_review_quizzs.fxml", review, 350, 157);
     }
     
     @FXML
     private void importAction(ActionEvent event) {
-        GoPage.getGoPage().goPage("import_question.fxml", importquestions, 0);
+        GoPage.getGoPage().goPage("import_question.fxml", importquestions, 406, 650);
     }
     
     @FXML

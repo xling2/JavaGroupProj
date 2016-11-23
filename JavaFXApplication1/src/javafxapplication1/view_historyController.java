@@ -12,9 +12,9 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import utilclass.HistoryRecord;
 
 
 /**
@@ -24,41 +24,41 @@ import javafx.scene.control.ListView;
 public class view_historyController implements Initializable {
     
     @FXML
-    private Button back;
-    @FXML
-    private Button viewGenerateReport;
-    @FXML
-    private Button viewReport;
-    @FXML
-    private Button getHistory;    
-    @FXML
-    private ListView historyList;
+    private ListView<HistoryRecord> historyList;
     @FXML
     private Label tips;
     
     @FXML
     private void backAction(ActionEvent event){
-        GoPage.getGoPage().goPage("student_panel.fxml", back, 0);
+        goPage.goPage("student_panel.fxml", tips, 0);
+        
     }
     @FXML
     private void viewGenerateReport(ActionEvent event){
-        GoPage.getGoPage().goPage("quiz_report.fxml", back, 600, 800);
+        //System.out.println("view_historyController.viewGenerateReport");
+    	goPage.goPage("student_general_report.fxml", tips, 438, 1000);
     }
     @FXML
     private void viewReport(ActionEvent event){
-        GoPage.getGoPage().historySelectIndex = historyList.getSelectionModel().getSelectedIndex();
-        if(GoPage.getGoPage().historySelectIndex==-1){
+        if(historyList.getSelectionModel().getSelectedIndex()==-1){
             tips.setVisible(true);
         }else{
             tips.setVisible(false);
-            GoPage.getGoPage().goPage("quiz_report.fxml", back, 600, 800);
+            goPage.getQuizFromServeById(historyList.getSelectionModel().getSelectedItem().quizId);
+            goPage.back = "view_history.fxml";
+            goPage.backX = tips.getScene().getWidth();
+            goPage.backY = tips.getScene().getHeight();
+            goPage.goPage("student_quiz_report_onetime.fxml", tips, 438, 1000);
         }
     }
     
+    private GoPage goPage;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        ObservableList<String> historyItems=FXCollections.observableArrayList(GoPage.getGoPage().historyItems);
+    	goPage = GoPage.getGoPage();
+        goPage.getStudentHistoryRecordFromServe();
+        ObservableList<HistoryRecord> historyItems=FXCollections.observableArrayList(goPage.historyRecordItems);
         historyList.setItems(historyItems); 
         tips.setVisible(false);
     }    

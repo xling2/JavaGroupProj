@@ -32,12 +32,12 @@ public class student_panelController implements Initializable {
     
     @FXML
     private void viewHistory(ActionEvent event) {
-        GoPage.getGoPage().goPage("view_history.fxml", logout, 0);
+        GoPage.getGoPage().goPage("view_history.fxml", logout, 311, 400);
     }
     
     @FXML
     private void quiz(ActionEvent event) {
-        GoPage.getGoPage().goPage("quiz_setting.fxml", logout, 600, 308);
+        GoPage.getGoPage().goPage("quiz_setting.fxml", logout, 350, 200);
     }
     
     @Override

@@ -7,65 +7,75 @@ package javafxapplication1;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-
 
 /**
  *
  * @author mica
  */
 public class quiz_settingController implements Initializable {
-    
-    @FXML
-    private Button back;
-    @FXML
-    private Button start;
-    @FXML
-    private Label tips;
-    @FXML
-    private TextField number;
-    @FXML
-    private ChoiceBox difficulty;
-    
-    @FXML
-    private void backAction(ActionEvent event){
-        GoPage.getGoPage().goPage("student_panel.fxml", back, 0);
-    }
 
-    @FXML
-    private void start(ActionEvent event){
-        GoPage util = GoPage.getGoPage();
-        System.out.println(util.quizDifficult = difficulty.getSelectionModel().selectedIndexProperty().intValue());
-        if(util.questionCounts==-1||number.getText().length()==0){
-            tips.setVisible(true);
-        }else{
-            try {
-                util.questionCounts = Integer.parseInt(number.getText());
-                tips.setVisible(false);
-                util.getQuiz();
-                util.currentNumber = 1;
-                System.out.println(Question.FXMLForQuestion[util.quiz.get(util.currentNumber-1).questionType]);
-                util.goPage(Question.FXMLForQuestion[util.quiz.get(util.currentNumber-1).questionType], back);
-            }catch (Exception e) {
-                System.out.println("General quiz Fail");
-            }
-        }
-    }
-    
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-        difficulty.setItems(FXCollections.observableArrayList("Easy", "Mediem ", "Hard", "Mixed"));  
-        tips.setVisible(false);
-    }    
-    
+	@FXML
+	private Label tips;
+	@FXML
+	private TextField number;
+	@FXML
+	private ChoiceBox<String> difficulty;
+
+	@FXML
+	private void backAction(ActionEvent event) {
+		goPage.goPage("student_panel.fxml", tips, 0);
+	}
+
+	@FXML
+	private void start(ActionEvent event) {
+		
+		goPage.quizDifficultyOfStringSelect = difficulty.getSelectionModel().selectedIndexProperty().intValue();
+		if (goPage.quizDifficultyOfStringSelect == -1 || number.getText().length() == 0) {
+			tips.setText("Please select a difficulty and input a number first.");
+			tips.setVisible(true);
+		} else if (Integer.parseInt(number.getText()) > 50) {
+			tips.setText("The number must less than 50.");
+			tips.setVisible(true);
+		} else {
+			goPage.numberOfCurrentQuiz = 1;
+			goPage.questionNumberFromQuizSetting = Integer.parseInt(number.getText());
+			goPage.getRandomQuiz();
+			goPage.goPage("question.fxml", tips);
+		}
+	}
+	
+	private GoPage goPage;
+	@Override
+	public void initialize(URL url, ResourceBundle rb) {
+		// TODO
+		goPage = GoPage.getGoPage();
+		difficulty.setItems(FXCollections.observableArrayList("Easy", "Mediem ", "Hard", "Mixed"));
+		goPage.quizDifficultyOfStringSelect = -1;
+		tips.setVisible(false);
+		// set only number
+		number.textProperty().addListener(new ChangeListener<String>() {
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				// TODO Auto-generated method stub
+				if (!newValue.matches("\\d*")) {
+					number.setText(newValue.replaceAll("[^\\d]", ""));
+					tips.setText("Number available");
+					tips.setVisible(true);
+				} else {
+					tips.setVisible(false);
+				}
+			}
+		});
+	}
+
 }

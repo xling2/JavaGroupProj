@@ -6,16 +6,19 @@
 package javafxapplication1;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Random;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+
+import interfacewithserve.CommunicateWithServe;
+import interfacewithserve.TestCommunicate;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import utilclass.Answer;
+import utilclass.HistoryRecord;
+import utilclass.QuizOfStudent;
 
 /**
  *
@@ -23,46 +26,164 @@ import javafx.stage.Stage;
  */
 
 public class GoPage {
-    private static GoPage gopage = new GoPage();
-    //some global data
-    public int id = 0;
-    public ArrayList<String> historyItems = new ArrayList<String>(){{add("8:00am"); add("9:00pm");add("...");}}; 
-    public int historySelectIndex = -1;
-    public int questionCounts = 4;//question counts of quiz_report 
-    public int quizDifficult = -1;
-    public int currentNumber = 1;
-    public ArrayList<Question> quiz = new ArrayList<>();
-    
-    private void GoPage(){
-    }
-    
-    public static GoPage getGoPage(){
-        return gopage;
-    }
-    
-    public void goPage(String FXMLName, Node node, int...args){
-        Scene scene;
-        int x = 600;
-        int y = 400;
-        if(args.length>=2){
-            x = args[0];
-            y = args[1];
-        }
-        try {
-            scene = new Scene(FXMLLoader.load(getClass().getResource(FXMLName)), x, y);
-            Stage stage = (Stage)node.getScene().getWindow();
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException ex) {
-            Logger.getLogger(GoPage.class.getName()).log(Level.SEVERE, null, ex);
-        }
+	private static GoPage gopage = new GoPage();
+	// some global date
+	public String studentName;
+	public String userName;
+	public QuizOfStudent quizOfCurrentCheck;
+	public int numberOfCurrentQuiz = 1;
+	public CommunicateWithServe communicateWithServe = new TestCommunicate();
+	// some select date between pages
+	public int quizzsReviewSelectOfInstructor = -1;
+	public int quizDifficultyOfStringSelect = -1;// 0-easy 1-Mediem 2-Hard 3-Mixed
+												// -1-nochoice
+	public int questionNumberFromQuizSetting = 10;
+	public HistoryRecord[] historyRecordItems;
+	public String[] studentViewListForInstructor;//instructor_reviw_quizzs_detail,student passed and failed
+	//instructor_review_quizzes
+	public int[] numberOfQuizzesTakenOfAll;
+	public int[] averageScoreOfAll;
 
-    }
-    public void getQuiz(){
-        Random ra = new Random();
-        quiz.clear();
-        for(int i=0;i<this.questionCounts;i++){
-            quiz.add(new Question(ra.nextInt(4), i+1, "this is a question", new String[]{"choices1","choices2","choices3","choices4"}));
-        }
-    }
+	public String back = "student_panel.fxml";
+	public double backX = 600;
+	public double backY = 400;
+
+	private GoPage() {
+	}
+
+	public static GoPage getGoPage() {
+		return gopage;
+	}
+
+	// goPage
+	public void goPage(String FXMLName, Node node, int... args) {
+		Scene scene;
+		int x = 600;
+		int y = 400;
+		if (args.length >= 2) {
+			x = args[0];
+			y = args[1];
+		}
+		try {
+			scene = new Scene(FXMLLoader.load(getClass().getResource(FXMLName)), x, y);
+			// scene.getStylesheets().add("./src/javafxapplication1/no-divider.css");
+			Stage stage = (Stage) node.getScene().getWindow();
+			stage.setScene(scene);
+			stage.show();
+		} catch (IOException ex) {
+			Logger.getLogger(GoPage.class.getName()).log(Level.SEVERE, null, ex);
+		}
+
+	}
+
+	// quiz_setting.
+	public void getRandomQuiz() {
+		Answer[] answerOfStudent = new Answer[questionNumberFromQuizSetting];
+		for (int i = 0; i < answerOfStudent.length; i++) {
+			answerOfStudent[i] = new Answer();
+		}
+		Date startDate = new Date();
+		quizOfCurrentCheck = new QuizOfStudent(studentName, communicateWithServe.getRandomQuestionListOfQuiz(
+				quizDifficultyOfStringSelect, questionNumberFromQuizSetting), answerOfStudent, startDate, startDate);
+	}
+	public void recordQuizResultToServe() {
+		communicateWithServe.recordQuizResultToServe(quizOfCurrentCheck);
+	}
+	
+	// Student_view_history
+	public void getStudentHistoryRecordFromServe() {
+		historyRecordItems = communicateWithServe.getHistoryRecordFromServeByStudentName(studentName);
+	}
+
+	public void getQuizFromServeById(int quizId) {
+		quizOfCurrentCheck = communicateWithServe.getQuizByQuizId(quizId);
+	}
+	
+	//student_general_report
+	public int[] getOneStudentScoresOfAllRecord() {
+		return communicateWithServe.getStudentAllRecordScoreByStudentName(studentName);
+	}
+
+	public String[] getOneStudentRecordDate() {
+		return communicateWithServe.getStudentRecordDateByStudentName(studentName);
+	}
+	
+	public int[] getStudentAverageScoreOfAllDifficulty() {
+		//three difficulty average score
+		return communicateWithServe.getStudentAverageScoreOfThreeDifficultyByStudentName(studentName);
+	}
+	
+	//Instructor Quizzes review
+	public int[] getAllQuizAverageScoreOfEachDifficultyLastMouth() {
+		return communicateWithServe.getAllQuizAverageScoreOfEachDifficultyInLastMouth();
+	}
+	
+	public int[] getAllQuizAverageScoreOfEachDifficultyLastQuater() {
+		return communicateWithServe.getAllQuizAverageScoreOfEachDifficultyInLastQuater();
+	}
+	
+	public int[] getAllQuizAverageScoreOfEachDifficultyLastYear() {
+		return communicateWithServe.getAllQuizAverageScoreOfEachDifficultyInLastYear();
+	}
+	
+	public void getStudentFailedListLastMouth() {
+		this.studentViewListForInstructor = communicateWithServe.getStudentFailedListOfLastMouth();
+	}
+
+	public void getStudentFailedListLastQuarter() {
+		this.studentViewListForInstructor = communicateWithServe.getStudentFailedListOfLastQuarter();
+	}
+
+	public void getStudentFailedListLastYear() {
+		this.studentViewListForInstructor = communicateWithServe.getStudentFailedListOfLastYear();
+	}
+
+	public void getStudentPassedListOfLastMouth() {
+		this.studentViewListForInstructor = communicateWithServe.getStudentPassedListOfLastMouth();
+	}
+
+	public void getStudentPassedListOfLastQuarter() {
+		this.studentViewListForInstructor = communicateWithServe.getStudentPassedListOfLastQuarter();
+	}
+
+	public void getStudentPassedListOfLastYear() {
+		this.studentViewListForInstructor = communicateWithServe.getStudentPassedListOfLastYear();
+	}
+
+	public void getPassedList(int indexOfDuration) {
+		switch (indexOfDuration) {
+		case 0:
+			getStudentPassedListOfLastMouth();
+			break;
+		case 1:
+			getStudentPassedListOfLastQuarter();
+			break;
+		case 2:
+			getStudentPassedListOfLastYear();
+			break;
+		default:
+			break;
+		}
+	}
+
+	public void getFailedList(int indexOfDuration) {
+		switch (indexOfDuration) {
+		case 0:
+			getStudentFailedListLastMouth();
+			break;
+		case 1:
+			getStudentFailedListLastQuarter();
+			break;
+		case 2:
+			getStudentFailedListLastYear();
+			break;
+		default:
+			break;
+		}
+	}
+
+	// instructor student quiz report check
+	public void checkStudentQuizReport(String studentName, int indexOfDuration) {
+		quizOfCurrentCheck = communicateWithServe.getQuizByStudentNameAndTimeType(studentName, indexOfDuration);
+	}
 }

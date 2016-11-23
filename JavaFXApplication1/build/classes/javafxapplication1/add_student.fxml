@@ -7,16 +7,17 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxapplication1.add_studentController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: rgb(51,51,51);" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxapplication1.add_studentController">
    <children>
-      <Button fx:id="add" layoutX="429.0" layoutY="306.0" mnemonicParsing="false" onAction="#addAction" prefHeight="46.0" prefWidth="138.0" text="Add" />
-      <Label layoutX="30.0" layoutY="44.0" text="Andrew ID">
+      <Button fx:id="add" layoutX="430.0" layoutY="337.0" mnemonicParsing="false" onAction="#addAction" prefHeight="33.0" prefWidth="138.0" stylesheets="@no-divider.css" text="Add" />
+      <Label layoutX="30.0" layoutY="44.0" text="Andrew ID" textFill="WHITE">
          <font>
             <Font name="System Bold" size="31.0" />
          </font>
       </Label>
-      <TextArea fx:id="text" layoutX="207.0" layoutY="50.0" prefHeight="194.0" prefWidth="361.0" />
-      <Label layoutX="30.0" layoutY="82.0" prefHeight="85.0" prefWidth="88.0" text="Use &quot;,&quot; to seperate multiple input" wrapText="true" />
-      <Button fx:id="back" layoutX="30.0" layoutY="306.0" mnemonicParsing="false" onAction="#backAction" prefHeight="46.0" prefWidth="138.0" text="Back" />
+      <TextArea fx:id="text" layoutX="207.0" layoutY="50.0" prefHeight="252.0" prefWidth="361.0" />
+      <Label layoutX="30.0" layoutY="82.0" prefHeight="85.0" prefWidth="88.0" text="Use &quot;,&quot; to seperate multiple input" textFill="WHITE" wrapText="true" />
+      <Button fx:id="back" layoutX="-1.0" layoutY="-2.0" mnemonicParsing="false" onAction="#backAction" prefHeight="27.0" prefWidth="75.0" style="-fx-background-color: rgb(150,0,0); -fx-text-fill: white;" text="&lt;&lt;Back" />
+      <Label fx:id="tips" layoutX="430.0" layoutY="313.0" text="Label" visible="false" />
    </children>
 </Pane>

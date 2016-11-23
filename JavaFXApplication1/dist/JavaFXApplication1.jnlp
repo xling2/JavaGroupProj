@@ -8,7 +8,8 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="JavaFXApplication1.jar" size="204675" download="eager" />
+    <jar href="JavaFXApplication1.jar" size="305671" download="eager" />
+    <jar href="lib/itextpdf-5.1.2.jar" size="1622161" download="eager" />
   </resources>
   <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="JavaFXApplication1" >
     <param name="requiredFXVersion" value="8.0+"/>

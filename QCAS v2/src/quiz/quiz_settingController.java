@@ -51,7 +51,7 @@ public class quiz_settingController implements Initializable {
     @FXML
     private void start(ActionEvent event) {
 
-        goPage.quizDifficultyOfStringSelect = difficulty.getSelectionModel().selectedIndexProperty().intValue();
+        goPage.quizDifficultyOfStudentSelect = difficulty.getSelectionModel().selectedIndexProperty().intValue();
         if (!number.getText().isEmpty() && difficulty.getSelectionModel().getSelectedIndex() > -1) {
             if (Integer.parseInt(number.getText()) > 50) {
                 tips.setText("Question number no more than 50");
@@ -84,7 +84,7 @@ public class quiz_settingController implements Initializable {
         // TODO
         goPage = GoPage.getGoPage();
         difficulty.setItems(FXCollections.observableArrayList("Easy", "Mediem ", "Hard", "Mixed"));
-		goPage.quizDifficultyOfStringSelect = -1;
+		goPage.quizDifficultyOfStudentSelect = -1;
         tips.setVisible(false);
         // set only number
         number.textProperty().addListener(new ChangeListener<String>() {

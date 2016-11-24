@@ -12,7 +12,7 @@ public interface CommunicateWithServe {
 	public boolean login(int loginType, String userName, String password);//loginType 1:Student 2:Instructor
 	public abstract Question[] importQuestionFromCSV(File CSVFile);//success->true  fail->false;
 	public abstract HistoryRecord[] getHistoryRecordFromServeByStudentName(String studentName);
-	public abstract QuizOfStudent getQuizByQuizId(int quizId);
+	public abstract QuizOfStudent getQuizByQuizId(String quizId, String StudentName);
 	public abstract int[] getStudentAllRecordScoreByStudentName(String studentName);//sort by finish time
 	public abstract String[] getStudentRecordDateByStudentName(String studentName);//sort by finish time
 	public abstract int[] getStudentAverageScoreOfThreeDifficultyByStudentName(String studentName);//[easy,medium,hard]

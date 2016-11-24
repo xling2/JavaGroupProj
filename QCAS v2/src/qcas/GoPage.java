@@ -35,7 +35,7 @@ public class GoPage {
 	public CommunicateWithServe communicateWithServe = new TestCommunicate();
 	// some select date between pages
 	public int quizzsReviewSelectOfInstructor = -1;
-	public int quizDifficultyOfStringSelect = -1;// 0-easy 1-Mediem 2-Hard 3-Mixed
+	public int quizDifficultyOfStudentSelect = -1;// 0-easy 1-Mediem 2-Hard 3-Mixed
 												// -1-nochoice
 	public int questionNumberFromQuizSetting = 10;
 	public HistoryRecord[] historyRecordItems;
@@ -84,7 +84,8 @@ public class GoPage {
 		}
 		Date startDate = new Date();
 		quizOfCurrentCheck = new QuizOfStudent(studentName, communicateWithServe.getRandomQuestionListOfQuiz(
-				quizDifficultyOfStringSelect, questionNumberFromQuizSetting), answerOfStudent, startDate, startDate);
+				quizDifficultyOfStudentSelect, questionNumberFromQuizSetting), answerOfStudent, startDate, startDate);
+		quizOfCurrentCheck.quizDifficulty = quizDifficultyOfStudentSelect;
 	}
 	public void recordQuizResultToServe() {
 		communicateWithServe.recordQuizResultToServe(quizOfCurrentCheck);
@@ -95,8 +96,8 @@ public class GoPage {
 		historyRecordItems = communicateWithServe.getHistoryRecordFromServeByStudentName(studentName);
 	}
 
-	public void getQuizFromServeById(int quizId) {
-		quizOfCurrentCheck = communicateWithServe.getQuizByQuizId(quizId);
+	public void getQuizFromServeById(String quizId) {
+		quizOfCurrentCheck = communicateWithServe.getQuizByQuizId(quizId, studentName);
 	}
 	
 	//student_general_report

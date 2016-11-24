@@ -24,6 +24,7 @@ import utilclass.HistoryRecord;
  */
 public class view_historyController implements Initializable {
 
+	@FXML
     private ListView<HistoryRecord> historyList;
    
     @FXML
@@ -41,7 +42,11 @@ public class view_historyController implements Initializable {
 
     @FXML
     private void backAction(ActionEvent event) {
-        goPage.goPage("/student_panel.fxml", tips);
+        if (goPage.userName.equals("instructor")) {
+            goPage.goPage("/Instructer_panel.fxml", tips);
+        } else {
+            goPage.goPage("/student_panel.fxml", tips);
+        }
 
     }
 
@@ -76,5 +81,4 @@ public class view_historyController implements Initializable {
         historyList.setItems(historyItems);
         tips.setVisible(false);
     }
-
 }

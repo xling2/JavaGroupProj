@@ -14,6 +14,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 import qcas.GoPage;
 import qcas.popUpPage;
+import utilclass.Question;
+import javafx.beans.*;
 
 /**
  * FXML Controller class
@@ -30,10 +32,11 @@ public class Question_bankController implements Initializable {
     private Button deleteButton;
     @FXML
     private Button importButton;
-
+    
     @FXML
-    private TableView questionTable;
+    private TableView<Question> questionTable;
 
+    
     private popUpPage pup = new popUpPage();
 
     @FXML
@@ -62,6 +65,8 @@ public class Question_bankController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+        
     }
 
 }

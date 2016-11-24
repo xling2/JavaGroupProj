@@ -36,12 +36,15 @@
             <Button fx:id="importButton" layoutX="249.0" layoutY="14.0" mnemonicParsing="false" onAction="#importButtonAction" prefHeight="33.0" prefWidth="131.0" stylesheets="@no-divider.css" text="Import questions" />
             <TableView fx:id="questionTable" layoutX="19.0" layoutY="60.0" prefHeight="325.0" prefWidth="364.0">
                <columns>
-                  <TableColumn prefWidth="29.0" />
-                  <TableColumn prefWidth="64.0" text="Difficulty" />
-                  <TableColumn prefWidth="39.0" text="Type" />
-                  <TableColumn prefWidth="154.0" text="Description" />
-                  <TableColumn prefWidth="70.0" text="Answer" />
+                  <TableColumn editable="false" prefWidth="29.0" resizable="false" sortable="false" />
+                  <TableColumn editable="false" maxWidth="64.0" minWidth="64.0" prefWidth="64.0" resizable="false" sortable="false" text="Difficulty" />
+                  <TableColumn editable="false" maxWidth="39.0" minWidth="39.0" prefWidth="39.0" resizable="false" sortable="false" text="Type" />
+                  <TableColumn editable="false" maxWidth="168.0" minWidth="168.0" prefWidth="168.0" resizable="false" sortable="false" text="Description" />
+                  <TableColumn editable="false" maxWidth="63.0" minWidth="63.0" prefWidth="63.0" resizable="false" sortable="false" text="Answer" />
                </columns>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
             </TableView>
          </children>
       </AnchorPane>

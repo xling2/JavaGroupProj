@@ -107,12 +107,8 @@ public class instructor_review_quizzs_detailController implements Initializable 
     @FXML
     private void checkStudent(ActionEvent event) {
         if (studentList.getSelectionModel().getSelectedIndex() != -1) {
-            goPage.checkStudentQuizReport(studentList.getSelectionModel().getSelectedItem(),
-                    selectDetail.getSelectionModel().getSelectedIndex());
-            goPage.back = "/instructor_review_quizzs_detail.fxml";
-            goPage.backX = tips.getScene().getWidth();
-            goPage.backY = tips.getScene().getHeight();
-            goPage.goPage("/student_quiz_report_onetime.fxml", tips, 438, 1000);
+            goPage.studentName = studentList.getSelectionModel().getSelectedItem();
+            goPage.goPage("/view_history.fxml", tips);
         } else {
             checkTips.setTextFill(Color.RED);
             checkTips.setText("Check failed, Please select a student first");

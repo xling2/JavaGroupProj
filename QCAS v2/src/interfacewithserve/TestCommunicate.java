@@ -49,16 +49,16 @@ public class TestCommunicate implements CommunicateWithServe {
 		Date now = new Date();
 		HistoryRecord[] historyRecord = new HistoryRecord[x];
 		for (int i = 0; i < x; i++) {
-			historyRecord[i] = new HistoryRecord(x, new Date(now.getTime() + 100000 * x));
+			historyRecord[i] = new HistoryRecord(x+"", new Date(now.getTime() + 100000 * x));
 		}
 		return historyRecord;
 	}
 
 	@Override
-	public QuizOfStudent getQuizByQuizId(int quizId) {
+	public QuizOfStudent getQuizByQuizId(String quizId, String studentName) {
 		// TODO Auto-generated method stub
 		String student = "Shelly";
-		int questionNumber = quizId;
+		int questionNumber = 20;
 		Date startDate = new Date();
 		Date finishDate = new Date(startDate.getTime() + 100000);
 		Answer[] answerOfStudent = new Answer[questionNumber];

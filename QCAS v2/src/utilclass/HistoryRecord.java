@@ -4,9 +4,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class HistoryRecord {
-	public int quizId;
+	public String quizId;
 	public Date finishDate;
-	public HistoryRecord(int quizId, Date finishDate) {
+	public HistoryRecord(String quizId, Date finishDate) {
 		// TODO Auto-generated constructor stub
 		this.quizId = quizId;
 		this.finishDate = finishDate;

@@ -3,6 +3,8 @@ package utilclass;
 import java.util.Date;
 
 public class QuizOfStudent {
+	public int quizDifficulty;
+	public String quizId;
 	public String studentName;
 	public Question[] questionsOfQuiz;
 	public Answer[] answerOfStudent;

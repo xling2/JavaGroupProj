@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="200.0" prefWidth="300.0" style="-fx-background-color: rgb(51,51,51);" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="instructor.Delete_confirmController">
+   <children>
+      <Label layoutX="21.0" layoutY="75.0" text="Are you sure to delete the selected item?" textFill="WHITE" />
+      <Button fx:id="OKButton" layoutX="215.0" layoutY="148.0" mnemonicParsing="false" onAction="#OKButtonAction" prefHeight="27.0" prefWidth="61.0" style="-fx-background-color: rgb(187,0,0); -fx-text-fill: white;" text="OK" />
+      <Button fx:id="cancelButton" layoutX="127.0" layoutY="148.0" mnemonicParsing="false" onAction="#cancelButtonAction" style="-fx-background-color: rgb(187,0,0); -fx-text-fill: white;" text="Cancel" />
+   </children>
+</AnchorPane>

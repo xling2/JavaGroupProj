@@ -44,6 +44,11 @@ public class popUpPage {
         }
     }
 
+    public void close() {
+        Stage popUpWindow = (Stage) popUpScene.getWindow();
+        popUpWindow.close();
+    }
+
     public void closeToOpen(String FXMLName) {
         Stage popUpWindow = (Stage) popUpScene.getWindow();
 

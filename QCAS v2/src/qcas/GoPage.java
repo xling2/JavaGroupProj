@@ -10,8 +10,7 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import interfacewithserve.CommunicateWithServe;
-import interfacewithserve.TestCommunicate;
+import implcommunicate.TestCommunicate;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -32,7 +31,7 @@ public class GoPage {
 	public String userName;
 	public QuizOfStudent quizOfCurrentCheck;
 	public int numberOfCurrentQuiz = 1;
-	public CommunicateWithServe communicateWithServe = new TestCommunicate();
+	public TestCommunicate communicateWithServe = new TestCommunicate();
 	// some select date between pages
 	public int quizzsReviewSelectOfInstructor = -1;
 	public int quizDifficultyOfStudentSelect = -1;// 0-easy 1-Mediem 2-Hard 3-Mixed

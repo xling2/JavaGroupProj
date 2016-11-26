@@ -6,6 +6,7 @@
 package instructor;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -43,7 +44,7 @@ public class add_studentController implements Initializable {
             = FXCollections.observableArrayList();
 
     private popUpPage pup = new popUpPage();
-    
+
     @FXML
     private TableColumn<studentInTable, String> andrewIDColumn;
 
@@ -51,6 +52,10 @@ public class add_studentController implements Initializable {
     private void addAction(ActionEvent event) {
         popUpPage.setParentScene(backButton);
         pup.open("/add_student_input.fxml");
+        if (Add_student_inputController.addSuccess) {
+            // If the table doesn't renew, enable the method below
+            // studentData = FXCollections.observableArrayList(createStudentTableList(GoPage.getGoPage().communicateWithServe.getAllStudent()));
+        }
     }
 
     @FXML
@@ -68,20 +73,29 @@ public class add_studentController implements Initializable {
             popUpPage.setParentScene(backButton);
             pup.open("/delete_confirm.fxml");
             if (Delete_confirmController.enterPressed) {
-                studentListSelected.forEach(studentData::remove);
+                if (GoPage.getGoPage().communicateWithServe.deleteStudent(studentListSelected.get(0).getAndrewID())) {
+                    studentListSelected.forEach(studentData::remove);
+                }
             }
         }
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        studentData = FXCollections.observableArrayList(
-                new studentInTable("AAAA"), new studentInTable("BBBB"));
+
+        studentData = FXCollections.observableArrayList(createStudentTableList(GoPage.getGoPage().communicateWithServe.getAllStudent()));
 
         andrewIDColumn.setCellValueFactory(
                 new PropertyValueFactory<>("AndrewID"));
-        //studentTable.setItems(studentData);
         studentTable.setItems(studentData);
     }
 
+    private ArrayList<studentInTable> createStudentTableList(ArrayList<String> studentIDList) {
+
+        ArrayList<studentInTable> studentList = new ArrayList<>();
+        for (String s : studentIDList) {
+            studentList.add(0, new studentInTable(s));
+        }
+        return studentList;
+    }
 }

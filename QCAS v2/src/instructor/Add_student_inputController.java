@@ -17,6 +17,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import qcas.GoPage;
+import qcas.popUpPage;
 
 /**
  * FXML Controller class
@@ -33,12 +34,12 @@ public class Add_student_inputController implements Initializable {
 
     @FXML
     private TextField andrewIDTextField;
+    
+    protected static boolean addSuccess = false;
 
     @FXML
     private void addButtonAction(ActionEvent ae) {
-        String andrewID = "";
-        andrewID = andrewIDTextField.getText();
-        boolean addSuccess = false;
+        String andrewID = andrewIDTextField.getText();
         if (!andrewID.isEmpty()) {
             addSuccess = GoPage.getGoPage().communicateWithServe.addStudent(andrewID);
             if (addSuccess) {
@@ -49,6 +50,7 @@ public class Add_student_inputController implements Initializable {
                     msgLabel.setVisible(false);
                 });
                 visiblePause.play();
+                addSuccess = false;
             } else {
                 msgLabel.setText("Add failed.");
                 msgLabel.setTextFill(Color.rgb(187, 0, 0));
@@ -60,6 +62,7 @@ public class Add_student_inputController implements Initializable {
                 });
                 visiblePause.play();
             }
+            
         }
 
     }

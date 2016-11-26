@@ -11,66 +11,84 @@ import utilclass.HistoryRecord;
 import utilclass.Question;
 import utilclass.QuizOfStudent;
 
-public class TestCommunicate extends Communicate1 implements ICommunicate2{
+public class TestCommunicate extends Communicate1 implements ICommunicate2 {
 
-	@Override
-	public Question[] getRandomQuestionListOfQuiz(int quizDifficulty, int questionNumber) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public Question[] getRandomQuestionListOfQuiz(int quizDifficulty, int questionNumber) {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-	@Override
-	public void recordQuizResultToServe(QuizOfStudent quizResult) {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void recordQuizResultToServe(QuizOfStudent quizResult) {
+        // TODO Auto-generated method stub
 
-	@Override
-	public boolean login(int loginType, String userName, String password) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+    }
 
-	@Override
-	public Question[] importQuestionFromCSV(File CSVFile) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public boolean login(int loginType, String userName, String password) {
+        // TODO Auto-generated method stub
+        return false;
+    }
 
-	@Override
-	public HistoryRecord[] getHistoryRecordFromServeByStudentName(String studentName) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public Question[] importQuestionFromCSV(File CSVFile) {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-	@Override
-	public QuizOfStudent getQuizByQuizId(String quizId, String StudentName) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public HistoryRecord[] getHistoryRecordFromServeByStudentName(String studentName) {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-	@Override
-	public int[] getStudentAllRecordScoreByStudentName(String studentName) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public QuizOfStudent getQuizByQuizId(String quizId, String StudentName) {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-	@Override
-	public String[] getStudentRecordDateByStudentName(String studentName) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public int[] getStudentAllRecordScoreByStudentName(String studentName) {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-	@Override
-	public int[] getStudentAverageScoreOfThreeDifficultyByStudentName(String studentName) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public String[] getStudentRecordDateByStudentName(String studentName) {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-	@Override
-	public boolean addStudent(String text) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+    @Override
+    public int[] getStudentAverageScoreOfThreeDifficultyByStudentName(String studentName) {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
+    @Override
+    public boolean addStudent(String text) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    // Added by Ethan
+    @Override
+    public boolean deleteStudent(String andrewID) {
+        return false;
+    }
+
+    // Added by Ethan
+    @Override
+    public ArrayList<String> getAllStudent() {
+        // For testing purpose below
+        ArrayList<String> studentIDList = new ArrayList<>();
+        
+        studentIDList.add("AAA");
+        studentIDList.add("BBB");
+        studentIDList.add("CCC");
+
+        return studentIDList;
+    }
 }

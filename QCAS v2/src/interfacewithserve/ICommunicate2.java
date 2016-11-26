@@ -1,6 +1,7 @@
 package interfacewithserve;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import utilclass.HistoryRecord;
 import utilclass.Question;
@@ -33,5 +34,11 @@ public interface ICommunicate2 {
 	public abstract int[] getStudentAverageScoreOfThreeDifficultyByStudentName(String studentName);// [easy,medium,hard]
 
 	public abstract boolean addStudent(String text);
+        
+        // Added by Ethan
+        public abstract boolean deleteStudent(String andrewID);
+        
+        // Added by Ethan, return an ArrayList with all students' Andrew ID
+        public abstract ArrayList<String> getAllStudent();
 
 }

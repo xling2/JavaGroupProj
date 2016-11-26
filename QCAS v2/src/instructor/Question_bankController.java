@@ -35,7 +35,6 @@ public class Question_bankController implements Initializable {
     
     @FXML
     private TableView<Question> questionTable;
-
     
     private popUpPage pup = new popUpPage();
 

@@ -34,12 +34,6 @@ public class add_studentController implements Initializable {
     private Button add;
 
     @FXML
-    private TextArea text;
-
-    @FXML
-    private Label tips;
-
-    @FXML
     private Button backButton;
 
     @FXML
@@ -48,22 +42,15 @@ public class add_studentController implements Initializable {
     private ObservableList<studentInTable> studentData
             = FXCollections.observableArrayList();
 
+    private popUpPage pup = new popUpPage();
+    
     @FXML
     private TableColumn<studentInTable, String> andrewIDColumn;
 
-    private popUpPage pup = new popUpPage();
-
     @FXML
     private void addAction(ActionEvent event) {
-        if (GoPage.getGoPage().communicateWithServe.addStudent(text.getText())) {
-            tips.setTextFill(Color.GREEN);
-            tips.setText("Add Successed");
-            tips.setVisible(true);
-        } else {
-            tips.setTextFill(Color.RED);
-            tips.setText("Add Failed");
-            tips.setVisible(true);
-        }
+        popUpPage.setParentScene(backButton);
+        pup.open("/add_student_input.fxml");
     }
 
     @FXML
@@ -77,7 +64,7 @@ public class add_studentController implements Initializable {
         ObservableList<studentInTable> studentListSelected;
 
         studentListSelected = studentTable.getSelectionModel().getSelectedItems();
-        if (studentListSelected != null) {
+        if (!studentListSelected.isEmpty()) {
             popUpPage.setParentScene(backButton);
             pup.open("/delete_confirm.fxml");
             if (Delete_confirmController.enterPressed) {

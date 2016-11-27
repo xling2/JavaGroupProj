@@ -68,6 +68,7 @@ public class GoPage {
 			// scene.getStylesheets().add("./src/javafxapplication1/no-divider.css");
 			Stage stage = (Stage) node.getScene().getWindow();
 			stage.setScene(scene);
+                        stage.setResizable(false);
 			stage.show();
 		} catch (IOException ex) {
 			Logger.getLogger(GoPage.class.getName()).log(Level.SEVERE, null, ex);

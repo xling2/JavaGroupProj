@@ -69,7 +69,7 @@ public class Question_bankController implements Initializable {
                 createQuestionTableList(
                         GoPage.getGoPage().communicateWithServe.getAllQuestions()));
         questionTable.setItems(questionData);
-        
+
     }
 
     @FXML
@@ -160,12 +160,20 @@ public class Question_bankController implements Initializable {
     private ArrayList<TableUse> createQuestionTableList(Question[] questionList) {
         ArrayList<TableUse> questionTableList = new ArrayList<>();
         for (Question q : questionList) {
+            String description = new String();
+
+            description = q.toString().split("\n\n")[1];
+
+            if (q.questionType < 2) {
+                description += "\n" + q.toString().split("\n\n")[2];
+            }
+
             questionTableList.add(0,
                     new TableUse(q.questionID,
                             Question.TYPENAME[q.questionType],
                             Question.DIFFICULTY[q.questionDifficult],
                             q.correctAnswer,
-                            q.toString().split("\n\n")[1] + "\n" + q.toString().split("\n\n")[2]));
+                            description));
         }
         return questionTableList;
     }

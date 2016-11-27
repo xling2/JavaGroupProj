@@ -269,7 +269,48 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
 
     @Override
     public Question[] getAllQuestions() {
-        return questions;
+        ArrayList<Question> allQuestion = new ArrayList();
+        String[] choice = new String[4];
+        String answer = null;
+        StringToInt sti = new StringToInt();
+        try (Connection con = DriverManager.getConnection(quizUrl, quizUsername, quizPassword)) {
+            Statement stmt = con.createStatement();
+            String sql = "select * from Question";
+            ResultSet rs = stmt.executeQuery(sql);
+
+            while (rs.next()) {
+
+                if (rs.getString("type").equals("MC") | rs.getString("type").equals("MA")) {
+                    for (int i = 0; i < 4; i++) {
+
+                        choice[i] = rs.getString(2 + 2 * (i + 1));
+                    }
+                    for (int i = 0; i < 4; i++) {
+                        if (rs.getString(2 * (i + 1) + 3).equals("correct")) {
+                            answer = answer + rs.getString(2 + 2 * (i + 1));
+                        }
+                    }
+
+                    Question ques = new Question(sti.toIntType(rs.getString("type")),
+                            rs.getInt("number"), sti.toIntDiff(rs.getString("difficulty")),
+                            rs.getString("description"), choice, answer);
+                    allQuestion.add(ques);
+                } else {
+                    Question ques = new Question(sti.toIntType(rs.getString("type")),
+                            rs.getInt("number"), sti.toIntDiff(rs.getString("difficulty")),
+                            rs.getString("description"), null, rs.getString("answer"));
+                    allQuestion.add(ques);
+                }
+
+            }
+        } catch (SQLException se) {
+            System.out.println("Exception: " + se);
+        }
+        Question[] question = new Question[allQuestion.size()];
+        for (int i = 0; i < allQuestion.size(); i++) {
+            question[i] = allQuestion.get(i);
+        }
+        return question;
     }
 
     @Override
@@ -488,10 +529,10 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
     @Override
     public boolean addStudent(String text) {
         createTable();
-        if(!checkID(text)){
-        createPassword();
-        sendMail(text, passW);
-        insertStudent(encryptPassW(), text);
+        if (!checkID(text)) {
+            createPassword();
+            sendMail(text, passW);
+            insertStudent(encryptPassW(), text);
         }
         boolean success = true;
         return success;
@@ -513,15 +554,16 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
             System.out.println("Exception: " + se);
         }
     }
-    
-    private boolean checkID(String id){
-      ArrayList allStudent = getAllStudent();
-      boolean exist = false;
-      for(int i = 0; i < allStudent.size(); i++){
-         if(allStudent.get(i).toString().equals(id)) 
-          exist = true;
-      }
-      return exist;
+
+    private boolean checkID(String id) {
+        ArrayList allStudent = getAllStudent();
+        boolean exist = false;
+        for (int i = 0; i < allStudent.size(); i++) {
+            if (allStudent.get(i).toString().equals(id)) {
+                exist = true;
+            }
+        }
+        return exist;
     }
 
     private void createPassword() {

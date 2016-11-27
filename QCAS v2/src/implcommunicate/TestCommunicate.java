@@ -46,7 +46,7 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
         IntToString its = new IntToString();
         Question[] question = new Question[questionNumber];
         String[] choice = new String[4];
-        String answer = null;
+        String answer = "";
         ArrayList<Question> questionBank = new ArrayList();
         StringToInt sti = new StringToInt();
         try (Connection con = DriverManager.getConnection(quizUrl,
@@ -85,6 +85,7 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
                             rs.getString("description"), null, rs.getString("answer"));
                     questionBank.add(ques);
                 }
+                answer = "";
 
             }
         } catch (SQLException se) {
@@ -271,7 +272,7 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
     public Question[] getAllQuestion(){
         ArrayList<Question> allQuestion = new ArrayList();
         String[] choice = new String[4];
-        String answer = null;
+        String answer = "";
         StringToInt sti = new StringToInt();
         try (Connection con = DriverManager.getConnection(quizUrl, quizUsername, quizPassword)) {
             Statement stmt = con.createStatement();
@@ -301,8 +302,8 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
                             rs.getString("description"), null, rs.getString("answer"));
                     allQuestion.add(ques);
                 }
-
-            
+                answer = "";
+             
             }
         } catch (SQLException se) {
             System.out.println("Exception: " + se);

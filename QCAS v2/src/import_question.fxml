@@ -15,7 +15,7 @@
          </font>
       </Label>
       <TextField fx:id="filePath" editable="false" layoutX="30.0" layoutY="124.0" prefHeight="27.0" prefWidth="261.0" promptText="......" text="Click to choose a csv file" />
-      <Button layoutX="315.0" layoutY="124.0" mnemonicParsing="false" onAction="#importCSV" text="Import" />
+      <Button fx:id="importButton" layoutX="315.0" layoutY="124.0" mnemonicParsing="false" onAction="#importCSV" text="Import" />
       <Label fx:id="successedTips" layoutX="31.0" layoutY="169.0" text="Import successed" textFill="#98ff98" visible="false" />
       <Label fx:id="failedTips" layoutX="31.0" layoutY="169.0" text="Import Failed" textFill="RED" visible="false" />
       <Label fx:id="noFileTips" layoutX="32.0" layoutY="169.0" text="Please select a CSV file" textFill="RED" visible="false" />

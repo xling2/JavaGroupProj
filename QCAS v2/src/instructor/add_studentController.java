@@ -75,7 +75,7 @@ public class add_studentController implements Initializable {
             if (Delete_confirmController.enterPressed) {
                 if (GoPage.getGoPage().communicateWithServe.deleteStudent(studentListSelected.get(0).getAndrewID())) {
                     studentListSelected.forEach(studentData::remove);
-                }
+                } 
             }
         }
     }

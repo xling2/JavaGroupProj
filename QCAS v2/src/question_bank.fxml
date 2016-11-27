@@ -35,8 +35,8 @@
             <Button fx:id="importButton" layoutX="249.0" layoutY="14.0" mnemonicParsing="false" onAction="#importButtonAction" prefHeight="33.0" prefWidth="131.0" stylesheets="@no-divider.css" text="Import questions" />
             <TableView fx:id="questionTable" layoutX="19.0" layoutY="60.0" prefHeight="325.0" prefWidth="364.0">
                <columns>
-                  <TableColumn fx:id="difficultyColumn" editable="false" maxWidth="64.0" minWidth="64.0" prefWidth="64.0" resizable="false" sortable="false" text="Difficulty" />
-                  <TableColumn fx:id="typeColumn" editable="false" maxWidth="39.0" minWidth="39.0" prefWidth="39.0" resizable="false" sortable="false" text="Type" />
+                  <TableColumn fx:id="difficultyColumn" editable="false" maxWidth="64.0" minWidth="64.0" prefWidth="64.0" resizable="false" text="Difficulty" />
+                  <TableColumn fx:id="typeColumn" editable="false" maxWidth="39.0" minWidth="39.0" prefWidth="39.0" resizable="false" text="Type" />
                   <TableColumn fx:id="descriptionColumn" editable="false" maxWidth="199.0" minWidth="168.0" prefWidth="199.0" resizable="false" sortable="false" text="Description" />
                   <TableColumn fx:id="answerColumn" editable="false" maxWidth="92.0" minWidth="61.0" prefWidth="61.0" resizable="false" sortable="false" text="Answer" />
                </columns>

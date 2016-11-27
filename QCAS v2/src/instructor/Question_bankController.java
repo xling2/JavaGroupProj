@@ -19,8 +19,10 @@ import utilclass.Question;
 import javafx.beans.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.text.Text;
 import utilclass.TableUse;
 
 /**
@@ -94,9 +96,11 @@ public class Question_bankController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-        questionData = FXCollections.observableArrayList(
-                createQuestionTableList(
-                        GoPage.getGoPage().communicateWithServe.getAllQuestion()));
+        ArrayList<TableUse> questionTableList = createQuestionTableList(
+                GoPage.getGoPage().communicateWithServe.getAllQuestion());
+
+        questionData = FXCollections.observableArrayList(questionTableList);
+
         difficultyColumn.setCellValueFactory(
                 new PropertyValueFactory<>("difficulty"));
         typeColumn.setCellValueFactory(
@@ -106,6 +110,53 @@ public class Question_bankController implements Initializable {
         answerColumn.setCellValueFactory(
                 new PropertyValueFactory<>("answer"));
         questionTable.setItems(questionData);
+
+        descriptionColumn.setCellFactory(param -> {
+            return new TableCell<TableUse, String>() {
+                @Override
+                protected void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+
+                    if (item == null || empty) {
+                        setText(null);
+                        setStyle("");
+                    } else {
+                        Text text = new Text(item);
+                        text.setStyle("-fx-padding: 5px 30px 5px 5px;"
+                                + "-fx-text-alignment:justify;");
+                        text.setWrappingWidth(param.getPrefWidth() - 35);
+                        System.out.println(text.getLayoutBounds().getHeight() + 10);//117
+                        //setPrefHeight(text.getLayoutBounds().getHeight()+10); -----> This is not working somehow
+                        setPrefHeight(117);
+                        setGraphic(text);
+                    }
+                }
+            };
+        });
+        
+        answerColumn.setCellFactory(param -> {
+            return new TableCell<TableUse, String>() {
+                @Override
+                protected void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+
+                    if (item == null || empty) {
+                        setText(null);
+                        setStyle("");
+                    } else {
+                        Text text = new Text(item);
+                        text.setStyle("-fx-padding: 5px 30px 5px 5px;"
+                                + "-fx-text-alignment:justify;");
+                        text.setWrappingWidth(param.getPrefWidth() - 35);
+                        System.out.println(text.getLayoutBounds().getHeight() + 10);//117
+                        //setPrefHeight(text.getLayoutBounds().getHeight()+10); -----> This is not working somehow
+                        setPrefHeight(117);
+                        setGraphic(text);
+                    }
+                }
+            };
+        });
+
     }
 
     // Convert TableUse to ObservableArrayList

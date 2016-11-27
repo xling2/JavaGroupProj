@@ -9,6 +9,7 @@
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.Cursor?>
 
 <SplitPane id="SplitPane" dividerPositions="0.5" maxHeight="400.0" maxWidth="600.0" minHeight="400.0" minWidth="600.0" orientation="VERTICAL" prefHeight="400.0" prefWidth="600.0" stylesheets="@no-divider.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="instructor.Instructer_panelController">
    <items>
@@ -27,22 +28,25 @@
                   <Font name="Arial Rounded MT Bold" size="28.0" />
                </font>
             </Label>
-            <Button fx:id="logout" layoutX="494.0" layoutY="55.0" mnemonicParsing="false" onAction="#logoutAction" style="-fx-background-color: white; -fx-text-fill: rgb(187,0,0);" text="Log out" AnchorPane.rightAnchor="40.0" />
+            <Button fx:id="logout" layoutX="494.0" layoutY="55.0" mnemonicParsing="false" onAction="#logoutAction" stylesheets="@white-button-on-hover.css" text="Log out" AnchorPane.rightAnchor="40.0">
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor></Button>
          </children>
       </AnchorPane>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: rgb(51,51,51);">
          <children>
-            <Button fx:id="add" layoutX="36.0" layoutY="33.0" mnemonicParsing="false" onAction="#addAction" prefHeight="69.0" prefWidth="158.0" style="-fx-background-color: rgb(51,51,51); -fx-border-color: white; -fx-border-radius: 10; -fx-text-fill: white;" text="View students">
+            <Button fx:id="add" layoutX="36.0" layoutY="33.0" mnemonicParsing="false" onAction="#addAction" prefHeight="69.0" prefWidth="158.0" style="-fx-background-insets: 0,6;" stylesheets="@black-button-on-hover.css" text="View students">
                <font>
                   <Font size="17.0" />
                </font>
             </Button>
-            <Button fx:id="review" layoutX="408.0" layoutY="33.0" mnemonicParsing="false" onAction="#reviewAciton" prefHeight="69.0" prefWidth="158.0" style="-fx-background-color: rgb(51,51,51); -fx-border-color: white; -fx-border-radius: 10; -fx-text-fill: white;" text="Review quizzes">
+            <Button fx:id="review" layoutX="408.0" layoutY="33.0" mnemonicParsing="false" onAction="#reviewAciton" prefHeight="69.0" prefWidth="158.0" stylesheets="@black-button-on-hover.css" text="Review quizzes">
                <font>
                   <Font size="17.0" />
                </font>
             </Button>
-            <Button fx:id="importquestions" layoutX="220.0" layoutY="33.0" mnemonicParsing="false" onAction="#importAction" prefHeight="69.0" prefWidth="158.0" style="-fx-background-color: rgb(51,51,51); -fx-border-color: white; -fx-border-radius: 10; -fx-text-fill: white;" text="Question bank">
+            <Button fx:id="importquestions" layoutX="220.0" layoutY="33.0" mnemonicParsing="false" onAction="#importAction" prefHeight="69.0" prefWidth="158.0" stylesheets="@black-button-on-hover.css" text="Question bank">
                <font>
                   <Font size="17.0" />
                </font>

@@ -45,7 +45,7 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
     public Question[] getRandomQuestionListOfQuiz(int quizDifficulty, int questionNumber) {
         IntToString its = new IntToString();
         Question[] question = new Question[questionNumber];
-        String[] choice = new String[4];
+        
         String answer = "";
         ArrayList<Question> questionBank = new ArrayList();
         StringToInt sti = new StringToInt();
@@ -63,7 +63,7 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
 
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
-
+                String[] choice = new String[4];
                 if (rs.getString("type").equals("MC") | rs.getString("type").equals("MA")) {
                     for (int i = 0; i < 4; i++) {
 
@@ -192,6 +192,7 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
             ResultSet rs = dbmd.getTables(null, null, "Question".toUpperCase(), null);
             if (!rs.next()) {
                 // create the table question
+                //stmt.execute("drop table Question");
                 stmt.execute("create table Question(number int, type varchar(40), "
                         + "difficulty varchar(40), description long varchar, "
                         + "choice1 varchar(255), correct1 varchar(40), "
@@ -205,8 +206,7 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
         }
     }
 
-    public Question[] insertQuestion() {
-　　　
+    public Question[] insertQuestion(){
         ArrayList<Question> ques = new ArrayList();
         StringToInt sti = new StringToInt();
         try (Connection con = DriverManager.getConnection(quizUrl,
@@ -269,9 +269,9 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
     }
     
     @Override
-    public Question[] getAllQuestion(){
+    public Question[] getAllQuestions(){
         ArrayList<Question> allQuestion = new ArrayList();
-        String[] choice = new String[4];
+       
         String answer = "";
         StringToInt sti = new StringToInt();
         try (Connection con = DriverManager.getConnection(quizUrl, quizUsername, quizPassword)) {
@@ -280,7 +280,7 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
             ResultSet rs = stmt.executeQuery(sql);
             
             while (rs.next()) {
-
+                 String[] choice = new String[4];
                 if (rs.getString("type").equals("MC") | rs.getString("type").equals("MA")) {
                     for (int i = 0; i < 4; i++) {
 

@@ -67,11 +67,11 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
                 if (rs.getString("type").equals("MC") | rs.getString("type").equals("MA")) {
                     for (int i = 0; i < 4; i++) {
 
-                        choice[i] = rs.getString(2 + 2 * (i + 1));
+                        choice[i] = rs.getString(3 + 2 * (i + 1));
                     }
                     for (int i = 0; i < 4; i++) {
-                        if (rs.getString(2 * (i + 1) + 3).equals("correct")) {
-                            answer = answer + rs.getString(2 + 2 * (i + 1));
+                        if (rs.getString(2 * (i + 1) + 4).equals("correct")) {
+                            answer = answer + rs.getString(3 + 2 * (i + 1));
                         }
                     }
 
@@ -283,11 +283,11 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
                 if (rs.getString("type").equals("MC") | rs.getString("type").equals("MA")) {
                     for (int i = 0; i < 4; i++) {
 
-                        choice[i] = rs.getString(2 + 2 * (i + 1));
+                        choice[i] = rs.getString(3 + 2 * (i + 1));
                     }
                     for (int i = 0; i < 4; i++) {
-                        if (rs.getString(2 * (i + 1) + 3).equals("correct")) {
-                            answer = answer + rs.getString(2 + 2 * (i + 1));
+                        if (rs.getString(2 * (i + 1) + 4).equals("correct")) {
+                            answer = answer + rs.getString(3 + 2 * (i + 1));
                         }
                     }
 

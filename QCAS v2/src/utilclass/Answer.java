@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class Answer {
 	static final public String[] CHOICENAME = new String[] { "A", "B", "C", "D" };
 	public int questionID;
-	public int questionType;
+	public int questionType = 100;
 	public boolean isAnswer = false;
 	public int singleChoice;
 	public ArrayList<Integer> multipleChoices = new ArrayList<>();
@@ -62,25 +62,27 @@ public class Answer {
 	@Override
 	public String toString() {
 		String s = "";
-		switch (questionType) {
-		case 0:
-			for (Integer multipleChoice : multipleChoices) {
-				s += CHOICENAME[multipleChoice - 1];
-			}
-			break;
-		case 1:
-			s += CHOICENAME[singleChoice - 1];
-			break;
-		case 2:
-			s += trueOrFalse;
-			break;
-		case 3:
-			s += blank;
-			break;
-		default:
-			break;
-		}
-		return s;
-	}
+        if(isAnswer){
+            switch (questionType) {
+            case 0:
+                for (Integer multipleChoice : multipleChoices) {
+                    s += CHOICENAME[multipleChoice - 1];
+                }
+                break;
+            case 1:
+                s += CHOICENAME[singleChoice - 1];
+                break;
+            case 2:
+                s += trueOrFalse;
+                break;
+            case 3:
+                s += blank;
+                break;
+            default:
+                break;
+            }
+        }
+        return s;
+    }
 
 }

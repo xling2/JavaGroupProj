@@ -103,15 +103,4 @@ public class Communicate1 implements ICommunicate1 {
         return null;
     }
 
-    @Override
-    public Question[] getAllQuestion() {
-        // For test purpose only
-        String[] choices = new String[]{"a", "b", "c", "d"};
-        Question q1 = new Question(1, 1, 1, "content here content here content here content here content here content here", choices, "a");
-        Question q2 = new Question(0, 0, 2, "content here too", choices, "b");
-
-        Question[] test = new Question[]{q1, q2};
-        
-        return test;
-    }
 }

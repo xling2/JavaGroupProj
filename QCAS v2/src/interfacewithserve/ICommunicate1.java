@@ -37,8 +37,5 @@ public interface ICommunicate1 {
 
 	public abstract QuizOfStudent getQuizByStudentNameAndTimeType(String studentName, int timeType);// timeType:0-LastMouth,1:Last
 	// Quarter,2:Last
-	// Year
-        
-        // Added by Ethan
-        public abstract Question[] getAllQuestion();
+	// Year        
 }

@@ -67,7 +67,7 @@ public class Question_bankController implements Initializable {
         // If table doesn't renew, enable the following
         questionData = FXCollections.observableArrayList(
                 createQuestionTableList(
-                        GoPage.getGoPage().communicateWithServe.getAllQuestion()));
+                        GoPage.getGoPage().communicateWithServe.getAllQuestions()));
         questionTable.setItems(questionData);
         
     }
@@ -99,7 +99,7 @@ public class Question_bankController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
 
         ArrayList<TableUse> questionTableList = createQuestionTableList(
-                GoPage.getGoPage().communicateWithServe.getAllQuestion());
+                GoPage.getGoPage().communicateWithServe.getAllQuestions());
 
         questionData = FXCollections.observableArrayList(questionTableList);
 

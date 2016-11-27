@@ -26,13 +26,13 @@
                   <Insets />
                </opaqueInsets>
             </Label>
-            <Button fx:id="backButton" layoutX="76.0" layoutY="317.0" mnemonicParsing="false" onAction="#backButtonAction" style="-fx-background-color: white; -fx-text-fill: rgb(187,0,0);" text="Back" textFill="WHITE" />
+            <Button fx:id="backButton" layoutX="76.0" layoutY="317.0" mnemonicParsing="false" onAction="#backButtonAction" stylesheets="@white-button-on-hover.css" text="Back" textFill="WHITE" />
          </children>
       </AnchorPane>
       <AnchorPane prefHeight="400.0" prefWidth="341.0" style="-fx-background-color: rgb(51,51,51);">
          <children>
-            <Button fx:id="deleteButton" layoutX="21.0" layoutY="14.0" mnemonicParsing="false" onAction="#deleteAction" prefHeight="33.0" prefWidth="65.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-radius: 3;" stylesheets="@no-divider.css" text="Delete" />
-            <Button fx:id="importButton" layoutX="249.0" layoutY="14.0" mnemonicParsing="false" onAction="#importButtonAction" prefHeight="33.0" prefWidth="131.0" stylesheets="@no-divider.css" text="Import questions" />
+            <Button fx:id="deleteButton" layoutX="21.0" layoutY="14.0" mnemonicParsing="false" onAction="#deleteAction" prefHeight="33.0" prefWidth="65.0" stylesheets="@small-black-button-on-hover.css" text="Delete" />
+            <Button fx:id="importButton" layoutX="249.0" layoutY="14.0" mnemonicParsing="false" onAction="#importButtonAction" prefHeight="33.0" prefWidth="131.0" stylesheets="@red-button-on-hover.css" text="Import questions" />
             <TableView fx:id="questionTable" layoutX="19.0" layoutY="60.0" prefHeight="325.0" prefWidth="364.0">
                <columns>
                   <TableColumn fx:id="difficultyColumn" editable="false" maxWidth="64.0" minWidth="64.0" prefWidth="64.0" resizable="false" text="Difficulty" />

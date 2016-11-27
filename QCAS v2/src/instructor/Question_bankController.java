@@ -65,9 +65,11 @@ public class Question_bankController implements Initializable {
         popUpPage.setParentScene(importButton);
         pup.open("/import_question.fxml");
         // If table doesn't renew, enable the following
-//        questionData = FXCollections.observableArrayList(
-//                createQuestionTableList(
-//                        GoPage.getGoPage().communicateWithServe.getAllQuestion()));
+        questionData = FXCollections.observableArrayList(
+                createQuestionTableList(
+                        GoPage.getGoPage().communicateWithServe.getAllQuestion()));
+        questionTable.setItems(questionData);
+        
     }
 
     @FXML

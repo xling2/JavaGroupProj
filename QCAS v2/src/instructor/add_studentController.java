@@ -54,8 +54,10 @@ public class add_studentController implements Initializable {
         pup.open("/add_student_input.fxml");
         if (Add_student_inputController.addSuccess) {
             // If the table doesn't renew, enable the method below
-            // studentData = FXCollections.observableArrayList(createStudentTableList(GoPage.getGoPage().communicateWithServe.getAllStudent()));
+            studentData = FXCollections.observableArrayList(createStudentTableList(GoPage.getGoPage().communicateWithServe.getAllStudent()));
+            studentTable.setItems(studentData);
         }
+        
     }
 
     @FXML
@@ -75,7 +77,7 @@ public class add_studentController implements Initializable {
             if (Delete_confirmController.enterPressed) {
                 if (GoPage.getGoPage().communicateWithServe.deleteStudent(studentListSelected.get(0).getAndrewID())) {
                     studentListSelected.forEach(studentData::remove);
-                } 
+                }
             }
         }
     }

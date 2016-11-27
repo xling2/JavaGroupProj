@@ -61,7 +61,7 @@
       <Label layoutX="28.0" layoutY="238.0" prefHeight="28.0" prefWidth="358.0" text="Answers to incorrectly answered questions are mark in" textFill="WHITE" />
       <Label layoutX="322.0" layoutY="238.0" prefHeight="28.0" prefWidth="23.0" text="red" textFill="RED" />
       <Label layoutX="345.0" layoutY="238.0" prefHeight="28.0" prefWidth="23.0" text="." />
-      <Button fx:id="export" layoutX="157.0" layoutY="763.0" mnemonicParsing="false" onAction="#export" stylesheets="@no-divider.css" text="Export toPDF" />
+      <Button fx:id="export" layoutX="308.0" layoutY="50.0" mnemonicParsing="false" onAction="#export" stylesheets="@red-button-on-hover.css" text="Export to PDF" />
       <Label layoutX="23.0" layoutY="523.0" text="Performance vs. Difficulty" textFill="WHITE">
          <font>
             <Font name="System Bold" size="23.0" />
@@ -76,7 +76,7 @@
         </xAxis>
       </BarChart>
       <Label fx:id="questionLabel" alignment="TOP_LEFT" layoutX="28.0" layoutY="39.0" prefHeight="197.0" prefWidth="385.0" style="-fx-background-color: rgb(51,51,51); -fx-border-color: white; -fx-border-radius: 5;" textFill="WHITE" visible="false" wrapText="true" />
-      <Button fx:id="hidebtn" layoutX="367.0" layoutY="204.0" mnemonicParsing="false" onAction="#hideAction" stylesheets="@no-divider.css" text="hide" />
+      <Button fx:id="hidebtn" layoutX="367.0" layoutY="204.0" mnemonicParsing="false" onAction="#hideAction" stylesheets="@small-black-button-on-hover.css" text="hide" />
       <TableView fx:id="table" layoutX="24.0" layoutY="266.0" prefHeight="236.0" prefWidth="394.0" style="-fx-background-color: rgb(51,51,51);">
         <columns>
           <TableColumn fx:id="number" prefWidth="62.0" text="No." />

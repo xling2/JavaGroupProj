@@ -9,7 +9,7 @@
 <AnchorPane id="AnchorPane" prefHeight="100.0" prefWidth="300.0" style="-fx-background-color: rgb(51,51,51);" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="instructor.Add_student_inputController">
    <children>
       <TextField fx:id="andrewIDTextField" layoutX="29.0" layoutY="26.0" prefHeight="27.0" prefWidth="164.0" promptText="Input Andrew ID" style="-fx-background-color: white;" />
-      <Button fx:id="addButton" layoutX="222.0" layoutY="27.0" mnemonicParsing="false" onAction="#addButtonAction" style="-fx-background-color: rgb(187,0,0); -fx-text-fill: white;" text="Add" />
+      <Button fx:id="addButton" layoutX="222.0" layoutY="27.0" mnemonicParsing="false" onAction="#addButtonAction" stylesheets="@red-button-on-hover.css" text="Add" />
       <Label fx:id="msgLabel" layoutX="27.0" layoutY="66.0" text="Add success, email with password sent." textFill="#7dffe3" />
    </children>
 </AnchorPane>

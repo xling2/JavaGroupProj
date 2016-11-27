@@ -27,17 +27,17 @@
                   <Font name="Arial Rounded MT Bold" size="28.0" />
                </font>
             </Label>
-            <Button fx:id="logout" layoutX="494.0" layoutY="55.0" mnemonicParsing="false" onAction="#logoutAction" style="-fx-background-color: white; -fx-text-fill: rgb(187,0,0);" text="Log out" AnchorPane.rightAnchor="40.0" />
+            <Button fx:id="logout" layoutX="494.0" layoutY="55.0" mnemonicParsing="false" onAction="#logoutAction" stylesheets="@white-button-on-hover.css" text="Log out" AnchorPane.rightAnchor="40.0" />
          </children>
       </AnchorPane>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: rgb(51,51,51);">
          <children>
-            <Button fx:id="quiz" layoutX="82.0" layoutY="33.0" mnemonicParsing="false" onAction="#quiz" prefHeight="69.0" prefWidth="143.0" style="-fx-background-color: rgb(51,51,51); -fx-border-color: white; -fx-border-radius: 10; -fx-text-fill: white;" text="Take a quiz!">
+            <Button fx:id="quiz" layoutX="82.0" layoutY="33.0" mnemonicParsing="false" onAction="#quiz" prefHeight="69.0" prefWidth="143.0" stylesheets="@large-black-button-on-hover.css" text="Take a quiz!">
                <font>
                   <Font size="17.0" />
                </font>
             </Button>
-            <Button fx:id="viewHistory" layoutX="376.0" layoutY="33.0" mnemonicParsing="false" onAction="#viewHistory" prefHeight="69.0" prefWidth="143.0" style="-fx-background-color: rgb(51,51,51); -fx-border-color: white; -fx-border-radius: 10; -fx-text-fill: white;" text="View history">
+            <Button fx:id="viewHistory" layoutX="376.0" layoutY="33.0" mnemonicParsing="false" onAction="#viewHistory" prefHeight="69.0" prefWidth="143.0" stylesheets="@large-black-button-on-hover.css" text="View history">
                <font>
                   <Font size="17.0" />
                </font>

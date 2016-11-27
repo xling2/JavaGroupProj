@@ -9,7 +9,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="200.0" prefWidth="350.0" style="-fx-background-color: rgb(51,51,51);" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="quiz.quiz_settingController">
    <children>
-      <Button fx:id="startQuizButton" layoutX="146.0" layoutY="159.0" mnemonicParsing="false" onAction="#start" style="-fx-background-color: rgb(150,0,0); -fx-text-fill: white;" text="Start!" />
+      <Button fx:id="startQuizButton" layoutX="146.0" layoutY="159.0" mnemonicParsing="false" onAction="#start" stylesheets="@red-button-on-hover.css" text="Start!" />
       <Label layoutX="23.0" layoutY="44.0" text="Number of questions" textFill="WHITE">
          <font>
             <Font size="15.0" />

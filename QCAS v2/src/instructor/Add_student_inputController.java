@@ -35,7 +35,7 @@ public class Add_student_inputController implements Initializable {
     @FXML
     private TextField andrewIDTextField;
     
-    protected static boolean addSuccess = false;
+    protected static boolean addSuccess;
 
     @FXML
     private void addButtonAction(ActionEvent ae) {
@@ -50,7 +50,6 @@ public class Add_student_inputController implements Initializable {
                     msgLabel.setVisible(false);
                 });
                 visiblePause.play();
-                addSuccess = false;
             } else {
                 msgLabel.setText("Add failed.");
                 msgLabel.setTextFill(Color.rgb(187, 0, 0));
@@ -69,6 +68,7 @@ public class Add_student_inputController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        addSuccess = false;
         msgLabel.setVisible(false);
     }
 }

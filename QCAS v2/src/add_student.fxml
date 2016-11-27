@@ -27,7 +27,7 @@
                   <Insets />
                </opaqueInsets>
             </Label>
-            <Button fx:id="backButton" layoutX="76.0" layoutY="317.0" mnemonicParsing="false" onAction="#backButtonAction" style="-fx-background-color: white; -fx-text-fill: rgb(187,0,0);" text="Back" textFill="#bc0000" />
+            <Button fx:id="backButton" layoutX="76.0" layoutY="317.0" mnemonicParsing="false" onAction="#backButtonAction" stylesheets="@white-button-on-hover.css" text="Back" />
          </children>
       </AnchorPane>
       <AnchorPane prefHeight="400.0" prefWidth="341.0" style="-fx-background-color: rgb(51,51,51);">

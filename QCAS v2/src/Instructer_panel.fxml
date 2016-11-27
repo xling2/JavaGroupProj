@@ -36,17 +36,17 @@
       </AnchorPane>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: rgb(51,51,51);">
          <children>
-            <Button fx:id="add" layoutX="36.0" layoutY="33.0" mnemonicParsing="false" onAction="#addAction" prefHeight="69.0" prefWidth="158.0" style="-fx-background-insets: 0,6;" stylesheets="@black-button-on-hover.css" text="View students">
+            <Button fx:id="add" layoutX="36.0" layoutY="33.0" mnemonicParsing="false" onAction="#addAction" prefHeight="69.0" prefWidth="158.0" style="-fx-background-insets: 0,6;" stylesheets="@large-black-button-on-hover.css" text="View students">
                <font>
                   <Font size="17.0" />
                </font>
             </Button>
-            <Button fx:id="review" layoutX="408.0" layoutY="33.0" mnemonicParsing="false" onAction="#reviewAciton" prefHeight="69.0" prefWidth="158.0" stylesheets="@black-button-on-hover.css" text="Review quizzes">
+            <Button fx:id="review" layoutX="408.0" layoutY="33.0" mnemonicParsing="false" onAction="#reviewAciton" prefHeight="69.0" prefWidth="158.0" stylesheets="@large-black-button-on-hover.css" text="Review quizzes">
                <font>
                   <Font size="17.0" />
                </font>
             </Button>
-            <Button fx:id="importquestions" layoutX="220.0" layoutY="33.0" mnemonicParsing="false" onAction="#importAction" prefHeight="69.0" prefWidth="158.0" stylesheets="@black-button-on-hover.css" text="Question bank">
+            <Button fx:id="importquestions" layoutX="220.0" layoutY="33.0" mnemonicParsing="false" onAction="#importAction" prefHeight="69.0" prefWidth="158.0" stylesheets="@large-black-button-on-hover.css" text="Question bank">
                <font>
                   <Font size="17.0" />
                </font>

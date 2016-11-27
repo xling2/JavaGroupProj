@@ -215,9 +215,17 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
             CSVReader reader = new CSVReader(new FileReader(csvFile));
             String[] line;
             int count = 1;
+            Question[] questionBank = getAllQuestions();
+            boolean exist = false;
             while ((line = reader.readNext()) != null) {
                 // import data from file into database
                 // import MA and MC
+                for(Question q: questionBank){
+                    count ++;
+                    if(line[2].equals(q.content))
+                        exist = true;
+                }
+                if(!exist){
                 if (line[0].equals("MA") | line[0].equals("MC")) {
                     String sql = "insert into Question values (" + count + ", '";
                     for (int i = 0; i < line.length - 1; i++) {
@@ -252,6 +260,7 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
                     ques.add(question);
                 }
                 count++;
+            }
             }
         } catch (SQLException se) {
             System.out.println("Exception: " + se);

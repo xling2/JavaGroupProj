@@ -125,15 +125,13 @@ public class Question_bankController implements Initializable {
                         text.setStyle("-fx-padding: 5px 30px 5px 5px;"
                                 + "-fx-text-alignment:justify;");
                         text.setWrappingWidth(param.getPrefWidth() - 35);
-                        System.out.println(text.getLayoutBounds().getHeight() + 10);//117
-                        //setPrefHeight(text.getLayoutBounds().getHeight()+10); -----> This is not working somehow
                         setPrefHeight(117);
                         setGraphic(text);
                     }
                 }
             };
         });
-        
+
         answerColumn.setCellFactory(param -> {
             return new TableCell<TableUse, String>() {
                 @Override
@@ -147,9 +145,6 @@ public class Question_bankController implements Initializable {
                         Text text = new Text(item);
                         text.setStyle("-fx-padding: 5px 30px 5px 5px;"
                                 + "-fx-text-alignment:justify;");
-                        text.setWrappingWidth(param.getPrefWidth() - 35);
-                        System.out.println(text.getLayoutBounds().getHeight() + 10);//117
-                        //setPrefHeight(text.getLayoutBounds().getHeight()+10); -----> This is not working somehow
                         setPrefHeight(117);
                         setGraphic(text);
                     }

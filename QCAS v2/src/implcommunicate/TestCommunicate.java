@@ -40,14 +40,13 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
     private String userUsername = "user";
     private String userPassword = "user";
     private String passW;
-    private Question[] questions;
 
     @Override
     public Question[] getRandomQuestionListOfQuiz(int quizDifficulty, int questionNumber) {
         IntToString its = new IntToString();
         Question[] question = new Question[questionNumber];
         String[] choice = new String[4];
-        String answer = null;
+        String answer = "";
         ArrayList<Question> questionBank = new ArrayList();
         StringToInt sti = new StringToInt();
         try (Connection con = DriverManager.getConnection(quizUrl,
@@ -68,11 +67,11 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
                 if (rs.getString("type").equals("MC") | rs.getString("type").equals("MA")) {
                     for (int i = 0; i < 4; i++) {
 
-                        choice[i] = rs.getString(2 + 2 * (i + 1));
+                        choice[i] = rs.getString(3 + 2 * (i + 1));
                     }
                     for (int i = 0; i < 4; i++) {
-                        if (rs.getString(2 * (i + 1) + 3).equals("correct")) {
-                            answer = answer + rs.getString(2 + 2 * (i + 1));
+                        if (rs.getString(2 * (i + 1) + 4).equals("correct")) {
+                            answer = answer + rs.getString(3 + 2 * (i + 1));
                         }
                     }
 
@@ -86,6 +85,7 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
                             rs.getString("description"), null, rs.getString("answer"));
                     questionBank.add(ques);
                 }
+                answer = "";
 
             }
         } catch (SQLException se) {
@@ -206,7 +206,7 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
     }
 
     public Question[] insertQuestion() {
-
+　　　
         ArrayList<Question> ques = new ArrayList();
         StringToInt sti = new StringToInt();
         try (Connection con = DriverManager.getConnection(quizUrl,
@@ -260,34 +260,35 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        questions = new Question[ques.size()];
+        
+        Question[] questions = new Question[ques.size()];
         for (int i = 0; i < ques.size(); i++) {
             questions[i] = ques.get(i);
         }
         return questions;
     }
-
+    
     @Override
-    public Question[] getAllQuestions() {
+    public Question[] getAllQuestion(){
         ArrayList<Question> allQuestion = new ArrayList();
         String[] choice = new String[4];
-        String answer = null;
+        String answer = "";
         StringToInt sti = new StringToInt();
         try (Connection con = DriverManager.getConnection(quizUrl, quizUsername, quizPassword)) {
             Statement stmt = con.createStatement();
             String sql = "select * from Question";
             ResultSet rs = stmt.executeQuery(sql);
-
+            
             while (rs.next()) {
 
                 if (rs.getString("type").equals("MC") | rs.getString("type").equals("MA")) {
                     for (int i = 0; i < 4; i++) {
 
-                        choice[i] = rs.getString(2 + 2 * (i + 1));
+                        choice[i] = rs.getString(3 + 2 * (i + 1));
                     }
                     for (int i = 0; i < 4; i++) {
-                        if (rs.getString(2 * (i + 1) + 3).equals("correct")) {
-                            answer = answer + rs.getString(2 + 2 * (i + 1));
+                        if (rs.getString(2 * (i + 1) + 4).equals("correct")) {
+                            answer = answer + rs.getString(3 + 2 * (i + 1));
                         }
                     }
 
@@ -301,7 +302,8 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
                             rs.getString("description"), null, rs.getString("answer"));
                     allQuestion.add(ques);
                 }
-
+                answer = "";
+             
             }
         } catch (SQLException se) {
             System.out.println("Exception: " + se);
@@ -312,6 +314,8 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
         }
         return question;
     }
+
+
 
     @Override
     public HistoryRecord[] getHistoryRecordFromServeByStudentName(String studentName) {
@@ -583,7 +587,8 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
         String pass = "lingxingyu125";
         String[] to = {text + "@andrew.cmu.edu"}; // list of recipient email addresses
         String subject = "Your Exam Password";
-        String body = password;
+        String body = "Dear Student,\n\nHere is your exam password:\n" 
+                + password + "\n\nRegards\nCMU";
 
         sendFromGMail(from, pass, to, subject, body);
 

@@ -267,6 +267,7 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
         return questions;
     }
     
+    @Override
     public Question[] getAllQuestion(){
         ArrayList<Question> allQuestion = new ArrayList();
         String[] choice = new String[4];

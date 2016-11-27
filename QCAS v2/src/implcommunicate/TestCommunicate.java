@@ -487,9 +487,11 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
     @Override
     public boolean addStudent(String text) {
         createTable();
+        if(!checkID(text)){
         createPassword();
         sendMail(text, passW);
         insertStudent(encryptPassW(), text);
+        }
         boolean success = true;
         return success;
 
@@ -509,6 +511,16 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
         } catch (SQLException se) {
             System.out.println("Exception: " + se);
         }
+    }
+    
+    private boolean checkID(String id){
+      ArrayList allStudent = getAllStudent();
+      boolean exist = false;
+      for(int i = 0; i < allStudent.size(); i++){
+         if(allStudent.get(i).toString().equals(id)) 
+          exist = true;
+      }
+      return exist;
     }
 
     private void createPassword() {

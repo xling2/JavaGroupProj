@@ -160,12 +160,10 @@ public class Question_bankController implements Initializable {
     private ArrayList<TableUse> createQuestionTableList(Question[] questionList) {
         ArrayList<TableUse> questionTableList = new ArrayList<>();
         for (Question q : questionList) {
-            String description = new String();
-
-            description = q.toString().split("\n\n")[1];
+            String description =  q.toString().split("\n\n")[1];
 
             if (q.questionType < 2) {
-                description += "\n" + q.toString().split("\n\n")[2];
+                description += "\n\n" + q.toString().split("\n\n")[2];
             }
 
             questionTableList.add(0,
@@ -173,7 +171,7 @@ public class Question_bankController implements Initializable {
                             Question.TYPENAME[q.questionType],
                             Question.DIFFICULTY[q.questionDifficult],
                             q.correctAnswer,
-                            description));
+                            q.toString()));
         }
         return questionTableList;
     }

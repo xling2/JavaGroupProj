@@ -206,7 +206,6 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
     }
 
     public Question[] insertQuestion() {
-　　　
         ArrayList<Question> ques = new ArrayList();
         StringToInt sti = new StringToInt();
         try (Connection con = DriverManager.getConnection(quizUrl,
@@ -269,7 +268,7 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
     }
     
     @Override
-    public Question[] getAllQuestion(){
+    public Question[] getAllQuestions(){
         ArrayList<Question> allQuestion = new ArrayList();
         String[] choice = new String[4];
         String answer = "";

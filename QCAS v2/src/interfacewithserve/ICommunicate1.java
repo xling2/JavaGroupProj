@@ -35,7 +35,5 @@ public interface ICommunicate1 {
 
 	public abstract void deleteById(int questionID);
 
-	public abstract QuizOfStudent getQuizByStudentNameAndTimeType(String studentName, int timeType);// timeType:0-LastMouth,1:Last
-	// Quarter,2:Last
-	// Year        
+        public abstract QuizOfStudent getQuizByQuizId(String quizId, String StudentName);
 }

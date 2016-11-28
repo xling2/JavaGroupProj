@@ -126,7 +126,7 @@ public class Question_bankController implements Initializable {
                         Text text = new Text(item);
                         text.setStyle("-fx-padding: 5px 30px 5px 5px;"
                                 + "-fx-text-alignment:justify;");
-                        text.setWrappingWidth(param.getPrefWidth() - 35);
+                        text.setWrappingWidth(param.getPrefWidth() - 10);
                         setPrefHeight(117);
                         setGraphic(text);
                     }
@@ -147,6 +147,7 @@ public class Question_bankController implements Initializable {
                         Text text = new Text(item);
                         text.setStyle("-fx-padding: 5px 30px 5px 5px;"
                                 + "-fx-text-alignment:justify;");
+                        text.setWrappingWidth(param.getPrefWidth()-10);
                         setPrefHeight(117);
                         setGraphic(text);
                     }
@@ -170,8 +171,8 @@ public class Question_bankController implements Initializable {
                     new TableUse(q.questionID,
                             Question.TYPENAME[q.questionType],
                             Question.DIFFICULTY[q.questionDifficult],
-                            q.correctAnswer,
-                            q.toString()));
+                            q.getCorrectAnswer(),
+                            description));
         }
         return questionTableList;
     }

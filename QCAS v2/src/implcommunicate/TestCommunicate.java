@@ -45,7 +45,7 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
     public Question[] getRandomQuestionListOfQuiz(int quizDifficulty, int questionNumber) {
         IntToString its = new IntToString();
         Question[] question = new Question[questionNumber];
-        
+
         String answer = "";
         ArrayList<Question> questionBank = new ArrayList();
         StringToInt sti = new StringToInt();
@@ -206,7 +206,7 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
         }
     }
 
-    public Question[] insertQuestion(){
+    public Question[] insertQuestion() {
         ArrayList<Question> ques = new ArrayList();
         StringToInt sti = new StringToInt();
         try (Connection con = DriverManager.getConnection(quizUrl,
@@ -220,47 +220,48 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
             while ((line = reader.readNext()) != null) {
                 // import data from file into database
                 // import MA and MC
-                for(Question q: questionBank){
-                    count ++;
-                    if(line[2].equals(q.content))
+                for (Question q : questionBank) {
+                    count++;
+                    if (line[2].equals(q.content)) {
                         exist = true;
-                }
-                if(!exist){
-                if (line[0].equals("MA") | line[0].equals("MC")) {
-                    String sql = "insert into Question values (" + count + ", '";
-                    for (int i = 0; i < line.length - 1; i++) {
-                        sql = sql + line[i] + "', '";
                     }
-                    sql = sql + line[line.length - 1] + "', '')";
-                    stmt.execute(sql);
-                    String[] choice = {line[3], line[5], line[7], line[9]};
-                    String answer = null;
-                    for (int i = 0; i < line.length; i++) {
-                        if (line[i].equals("correct")) {
-                            answer = line[i - 1];
+                }
+                if (!exist) {
+                    if (line[0].equals("MA") | line[0].equals("MC")) {
+                        String sql = "insert into Question values (" + count + ", '";
+                        for (int i = 0; i < line.length - 1; i++) {
+                            sql = sql + line[i] + "', '";
                         }
+                        sql = sql + line[line.length - 1] + "', '')";
+                        stmt.execute(sql);
+                        String[] choice = {line[3], line[5], line[7], line[9]};
+                        String answer = null;
+                        for (int i = 0; i < line.length; i++) {
+                            if (line[i].equals("correct")) {
+                                answer = line[i - 1];
+                            }
+                        }
+                        Question question = new Question(sti.toIntType(line[0]),
+                                count, sti.toIntDiff(line[1]),
+                                line[2], choice, answer);
+                        ques.add(question);
+                    } else {
+                        // import FIB and TF
+                        String sql = "insert into Question values (" + count + ", '"
+                                + line[0] + "', '" + line[1] + "', '" + line[2] + "', '";
+                        for (int i = 3; i < 11; i++) {
+                            sql = sql + "" + "', '";
+                        }
+                        sql = sql + line[3] + "')";
+                        //System.out.println(sql);
+                        stmt.execute(sql);
+                        Question question = new Question(sti.toIntType(line[0]),
+                                count, sti.toIntDiff(line[1]),
+                                line[2], null, line[3]);
+                        ques.add(question);
                     }
-                    Question question = new Question(sti.toIntType(line[0]),
-                            count, sti.toIntDiff(line[1]),
-                            line[2], choice, answer);
-                    ques.add(question);
-                } else {
-                    // import FIB and TF
-                    String sql = "insert into Question values (" + count + ", '"
-                            + line[0] + "', '" + line[1] + "', '" + line[2] + "', '";
-                    for (int i = 3; i < 11; i++) {
-                        sql = sql + "" + "', '";
-                    }
-                    sql = sql + line[3] + "')";
-                    //System.out.println(sql);
-                    stmt.execute(sql);
-                    Question question = new Question(sti.toIntType(line[0]),
-                            count, sti.toIntDiff(line[1]),
-                            line[2], null, line[3]);
-                    ques.add(question);
+                    count++;
                 }
-                count++;
-            }
             }
         } catch (SQLException se) {
             System.out.println("Exception: " + se);
@@ -269,27 +270,27 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        
+
         Question[] questions = new Question[ques.size()];
         for (int i = 0; i < ques.size(); i++) {
             questions[i] = ques.get(i);
         }
         return questions;
     }
-    
+
     @Override
-    public Question[] getAllQuestions(){
+    public Question[] getAllQuestions() {
         ArrayList<Question> allQuestion = new ArrayList();
-       
+
         String answer = "";
         StringToInt sti = new StringToInt();
         try (Connection con = DriverManager.getConnection(quizUrl, quizUsername, quizPassword)) {
             Statement stmt = con.createStatement();
             String sql = "select * from Question";
             ResultSet rs = stmt.executeQuery(sql);
-            
+
             while (rs.next()) {
-                 String[] choice = new String[4];
+                String[] choice = new String[4];
                 if (rs.getString("type").equals("MC") | rs.getString("type").equals("MA")) {
                     for (int i = 0; i < 4; i++) {
 
@@ -297,7 +298,7 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
                     }
                     for (int i = 0; i < 4; i++) {
                         if (rs.getString(2 * (i + 1) + 4).equals("correct")) {
-                            answer = answer + rs.getString(3 + 2 * (i + 1));
+                            answer = answer + "\n" + rs.getString(3 + 2 * (i + 1));
                         }
                     }
 
@@ -312,7 +313,7 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
                     allQuestion.add(ques);
                 }
                 answer = "";
-             
+
             }
         } catch (SQLException se) {
             System.out.println("Exception: " + se);
@@ -323,8 +324,6 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
         }
         return question;
     }
-
-
 
     @Override
     public HistoryRecord[] getHistoryRecordFromServeByStudentName(String studentName) {
@@ -596,7 +595,7 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
         String pass = "lingxingyu125";
         String[] to = {text + "@andrew.cmu.edu"}; // list of recipient email addresses
         String subject = "Your Exam Password";
-        String body = "Dear Student,\n\nHere is your exam password:\n" 
+        String body = "Dear Student,\n\nHere is your exam password:\n"
                 + password + "\n\nRegards\nCMU";
 
         sendFromGMail(from, pass, to, subject, body);

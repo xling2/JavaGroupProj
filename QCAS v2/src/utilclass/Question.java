@@ -38,11 +38,12 @@ public class Question {
     public String toString() {
         // TODO Auto-generated method stub
         String s = "(" + TYPENAME[questionType] + ")" + "\n\n" + content + "\n\n";
+        String[] optionMark = {"A. ", "B. ", "C. ", "D. "};
         switch (questionType) {
             case 0:
             case 1:
                 for (int i = 0; i < choices.length; i++) {
-                    s += choices[i] + "\n";
+                    s += optionMark[i] + choices[i] + "\n";
                 }
                 break;
             case 2:
@@ -52,5 +53,21 @@ public class Question {
                 break;
         }
         return s;
+    }
+
+    public String getCorrectAnswer() {
+        String s = correctAnswer;
+        String result;
+        if (questionType == 0) {
+
+            s = s.substring(s.indexOf("\n") + 1);
+            s = "- " + s;
+            result = s.replace("\n", "\n- ");
+            return result;
+
+        }else{
+            return s;
+        }
+        
     }
 }

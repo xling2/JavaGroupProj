@@ -1,8 +1,8 @@
 ----------------------------------------------------------------
-Mon Nov 28 00:07:36 ACDT 2016:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.11.1.2 - (1629631): instance a816c00e-0158-a601-5896-000005bd8a48 
+Mon Nov 28 11:51:25 ACDT 2016:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.11.1.2 - (1629631): instance a816c00e-0158-a885-b8ad-000006b33a48 
 on database directory /Users/Yixin1/Google Drive/Java/Java Working Directory/QCAS v2/QuizDB with class loader sun.misc.Launcher$AppClassLoader@2503dbd3 
-Loaded from file:/Users/Yixin1/Google%20Drive/Java/Java%20Working%20Directory/QCAS%20v2/dist/run1895812129/lib/derby.jar
+Loaded from file:/Users/Yixin1/Google%20Drive/Java/Java%20Working%20Directory/QCAS%20v2/dist/run544871688/lib/derby.jar
 java.vendor=Oracle Corporation
 java.runtime.version=1.8.0_102-b14
 user.dir=/Users/Yixin1/Google Drive/Java/Java Working Directory/QCAS v2

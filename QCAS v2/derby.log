@@ -1,13 +1,13 @@
 ----------------------------------------------------------------
-Mon Nov 28 11:51:25 ACDT 2016:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.11.1.2 - (1629631): instance a816c00e-0158-a885-b8ad-000006b33a48 
-on database directory /Users/Yixin1/Google Drive/Java/Java Working Directory/QCAS v2/QuizDB with class loader sun.misc.Launcher$AppClassLoader@2503dbd3 
-Loaded from file:/Users/Yixin1/Google%20Drive/Java/Java%20Working%20Directory/QCAS%20v2/dist/run544871688/lib/derby.jar
+Mon Nov 28 13:36:09 CST 2016:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.11.1.2 - (1629631): instance a816c00e-0158-a96e-ef57-0000056996d0 
+on database directory /Users/mica/Downloads/QCAS v2/QuizDB with class loader sun.misc.Launcher$AppClassLoader@6bc7c054 
+Loaded from file:/Users/mica/Downloads/QCAS%20v2/dist/run1771586060/lib/derby.jar
 java.vendor=Oracle Corporation
-java.runtime.version=1.8.0_102-b14
-user.dir=/Users/Yixin1/Google Drive/Java/Java Working Directory/QCAS v2
+java.runtime.version=1.8.0_111-b14
+user.dir=/Users/mica/Downloads/QCAS v2
 os.name=Mac OS X
 os.arch=x86_64
-os.version=10.12.1
+os.version=10.11.6
 derby.system.home=null
 Database Class Loader started - derby.database.classpath=''

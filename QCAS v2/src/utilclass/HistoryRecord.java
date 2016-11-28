@@ -6,6 +6,7 @@ import java.util.Date;
 public class HistoryRecord {
 	public String quizId;
 	public Date finishDate;
+        public int count;
 	public HistoryRecord(String quizId, Date finishDate) {
 		// TODO Auto-generated constructor stub
 		this.quizId = quizId;

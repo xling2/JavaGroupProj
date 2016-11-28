@@ -1,8 +1,5 @@
 package interfacewithserve;
 
-import java.util.ArrayList;
-import utilclass.Question;
-import utilclass.QuizOfStudent;
 
 public interface ICommunicate1 {
 	public abstract String[] getStudentFailedListOfLastMouth();// login id name
@@ -34,6 +31,5 @@ public interface ICommunicate1 {
 	public abstract int[] getAllQuizAverageScoreOfEachDifficultyInLastYear();
 
 	public abstract void deleteById(int questionID);
-
-        public abstract QuizOfStudent getQuizByQuizId(String quizId, String StudentName);
+      
 }

@@ -64,7 +64,7 @@ public class GoPage {
 			y = args[1];
 		}
 		try {
-			scene = new Scene(FXMLLoader.load(getClass().getResource(FXMLName)), x, y);
+			scene = new Scene(FXMLLoader.load(getClass().getResource(FXMLName)));
 			// scene.getStylesheets().add("./src/javafxapplication1/no-divider.css");
 			Stage stage = (Stage) node.getScene().getWindow();
 			stage.setScene(scene);
@@ -183,8 +183,4 @@ public class GoPage {
 		}
 	}
 
-	// instructor student quiz report check
-	public void checkStudentQuizReport(String studentName, int indexOfDuration) {
-		quizOfCurrentCheck = communicateWithServe.getQuizByStudentNameAndTimeType(studentName, indexOfDuration);
-	}
 }

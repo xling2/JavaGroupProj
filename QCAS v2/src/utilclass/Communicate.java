@@ -360,8 +360,7 @@ public class Communicate {
         ArrayList<Integer> no = new ArrayList();// question number in question bank
         ArrayList answers = new ArrayList();
         ArrayList<Question> questions = new ArrayList();
-        ArrayList<Integer> ma = new ArrayList();
-        int mc = 0;
+
         boolean tf = false;
         Date startDate = new Date();
         Date finishDate = new Date();
@@ -371,8 +370,8 @@ public class Communicate {
         try (Connection con = DriverManager.getConnection(quizUrl,
                 quizUsername, quizPassword)) {
             Statement stmt = con.createStatement();
-            String sql = "Select * from " + studentName + "where quizID = "
-                    + quizId;
+            String sql = "Select * from " + studentName + " where quizID = '"
+                    + quizId + "'";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 num = rs.getInt("number");
@@ -382,72 +381,65 @@ public class Communicate {
                     startDate = rs.getDate("startTime");
                     finishDate = rs.getDate("endTime");
                     totalDiff = sti.toIntDiff(rs.getString("difficulty"));
+
                 }
             }
             for (int i = 0; i < no.size(); i++) {
                 sql = "Select * from Question where number = " + no.get(i);
                 rs = stmt.executeQuery(sql);
                 String[] choice = new String[4];
-                String correctAnswer = "";
-                if (rs.getString("type").equals("MC") | rs.getString("type").equals("MA")) {
-                    for (String a : choice) {
+                while (rs.next()) {
+                    if (rs.getString("type").equals("MC") | rs.getString("type").equals("MA")) {
+                        for (int j = 0; j < 4; j++) {
 
-                        choice[i] = rs.getString(2 + 2 * (i + 1));
-                    }
-                    for (int j = 0; j < 4; j++) {
-                        if (rs.getString(2 * (i + 1) + 3).equals("correct")) {
-                            correctAnswer = correctAnswer + rs.getString(2 + 2 * (i + 1));
+                            choice[j] = rs.getString(2 + 2 * (j + 1));
+                        }
+
+                    } else if (rs.getString("type").equals("TF")) {
+                        if (answers.get(i).equals("true")) {
+                            tf = true;
                         }
                     }
-                    if (rs.getString("type").equals("MA")) {
-                        ma = sti.toIntMultipleAnswer(answers.get(i).toString());
-                    } else {
-                        mc = sti.toIntSingleAnswer(answers.get(i).toString());
+                    Question ques = new Question(sti.toIntType(rs.getString("type")),
+                            rs.getInt("number"), sti.toIntDiff(rs.getString("difficulty")),
+                            rs.getString("description"), choice, answers.get(i).toString());
+                    questions.add(ques);
+                    int questionType = 100;
+                    if (answers.get(i) != "") {
+                        questionType = sti.toIntType(rs.getString("type"));
                     }
 
-                } else if (rs.getString("type").equals("TF")) {
-                    if (answers.get(i).equals("true")) {
-                        tf = true;
+                    switch (questionType) {
+                        case 0:
+                            answerTemp.add(new Answer(no.get(i),
+                                    questionType, sti.toIntMultipleAnswer(answers.get(i).toString())));
+                            break;
+                        case 1:
+                            answerTemp.add(new Answer(no.get(i), questionType,
+                                    sti.toIntSingleAnswer(answers.get(i).toString())));
+                            break;
+                        case 2:
+                            answerTemp.add(new Answer(no.get(i), questionType, tf));
+                            break;
+                        case 3:
+                            answerTemp.add(new Answer(no.get(i), questionType, answers.get(i).toString()));
+                            break;
+                        default:
+                            break;
                     }
-                }
-                Question ques = new Question(sti.toIntType(rs.getString("type")),
-                        rs.getInt("number"), sti.toIntDiff(rs.getString("difficulty")),
-                        rs.getString("description"), choice, correctAnswer);
-                questions.add(ques);
-                int questionType = 100;
-                if (answers.get(i) != "") {
-                    questionType = sti.toIntType(rs.getString("type"));
-                }
 
-                switch (questionType) {
-                    case 0:
-                        answerTemp.add(new Answer(no.get(i), questionType, ma));
-                        break;
-                    case 1:
-                        answerTemp.add(new Answer(no.get(i), questionType, mc));
-                        break;
-                    case 2:
-                        answerTemp.add(new Answer(no.get(i), questionType, tf));
-                        break;
-                    case 3:
-                        answerTemp.add(new Answer(no.get(i), questionType, answers.get(i).toString()));
-                        break;
-                    default:
-                        break;
                 }
-
             }
         } catch (SQLException se) {
             System.out.println("Exception: " + se);
         }
 
-        Answer[] answerOfStudent = new Answer[answerTemp.size()];
-        for (int i = 0; i < answerTemp.size(); i++) {
-            answerOfStudent[i] = answerTemp.get(i);
-        }
-
-        QuizOfStudent quizOfStudent = new QuizOfStudent(studentName, getRandomQuestion(totalDiff, answerOfStudent.length),
+        Answer[] answerOfStudent = answerTemp.toArray(new Answer[answerTemp.size()]);
+        Question[] questionOfQuiz = questions.toArray(new Question[questions.size()]);
+        QuizOfStudent quizOfStudent = new QuizOfStudent(studentName, questionOfQuiz,
                 answerOfStudent, startDate, finishDate);
+        quizOfStudent.quizId = quizId;
+        quizOfStudent.quizDifficulty = totalDiff;
 
         return quizOfStudent;
     }

@@ -36,9 +36,9 @@
       <CheckBox fx:id="choice7" layoutX="33.0" layoutY="408.0" mnemonicParsing="false" onAction="#checkAction" text="CheckBox" textFill="WHITE" visible="false" />
       <CheckBox fx:id="choice8" layoutX="33.0" layoutY="454.0" mnemonicParsing="false" onAction="#checkAction" text="CheckBox" textFill="WHITE" visible="false" />
       <TextArea fx:id="blank" layoutX="19.0" layoutY="307.0" prefHeight="187.0" prefWidth="521.0" promptText="Answer here" visible="false" />
-      <ScrollPane layoutX="19.0" layoutY="89.0" prefHeight="200.0" prefWidth="521.0">
+      <ScrollPane layoutX="19.0" layoutY="89.0" prefHeight="202.0" prefWidth="523.0" style="-fx-background-color: rgb(51,51,51); -fx-border-color: white;" stylesheets="@dark-scroll-pane.css">
          <content>
-            <Label fx:id="question" alignment="TOP_LEFT" prefHeight="198.0" prefWidth="519.0" text="" textFill="#000000f5" wrapText="true" />
+            <Label fx:id="question" alignment="TOP_LEFT" prefHeight="196.0" prefWidth="517.0" style="-fx-text-fill: white;" text="" textFill="#fffffff5" wrapText="true" />
          </content>
       </ScrollPane>
    </children>

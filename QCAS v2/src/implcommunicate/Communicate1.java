@@ -1,96 +1,171 @@
 package implcommunicate;
 
 import interfacewithserve.ICommunicate1;
+import java.util.ArrayList;
+import utilclass.DBConnection;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class Communicate1 implements ICommunicate1 {
+    private String resUrl = "jdbc:derby:QuizDB;create = true";
+    DBConnection con = new DBConnection();
 
     @Override
     public String[] getStudentFailedListOfLastMouth() {
-        // TODO Auto-generated method stub
-        return null;
+        con.getAndrewID();
+        con.getResult();
+        ArrayList <String> list = con.getStudentFailLM();
+        String[] stringArray = list.toArray(new String[list.size()]);
+        return stringArray; 
     }
 
     @Override
     public String[] getStudentFailedListOfLastQuarter() {
-        // TODO Auto-generated method stub
-        return null;
+        con.getAndrewID();
+        con.getResult();
+        ArrayList <String> list = con.getStudentFailLQ();
+        String[] stringArray = list.toArray(new String[list.size()]);
+        return stringArray;
     }
 
     @Override
     public String[] getStudentFailedListOfLastYear() {
-        // TODO Auto-generated method stub
-        return null;
+        con.getAndrewID();
+        con.getResult();
+        ArrayList <String> list = con.getStudentFailLY();
+        String[] stringArray = list.toArray(new String[list.size()]);
+        return stringArray;
     }
 
     @Override
     public String[] getStudentPassedListOfLastMouth() {
-        // TODO Auto-generated method stub
-        return null;
+        con.getAndrewID();
+        con.getResult();
+        ArrayList <String> list = con.getStudentPassLM();
+        String[] stringArray = list.toArray(new String[list.size()]);
+        return stringArray;
     }
 
     @Override
     public String[] getStudentPassedListOfLastQuarter() {
-        // TODO Auto-generated method stub
-        return null;
+        con.getAndrewID();
+        con.getResult();
+        ArrayList <String> list = con.getStudentPassLQ();
+        String[] stringArray = list.toArray(new String[list.size()]);
+        return stringArray;
     }
 
     @Override
     public String[] getStudentPassedListOfLastYear() {
-        // TODO Auto-generated method stub
-        return null;
+        con.getAndrewID();
+        con.getResult();
+        ArrayList <String> list = con.getStudentPassLY();
+        String[] stringArray = list.toArray(new String[list.size()]);
+        return stringArray;
     }
 
     @Override
     public int[] getLastNumberOfALLQuizzes() {
-        // TODO Auto-generated method stub
-        return null;
+        con.getAndrewID();
+        con.getResult();
+        int numberTestLM = con.getNumberTestLM();
+        int numberTestLQ = con.getNumberTestLQ();
+        int numberTestLY = con.getNumberTestLY();
+        int [] numberOfTest = {numberTestLM, numberTestLQ, numberTestLY};
+        return numberOfTest;
     }
 
     @Override
     public int[] getlastAverageOfALLQuizzes() {
-        // TODO Auto-generated method stub
-        return null;
+        con.getAndrewID();
+        con.getResult();
+        int avgScoreLM = con.getAvgScoreLM();
+        int avgScoreLQ = con.getAvgScoreLQ();
+        int avgScoreLY = con.getAvgScoreLY();
+        int [] avgAll = {avgScoreLM, avgScoreLQ, avgScoreLY};
+        return avgAll;
     }
 
     @Override
     public int[] geteasyAverageScoreOfThreeLastTime() {
-        // TODO Auto-generated method stub
-        return null;
+        con.getAndrewID();
+        con.getResult();
+        int avgScoreELM = con.getAvgScoreELM();
+        int avgScoreELQ = con.getAvgScoreELQ();
+        int avgScoreELY = con.getAvgScoreELY();
+        int [] scoreEasy = {avgScoreELM, avgScoreELQ, avgScoreELY};
+        return scoreEasy;
     }
 
     @Override
     public int[] getMediumAverageScoreOfThreeLastTime() {
-        // TODO Auto-generated method stub
-        return null;
+        con.getAndrewID();
+        con.getResult();
+        int avgScoreMLM = con.getAvgScoreMLM();
+        int avgScoreMLQ = con.getAvgScoreMLQ();
+        int avgScoreMLY = con.getAvgScoreMLY();
+        int [] scoreMedium = {avgScoreMLM, avgScoreMLQ, avgScoreMLY};
+        return scoreMedium;
     }
 
     @Override
     public int[] getHardAverageScoreOfThreeLastTime() {
-        // TODO Auto-generated method stub
-        return null;
+        con.getAndrewID();
+        con.getResult();
+        int avgScoreHLM = con.getAvgScoreHLM();
+        int avgScoreHLQ = con.getAvgScoreHLQ();
+        int avgScoreHLY = con.getAvgScoreHLY();
+        int [] scoreHard = {avgScoreHLM, avgScoreHLQ, avgScoreHLY};
+        return scoreHard;
     }
 
     @Override
     public int[] getAllQuizAverageScoreOfEachDifficultyInLastMouth() {
-        // TODO Auto-generated method stub
-        return null;
+        con.getAndrewID();
+        con.getResult();
+        int avgScoreELM = con.getAvgScoreELM();
+        int avgScoreMLM = con.getAvgScoreMLM();
+        int avgScoreHLM = con.getAvgScoreHLM();
+        int [] scoreDiffLM = {avgScoreELM, avgScoreMLM, avgScoreHLM};
+        return scoreDiffLM;
     }
 
     @Override
     public int[] getAllQuizAverageScoreOfEachDifficultyInLastQuater() {
-        // TODO Auto-generated method stub
-        return null;
+        con.getAndrewID();
+        con.getResult();
+        int avgScoreELQ = con.getAvgScoreELQ();
+        int avgScoreMLQ = con.getAvgScoreMLQ();
+        int avgScoreHLQ = con.getAvgScoreHLQ();
+        int [] scoreDiffLQ = {avgScoreELQ, avgScoreMLQ, avgScoreHLQ};
+        return scoreDiffLQ;
     }
 
     @Override
     public int[] getAllQuizAverageScoreOfEachDifficultyInLastYear() {
-        // TODO Auto-generated method stub
-        return null;
+        con.getAndrewID();
+        con.getResult();
+        int avgScoreELY = con.getAvgScoreELY();
+        int avgScoreMLY = con.getAvgScoreMLY();
+        int avgScoreHLY = con.getAvgScoreHLY();
+        int [] scoreDiffLY = {avgScoreELY, avgScoreMLY, avgScoreHLY};
+        return scoreDiffLY;
     }
 
     @Override
     public void deleteById(int questionID) {
-        // TODO Auto-generated method stub
+       String sql = "DELETE FROM QUESTIONS WHERE NUMBER = '"+questionID+"'";  
+       try (Connection con = DriverManager.getConnection(resUrl)){
+           Statement stmt = con.createStatement();
+           stmt.executeUpdate(sql);
+        }catch (SQLException e) {
+            System.out.println("Exception creating connection: " + e);
+            e.printStackTrace();
+            System.exit(0);
+        }
 
     }
 

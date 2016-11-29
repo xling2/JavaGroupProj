@@ -34,15 +34,18 @@ public class Add_student_inputController implements Initializable {
 
     @FXML
     private TextField andrewIDTextField;
-    
+
     protected static boolean addSuccess;
 
     @FXML
     private void addButtonAction(ActionEvent ae) {
+        msgLabel.setVisible(true);
+
         String andrewID = andrewIDTextField.getText();
         if (!andrewID.isEmpty()) {
             addSuccess = GoPage.getGoPage().communicateWithServe.addStudent(andrewID);
             if (addSuccess) {
+                msgLabel.setText("Add success, email with password sent.");
                 msgLabel.setVisible(true);
                 PauseTransition visiblePause
                         = new PauseTransition(Duration.seconds(3));
@@ -61,7 +64,7 @@ public class Add_student_inputController implements Initializable {
                 });
                 visiblePause.play();
             }
-            
+
         }
 
     }

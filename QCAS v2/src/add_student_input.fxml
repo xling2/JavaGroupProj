@@ -10,6 +10,6 @@
    <children>
       <TextField fx:id="andrewIDTextField" layoutX="29.0" layoutY="26.0" prefHeight="27.0" prefWidth="164.0" promptText="Input Andrew ID" style="-fx-background-color: white;" />
       <Button fx:id="addButton" layoutX="222.0" layoutY="27.0" mnemonicParsing="false" onAction="#addButtonAction" stylesheets="@red-button-on-hover.css" text="Add" />
-      <Label fx:id="msgLabel" layoutX="27.0" layoutY="66.0" text="Add success, email with password sent." textFill="#7dffe3" />
+      <Label fx:id="msgLabel" layoutX="27.0" layoutY="66.0" text="Processing, please wait..." textFill="#7dffe3" />
    </children>
 </AnchorPane>

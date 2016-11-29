@@ -5,7 +5,6 @@
  */
 package quiz;
 
-
 import java.net.URL;
 import java.util.HashSet;
 import java.util.ResourceBundle;
@@ -24,14 +23,14 @@ import javafx.scene.control.ToggleGroup;
 import qcas.GoPage;
 import utilclass.Question;
 
-
 /**
  *
  * @author mica
  */
 public class questionController implements Initializable {
+
     GoPage goPage;
-    
+
     @FXML
     private Button nextQuestion;
     @FXML
@@ -66,59 +65,60 @@ public class questionController implements Initializable {
     private Button preview;
 
     @FXML
-    private void preview(ActionEvent event){
-        if(goPage.numberOfCurrentQuiz==1){
-        }else{
+    private void preview(ActionEvent event) {
+        if (goPage.numberOfCurrentQuiz == 1) {
+        } else {
             goPage.numberOfCurrentQuiz -= 1;
             goPage.goPage("/question.fxml", nextQuestion);
-        } 
+        }
     }
-    
+
     @FXML
-    private void nextQuestion(ActionEvent event){
+    private void nextQuestion(ActionEvent event) {
         preview.setVisible(true);
-        if(goPage.numberOfCurrentQuiz==goPage.questionNumberFromQuizSetting){
-        	goPage.quizOfCurrentCheck.finishQuiz();
+        if (goPage.numberOfCurrentQuiz == goPage.questionNumberFromQuizSetting) {
+            goPage.quizOfCurrentCheck.finishQuiz();
             goPage.recordQuizResultToServe();
             goPage.back = "/student_panel.fxml";
             goPage.backX = 600;
             goPage.backY = 400;
             goPage.goPage("/student_quiz_report_onetime.fxml", nextQuestion, 438, 800);
-        }else{
+        } else {
             goPage.numberOfCurrentQuiz += 1;
             goPage.goPage("/question.fxml", nextQuestion);
-        }   
-    }
-    
-    @FXML
-    private void radioAction(ActionEvent event){
-        goPage.quizOfCurrentCheck.answerOfStudent[goPage.numberOfCurrentQuiz-1].singleChoice = (int)select.getSelectedToggle().getUserData();
-        goPage.quizOfCurrentCheck.answerOfStudent[goPage.numberOfCurrentQuiz-1].trueOrFalse = (int)select.getSelectedToggle().getUserData()==1;
-        goPage.quizOfCurrentCheck.answerOfStudent[goPage.numberOfCurrentQuiz-1].isAnswer = true;
-    }
-    @FXML
-    private void checkAction(ActionEvent event){
-        CheckBox[] temp = new CheckBox[]{choice5, choice6, choice7, choice8};
-        goPage.quizOfCurrentCheck.answerOfStudent[goPage.numberOfCurrentQuiz-1].multipleChoices.clear();
-        for (int i = 0; i < temp.length; i++) {
-            if(temp[i].isSelected()){
-                goPage.quizOfCurrentCheck.answerOfStudent[goPage.numberOfCurrentQuiz-1].multipleChoices.add((int)temp[i].getUserData());
-            }
         }
-        goPage.quizOfCurrentCheck.answerOfStudent[goPage.numberOfCurrentQuiz-1].isAnswer = true;
     }
 
     @FXML
-    private void goNumber(ActionEvent event){
-        goPage.numberOfCurrentQuiz = (int)numberSlider.getValue();
-        goPage.goPage("/question.fxml", nextQuestion);    
+    private void radioAction(ActionEvent event) {
+        goPage.quizOfCurrentCheck.answerOfStudent[goPage.numberOfCurrentQuiz - 1].singleChoice = (int) select.getSelectedToggle().getUserData();
+        goPage.quizOfCurrentCheck.answerOfStudent[goPage.numberOfCurrentQuiz - 1].trueOrFalse = (int) select.getSelectedToggle().getUserData() == 1;
+        goPage.quizOfCurrentCheck.answerOfStudent[goPage.numberOfCurrentQuiz - 1].isAnswer = true;
     }
-    
+
+    @FXML
+    private void checkAction(ActionEvent event) {
+        CheckBox[] temp = new CheckBox[]{choice5, choice6, choice7, choice8};
+        goPage.quizOfCurrentCheck.answerOfStudent[goPage.numberOfCurrentQuiz - 1].multipleChoices.clear();
+        for (int i = 0; i < temp.length; i++) {
+            if (temp[i].isSelected()) {
+                goPage.quizOfCurrentCheck.answerOfStudent[goPage.numberOfCurrentQuiz - 1].multipleChoices.add((int) temp[i].getUserData());
+            }
+        }
+        goPage.quizOfCurrentCheck.answerOfStudent[goPage.numberOfCurrentQuiz - 1].isAnswer = true;
+    }
+
+    @FXML
+    private void goNumber(ActionEvent event) {
+        goPage.numberOfCurrentQuiz = (int) numberSlider.getValue();
+        goPage.goPage("/question.fxml", nextQuestion);
+    }
+
     private Question currentQuestion;
-    
-    public void setVisible(){
-    	
-        switch(goPage.quizOfCurrentCheck.questionsOfQuiz[goPage.numberOfCurrentQuiz-1].questionType){
+
+    public void setVisible() {
+
+        switch (goPage.quizOfCurrentCheck.questionsOfQuiz[goPage.numberOfCurrentQuiz - 1].questionType) {
             case 0:
                 choice5.setVisible(true);
                 choice6.setVisible(true);
@@ -153,25 +153,25 @@ public class questionController implements Initializable {
                 break;
         }
     }
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         this.goPage = GoPage.getGoPage();
-        currentQuestion = goPage.quizOfCurrentCheck.questionsOfQuiz[goPage.numberOfCurrentQuiz-1];
+        currentQuestion = goPage.quizOfCurrentCheck.questionsOfQuiz[goPage.numberOfCurrentQuiz - 1];
         numberSlider.valueProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
-            numberSlider.setValue((int)numberSlider.getValue());
-            currentNumber.setText((int)numberSlider.getValue()+"/"+goPage.questionNumberFromQuizSetting);
+            numberSlider.setValue((int) numberSlider.getValue());
+            currentNumber.setText((int) numberSlider.getValue() + "/" + goPage.questionNumberFromQuizSetting);
         });
-        
-        blank.textProperty().addListener(new ChangeListener<String>(){
+
+        blank.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                goPage.quizOfCurrentCheck.answerOfStudent[goPage.numberOfCurrentQuiz-1].blank = blank.getText();
-                goPage.quizOfCurrentCheck.answerOfStudent[goPage.numberOfCurrentQuiz-1].isAnswer = true;
+                goPage.quizOfCurrentCheck.answerOfStudent[goPage.numberOfCurrentQuiz - 1].blank = blank.getText();
+                goPage.quizOfCurrentCheck.answerOfStudent[goPage.numberOfCurrentQuiz - 1].isAnswer = true;
             }
         });
-        
+
         choice1.setUserData(1);
         choice2.setUserData(2);
         choice3.setUserData(3);
@@ -181,55 +181,55 @@ public class questionController implements Initializable {
         choice7.setUserData(3);
         choice8.setUserData(4);
         setVisible();
-        
+
         numberSlider.setMax(goPage.questionNumberFromQuizSetting);
         numberSlider.setValue(goPage.numberOfCurrentQuiz);
-        currentNumber.setText(goPage.numberOfCurrentQuiz+"/"+goPage.questionNumberFromQuizSetting);
+        currentNumber.setText(goPage.numberOfCurrentQuiz + "/" + goPage.questionNumberFromQuizSetting);
 
         question.setText(currentQuestion.content);
-        
+
         //set question height
         int questionLengh = currentQuestion.content.split("\\n").length;
         question.setStyle("-fx-padding: 5px 30px 5px 5px;"
-            + "-fx-text-alignment:justify;");
-        question.setPrefHeight(questionLengh*20<198?198:questionLengh*20);
-        
+                + "-fx-text-alignment:justify;");
+        question.setPrefHeight(questionLengh * 20 < 198 ? 198 : questionLengh * 20);
+
         title.setText("No." + goPage.numberOfCurrentQuiz + " " + Question.TYPENAME[currentQuestion.questionType]);
-        
-        if(goPage.numberOfCurrentQuiz==goPage.questionNumberFromQuizSetting){
+
+        if (goPage.numberOfCurrentQuiz == goPage.questionNumberFromQuizSetting) {
             nextQuestion.setText("submit");
         }
-        if(goPage.numberOfCurrentQuiz==1){
+        if (goPage.numberOfCurrentQuiz == 1) {
             preview.setVisible(false);
         }
-        goPage.quizOfCurrentCheck.answerOfStudent[goPage.numberOfCurrentQuiz-1].questionID = currentQuestion.questionID;
-        goPage.quizOfCurrentCheck.answerOfStudent[goPage.numberOfCurrentQuiz-1].questionType = currentQuestion.questionType;
-        
-        
-        if(goPage.quizOfCurrentCheck.answerOfStudent[goPage.numberOfCurrentQuiz-1].isAnswer){
+        goPage.quizOfCurrentCheck.answerOfStudent[goPage.numberOfCurrentQuiz - 1].questionID = currentQuestion.questionID;
+        goPage.quizOfCurrentCheck.answerOfStudent[goPage.numberOfCurrentQuiz - 1].questionType = currentQuestion.questionType;
+
+        if (goPage.quizOfCurrentCheck.answerOfStudent[goPage.numberOfCurrentQuiz - 1].isAnswer) {
             HashSet<Integer> temp = new HashSet<Integer>();
-            switch(currentQuestion.questionType){
+            switch (currentQuestion.questionType) {
                 case 0:
-                    temp.addAll(goPage.quizOfCurrentCheck.answerOfStudent[goPage.numberOfCurrentQuiz-1].multipleChoices);
+                    temp.addAll(goPage.quizOfCurrentCheck.answerOfStudent[goPage.numberOfCurrentQuiz - 1].multipleChoices);
                     choice5.setSelected(temp.contains(1));
                     choice6.setSelected(temp.contains(2));
                     choice7.setSelected(temp.contains(3));
                     choice8.setSelected(temp.contains(4));
-                case 1:case 2:
-                    temp.add(goPage.quizOfCurrentCheck.answerOfStudent[goPage.numberOfCurrentQuiz-1].singleChoice);
+                case 1:
+                case 2:
+                    temp.add(goPage.quizOfCurrentCheck.answerOfStudent[goPage.numberOfCurrentQuiz - 1].singleChoice);
                     choice1.setSelected(temp.contains(1));
                     choice2.setSelected(temp.contains(2));
                     choice3.setSelected(temp.contains(3));
                     choice4.setSelected(temp.contains(4));
                     break;
                 case 3:
-                    blank.setText(goPage.quizOfCurrentCheck.answerOfStudent[goPage.numberOfCurrentQuiz-1].blank);
+                    blank.setText(goPage.quizOfCurrentCheck.answerOfStudent[goPage.numberOfCurrentQuiz - 1].blank);
                     break;
                 default:
                     System.out.println("error");
                     break;
             }
         }
-    }    
-    
+    }
+
 }

@@ -156,15 +156,14 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
     }
     
     public void deleteById(int questionID) {
-       String sql = "DELETE FROM QUESTION WHERE NUMBER = '"+questionID+"'";  
+       String sql = "DELETE FROM QUESTION WHERE NUMBER = " + questionID;  
        try (Connection con = DriverManager.getConnection(quizUrl, quizUsername, quizPassword)){
            Statement stmt = con.createStatement();
            stmt.execute(sql);
            // add a check, whether successfully deleted?
         }catch (SQLException e) {
             System.out.println("Exception creating connection: " + e);
-            e.printStackTrace();
-            System.exit(0);
+           
         }
 
     }

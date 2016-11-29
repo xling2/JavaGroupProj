@@ -1,24 +1,24 @@
 ----------------------------------------------------------------
-Tue Nov 29 23:59:04 ACDT 2016:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.11.1.2 - (1629631): instance a816c00e-0158-b046-418b-000005f1fb08 
-on database directory /Users/lingxingyu/Documents/JavaGroupProj version 10/QCAS v2/UserDB with class loader sun.misc.Launcher$AppClassLoader@2503dbd3 
-Loaded from file:/Users/lingxingyu/Documents/JavaGroupProj%20version%2010/QCAS%20v2/dist/run2065563362/lib/derby.jar
+Wed Nov 30 01:31:16 ACDT 2016:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.11.1.2 - (1629631): instance a816c00e-0158-b09a-ab4b-00000601e0b0 
+on database directory /Users/lingxingyu/Documents/JavaGroupProj Ver11/QCAS v2/UserDB with class loader sun.misc.Launcher$AppClassLoader@2503dbd3 
+Loaded from file:/Users/lingxingyu/Documents/JavaGroupProj%20Ver11/QCAS%20v2/dist/run1383416645/lib/derby.jar
 java.vendor=Oracle Corporation
 java.runtime.version=1.8.0_101-b13
-user.dir=/Users/lingxingyu/Documents/JavaGroupProj version 10/QCAS v2
+user.dir=/Users/lingxingyu/Documents/JavaGroupProj Ver11/QCAS v2
 os.name=Mac OS X
 os.arch=x86_64
 os.version=10.11.6
 derby.system.home=null
 Database Class Loader started - derby.database.classpath=''
 ----------------------------------------------------------------
-Tue Nov 29 23:59:11 ACDT 2016:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.11.1.2 - (1629631): instance 08264012-0158-b046-418b-000005f1fb08 
-on database directory /Users/lingxingyu/Documents/JavaGroupProj version 10/QCAS v2/QuizDB with class loader sun.misc.Launcher$AppClassLoader@2503dbd3 
-Loaded from file:/Users/lingxingyu/Documents/JavaGroupProj%20version%2010/QCAS%20v2/dist/run2065563362/lib/derby.jar
+Wed Nov 30 01:31:18 ACDT 2016:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.11.1.2 - (1629631): instance 08264012-0158-b09a-ab4b-00000601e0b0 
+on database directory /Users/lingxingyu/Documents/JavaGroupProj Ver11/QCAS v2/QuizDB with class loader sun.misc.Launcher$AppClassLoader@2503dbd3 
+Loaded from file:/Users/lingxingyu/Documents/JavaGroupProj%20Ver11/QCAS%20v2/dist/run1383416645/lib/derby.jar
 java.vendor=Oracle Corporation
 java.runtime.version=1.8.0_101-b13
-user.dir=/Users/lingxingyu/Documents/JavaGroupProj version 10/QCAS v2
+user.dir=/Users/lingxingyu/Documents/JavaGroupProj Ver11/QCAS v2
 os.name=Mac OS X
 os.arch=x86_64
 os.version=10.11.6

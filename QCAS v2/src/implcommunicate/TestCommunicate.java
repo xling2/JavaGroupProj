@@ -15,7 +15,6 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
             + "create=true";
     private String quizUsername = "quiz";
     private String quizPassword = "quiz";
-    private File csvFile;
     private String userUrl = "jdbc:derby:UserDB; create=true";
     private String userUsername = "user";
     private String userPassword = "user";

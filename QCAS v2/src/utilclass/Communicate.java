@@ -153,13 +153,14 @@ public class Communicate {
             for (int i = 0; i < quizResult.answerOfStudent.length; i++) {
                 String correct = "";
 
-                if (quizResult.questionsOfQuiz[i].questionType == 2) {// TF
-                    if (quizResult.answerOfStudent[i].toString().equals(quizResult.questionsOfQuiz[i].correctAnswer.toLowerCase())) {
-                        correct = "correct";
-                    } else {
-                        correct = "incorrect";
-                    }
-                } else if (quizResult.answerOfStudent[i].toString().equals(quizResult.questionsOfQuiz[i].correctAnswer)) {
+               // if (quizResult.questionsOfQuiz[i].questionType == 2) {// TF
+                   // if (quizResult.answerOfStudent[i].toString().equals(quizResult.questionsOfQuiz[i].correctAnswer.toLowerCase())) {
+                   //     correct = "correct";
+                  //  } else {
+                     //   correct = "incorrect";
+                   // }
+               // } else 
+               if (quizResult.answerOfStudent[i].toString().equals(quizResult.questionsOfQuiz[i].correctAnswer)) {
                     correct = "correct";
                 } else {
                     correct = "incorrect";
@@ -190,12 +191,12 @@ public class Communicate {
         try (Connection con = DriverManager.getConnection(quizUrl,
                 quizUsername, quizPassword)) {
             Statement stmt = con.createStatement();
-            // check if the table exsit
+             //check if the table exsit
             DatabaseMetaData dbmd = con.getMetaData();
             ResultSet rs = dbmd.getTables(null, null, "Question".toUpperCase(), null);
             if (!rs.next()) {
                 // create the table question
-                //stmt.execute("drop table Question");
+               // stmt.execute("drop table Question");
                 stmt.execute("create table Question(number int, type varchar(40), "
                         + "difficulty varchar(40), description long varchar, "
                         + "choice1 varchar(255), correct1 varchar(40), "
@@ -251,6 +252,9 @@ public class Communicate {
                         ques.add(question);
                     } else {
                         // import FIB and TF
+                        if(line[0].equals("TF")){
+                        line[3] = line[3].toLowerCase();
+                        }
                         String sql = "insert into Question values (" + count + ", '"
                                 + line[0] + "', '" + line[1] + "', '" + line[2] + "', '";
                         for (int i = 3; i < 11; i++) {
@@ -258,7 +262,7 @@ public class Communicate {
                         }
                         sql = sql + line[3] + "')";
                         String[] choice = {"", "", "", ""};
-                        stmt.execute(sql);
+                        stmt.execute(sql);  
                         Question question = new Question(sti.toIntType(line[0]),
                                 count, sti.toIntDiff(line[1]),
                                 line[2], choice, line[3]);

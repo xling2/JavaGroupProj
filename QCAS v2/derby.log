@@ -1,13 +1,26 @@
 ----------------------------------------------------------------
-Mon Nov 28 17:05:49 ACDT 2016:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.11.1.2 - (1629631): instance a816c00e-0158-a9a5-8eb8-000002579ec8 
-on database directory C:\Users\me\Documents\NetBeansProjects\JavaGroupProj1128\QCAS v2\QuizDB with class loader sun.misc.Launcher$AppClassLoader@55f96302 
-Loaded from file:/C:/Users/me/Documents/NetBeansProjects/JavaGroupProj1128/QCAS%20v2/dist/run1250796363/lib/derby.jar
+Tue Nov 29 15:56:24 ACDT 2016:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.11.1.2 - (1629631): instance a816c00e-0158-ae8c-5d36-0000069f88a8 
+on database directory /Users/lingxingyu/Documents/JavaGroupProj Ver 6.0/QCAS v2/QuizDB with class loader sun.misc.Launcher$AppClassLoader@2503dbd3 
+Loaded from file:/Users/lingxingyu/Documents/JavaGroupProj%20Ver%206.0/QCAS%20v2/dist/run1956855629/lib/derby.jar
 java.vendor=Oracle Corporation
-java.runtime.version=1.8.0_77-b03
-user.dir=C:\Users\me\Documents\NetBeansProjects\JavaGroupProj1128\QCAS v2
-os.name=Windows 10
-os.arch=amd64
-os.version=10.0
+java.runtime.version=1.8.0_101-b13
+user.dir=/Users/lingxingyu/Documents/JavaGroupProj Ver 6.0/QCAS v2
+os.name=Mac OS X
+os.arch=x86_64
+os.version=10.11.6
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+Tue Nov 29 15:57:13 ACDT 2016:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.11.1.2 - (1629631): instance 4ac48095-0158-ae8c-5d36-0000069f88a8 
+on database directory /Users/lingxingyu/Documents/JavaGroupProj Ver 6.0/QCAS v2/UserDB with class loader sun.misc.Launcher$AppClassLoader@2503dbd3 
+Loaded from file:/Users/lingxingyu/Documents/JavaGroupProj%20Ver%206.0/QCAS%20v2/dist/run1956855629/lib/derby.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.8.0_101-b13
+user.dir=/Users/lingxingyu/Documents/JavaGroupProj Ver 6.0/QCAS v2
+os.name=Mac OS X
+os.arch=x86_64
+os.version=10.11.6
 derby.system.home=null
 Database Class Loader started - derby.database.classpath=''

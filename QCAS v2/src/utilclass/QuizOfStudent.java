@@ -40,14 +40,10 @@ public class QuizOfStudent {
             Answer answer = answerOfStudent[i];
             Question question = questionsOfQuiz[i];
             totalNumber[question.questionDifficult]++;
-            if (question.questionType == 2) {
-                if (answer.toString().equals(question.correctAnswer.toLowerCase())) {
-                    correctNumber[question.questionDifficult]++;
-                }
-            } else if (question.correctAnswer.equals(answer.toString())) {
-                correctNumber[question.questionDifficult]++;
-            }
-        }
+            if (question.correctAnswer.equals(answer.toString())) {
+				correctNumber[question.questionDifficult]++;
+			}
+		}
         this.totalScore = (int) ((float) total(correctNumber) / (float) total(totalNumber) * 100.0);
         for (int i = 0; i < 3; i++) {
             double x = (float) correctNumber[i] / (float) (totalNumber[i] == 0 ? 1 : totalNumber[i]) * 100.0;

@@ -1,9 +1,6 @@
 package implcommunicate;
 
 import interfacewithserve.ICommunicate1;
-import java.util.ArrayList;
-import utilclass.Question;
-import utilclass.QuizOfStudent;
 
 public class Communicate1 implements ICommunicate1 {
 
@@ -95,12 +92,6 @@ public class Communicate1 implements ICommunicate1 {
     public void deleteById(int questionID) {
         // TODO Auto-generated method stub
 
-    }
-
-    @Override
-    public QuizOfStudent getQuizByStudentNameAndTimeType(String studentName, int timeType) {
-        // TODO Auto-generated method stub
-        return null;
     }
 
 }

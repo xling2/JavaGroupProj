@@ -58,8 +58,7 @@
             <Font name="System Bold" size="23.0" />
          </font>
       </Label>
-      <Label layoutX="28.0" layoutY="238.0" prefHeight="28.0" prefWidth="358.0" text="Answers to incorrectly answered questions are mark in" textFill="WHITE" />
-      <Label layoutX="322.0" layoutY="238.0" prefHeight="28.0" prefWidth="23.0" text="red" textFill="RED" />
+      <Label layoutX="28.0" layoutY="238.0" prefHeight="28.0" prefWidth="358.0" text="Answers to incorrectly answered questions are mark in red" textFill="WHITE" />
       <Label layoutX="345.0" layoutY="238.0" prefHeight="28.0" prefWidth="23.0" text="." />
       <Button fx:id="export" layoutX="308.0" layoutY="50.0" mnemonicParsing="false" onAction="#export" stylesheets="@red-button-on-hover.css" text="Export to PDF" />
       <Label layoutX="23.0" layoutY="523.0" text="Performance vs. Difficulty" textFill="WHITE">

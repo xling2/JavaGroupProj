@@ -188,6 +188,12 @@ public class questionController implements Initializable {
 
         question.setText(currentQuestion.content);
         
+        //set question height
+        int questionLengh = currentQuestion.content.split("\\n").length;
+        question.setStyle("-fx-padding: 5px 30px 5px 5px;"
+            + "-fx-text-alignment:justify;");
+        question.setPrefHeight(questionLengh*20<198?198:questionLengh*20);
+        
         title.setText("No." + goPage.numberOfCurrentQuiz + " " + Question.TYPENAME[currentQuestion.questionType]);
         
         if(goPage.numberOfCurrentQuiz==goPage.questionNumberFromQuizSetting){

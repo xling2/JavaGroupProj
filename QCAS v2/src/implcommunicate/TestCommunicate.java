@@ -18,6 +18,7 @@ import java.util.Random;
 import com.opencsv.CSVReader;
 import java.math.BigInteger;
 import java.security.MessageDigest;
+import java.sql.PreparedStatement;
 import java.util.Properties;
 import utilclass.Answer;
 import utilclass.HistoryRecord;
@@ -28,6 +29,8 @@ import utilclass.IntToString;
 import javax.mail.*;
 import javax.mail.internet.*;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
+import utilclass.Choice;
 
 public class TestCommunicate extends Communicate1 implements ICommunicate2 {
 
@@ -45,14 +48,12 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
     public Question[] getRandomQuestionListOfQuiz(int quizDifficulty, int questionNumber) {
         IntToString its = new IntToString();
         Question[] question = new Question[questionNumber];
-
-        String answer = "";
         ArrayList<Question> questionBank = new ArrayList();
         StringToInt sti = new StringToInt();
         try (Connection con = DriverManager.getConnection(quizUrl,
                 quizUsername, quizPassword)) {
             Statement stmt = con.createStatement();
-            String sql = null;
+            String sql = "";
             if (quizDifficulty < 3) {
                 String diff = its.toStringDiff(quizDifficulty);
                 sql = "Select * from Question where difficulty = '" + diff
@@ -63,21 +64,29 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
 
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
-                String[] choice = new String[4];
+               ArrayList<Choice> temp = new ArrayList();
+                String[] key = {"A", "B", "C", "D"};
+                 String answer = "";
                 if (rs.getString("type").equals("MC") | rs.getString("type").equals("MA")) {
                     for (int i = 0; i < 4; i++) {
 
-                        choice[i] = rs.getString(3 + 2 * (i + 1));
+                        Choice choice = new Choice(rs.getString(3 + 2 * (i + 1)), 
+                                rs.getString(2 * (i + 1) + 4));
+                        temp.add(choice);
                     }
-                    for (int i = 0; i < 4; i++) {
-                        if (rs.getString(2 * (i + 1) + 4).equals("correct")) {
-                            answer = answer + rs.getString(3 + 2 * (i + 1));
+                   Collections.shuffle(temp); 
+                   String[] choices = new String[4];
+                   for(int i = 0; i < 4; i++){
+                       choices[i] = temp.get(i).getContent();
+                  
+                        if (temp.get(i).getCorrect().equals("correct")) {
+                            answer = answer + key[i];
                         }
-                    }
-
+                   }
+                
                     Question ques = new Question(sti.toIntType(rs.getString("type")),
                             rs.getInt("number"), sti.toIntDiff(rs.getString("difficulty")),
-                            rs.getString("description"), choice, answer);
+                            rs.getString("description"), choices, answer);
                     questionBank.add(ques);
                 } else {
                     Question ques = new Question(sti.toIntType(rs.getString("type")),
@@ -110,17 +119,18 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
         try (Connection con = DriverManager.getConnection(quizUrl,
                 quizUsername, quizPassword)) {
             Statement stmt = con.createStatement();
-            DatabaseMetaData dbmd = con.getMetaData();
-            ResultSet rs = dbmd.getTables(null, null, quizResult.studentName.toUpperCase(), null);
-            if (!rs.next()) {
+           // DatabaseMetaData dbmd = con.getMetaData();
+           // ResultSet rs = dbmd.getTables(null, null, quizResult.studentName.toUpperCase(), null);
+            //if (!rs.next()) {
                 String sql = "create table " + quizResult.studentName
                         + "(quizID varchar(40), difficulty varchar(40), score int, "
-                        + "number int, startTime date, endTime date ";
-                for (int i = 0; i < 50; i++) {
+                        + "number int, startTime date, endTime date";
+                for (int i = 1; i < 51; i++) {
 
-                    sql = sql + " , " + i + "int, answer varchar(40), correct" + i + " varchar(40)";
-                }
+                    sql = sql + " , no" + i + " int, answer" + i + " varchar(40), correct" + i + " varchar(40)";
+               // }
                 sql = sql + ")";
+   
                 stmt.execute(sql);
             }
         } catch (SQLException se) {
@@ -133,34 +143,57 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
                 quizUsername, quizPassword)) {
             Statement stmt = con.createStatement();
             IntToString its = new IntToString();
-            String sql = "insert into " + quizResult.studentName + " values ('"
+            String sql = "Select quizID, endTime from " + quizResult.studentName;
+            ResultSet rs = stmt.executeQuery(sql);
+            int count = 1;
+            while (rs.next()) {
+                count ++;
+            }
+            String quizID = quizResult.studentName + count;
+            quizResult.quizId = quizID;
+            java.sql.Date startDate = new java.sql.Date(quizResult.startDate.getTime());
+            java.sql.Date endDate = new java.sql.Date(quizResult.finishDate.getTime());
+            sql = "insert into " + quizResult.studentName + " values ('"
                     + quizResult.quizId + "', '"
-                    + its.toStringDiff(quizResult.quizDifficulty) + ", '" + quizResult.totalScore
-                    + "', " + quizResult.questionsOfQuiz.length + ", "
-                    + quizResult.startDate + ", " + quizResult.finishDate + ", ";
+                    + its.toStringDiff(quizResult.quizDifficulty) + "', " + quizResult.totalScore
+                    + ", " + quizResult.questionsOfQuiz.length + ", ?, ?, ";
 
             for (int i = 0; i < quizResult.answerOfStudent.length; i++) {
-                String correct = null;
-                //if(!quizResult.answerOfStudent[i].isAnswer){
-                //quizResult.answerOfStudent[i].questionType = 4; 
-                //}
-                if (quizResult.answerOfStudent[i].toString().equals(quizResult.questionsOfQuiz[i].correctAnswer)) {
+                String correct = "";
+
+               System.out.println(quizResult.answerOfStudent[i].toString());
+               System.out.println(quizResult.questionsOfQuiz[i].correctAnswer);
+              if(quizResult.questionsOfQuiz[i].questionType == 2){// TF
+                  if (quizResult.answerOfStudent[i].toString().equals
+        (quizResult.questionsOfQuiz[i].correctAnswer.toLowerCase())){
+                   correct = "correct";
+                } else {
+                    correct = "incorrect";
+                }   
+              }
+              else{ 
+               if (quizResult.answerOfStudent[i].toString().equals
+        (quizResult.questionsOfQuiz[i].correctAnswer)) {
                     correct = "correct";
                 } else {
                     correct = "incorrect";
                 }
+              }
                 sql = sql + quizResult.questionsOfQuiz[i].questionID
                         + ", '" + quizResult.answerOfStudent[i].toString() + "', '"
                         + correct + "', ";
             }
 
-            for (int i = quizResult.answerOfStudent.length; i < 49; i++) {
-                sql = sql + "'', ";
+            for (int i =  quizResult.answerOfStudent.length; i < 49; i++) {
+                sql = sql + 0 + ", '', '', ";
             }
 
-            sql = sql + "'')";
-
-            stmt.execute(sql);
+            sql = sql + 0 + ", '', '')";
+            System.out.println(sql);
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            pstmt.setDate(1, startDate);
+            pstmt.setDate(2, endDate);
+             pstmt.executeUpdate();
         } catch (SQLException se) {
             System.out.println("Exception: " + se);
         }
@@ -224,13 +257,21 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
                     count++;
                     if (line[2].equals(q.content)) {
                         exist = true;
-                    }
                 }
-                if (!exist) {
-                    if (line[0].equals("MA") | line[0].equals("MC")) {
-                        String sql = "insert into Question values (" + count + ", '";
-                        for (int i = 0; i < line.length - 1; i++) {
-                            sql = sql + line[i] + "', '";
+ 
+                if(!exist){
+                if (line[0].equals("MA") | line[0].equals("MC")) {
+                    String sql = "insert into Question values (" + count + ", '";
+                    for (int i = 0; i < line.length - 1; i++) {
+                        sql = sql + line[i] + "', '";
+                    }
+                    sql = sql + line[line.length - 1] + "', '')";
+                    stmt.execute(sql);
+                    String[] choice = {line[3], line[5], line[7], line[9]};
+                    String answer = "";
+                    for (int i = 0; i < line.length; i++) {
+                        if (line[i].equals("correct")) {
+                            answer = line[i - 1];
                         }
                         sql = sql + line[line.length - 1] + "', '')";
                         stmt.execute(sql);
@@ -260,7 +301,24 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
                                 line[2], null, line[3]);
                         ques.add(question);
                     }
-                    count++;
+                    Question question = new Question(sti.toIntType(line[0]),
+                            count, sti.toIntDiff(line[1]),
+                            line[2], choice, answer);
+                    ques.add(question);
+                } else {
+                    // import FIB and TF
+                    String sql = "insert into Question values (" + count + ", '"
+                            + line[0] + "', '" + line[1] + "', '" + line[2] + "', '";
+                    for (int i = 3; i < 11; i++) {
+                        sql = sql + "" + "', '";
+                    }
+                    sql = sql + line[3] + "')";
+                   String[] choice = {"", "", "", ""};
+                    stmt.execute(sql);
+                    Question question = new Question(sti.toIntType(line[0]),
+                            count, sti.toIntDiff(line[1]),
+                            line[2], choice, line[3]);
+                    ques.add(question);
                 }
             }
         } catch (SQLException se) {
@@ -290,7 +348,8 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
             ResultSet rs = stmt.executeQuery(sql);
 
             while (rs.next()) {
-                String[] choice = new String[4];
+                 String[] choice = new String[4];
+                 String[] key = {"A", "B", "C", "D"};
                 if (rs.getString("type").equals("MC") | rs.getString("type").equals("MA")) {
                     for (int i = 0; i < 4; i++) {
 
@@ -298,7 +357,7 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
                     }
                     for (int i = 0; i < 4; i++) {
                         if (rs.getString(2 * (i + 1) + 4).equals("correct")) {
-                            answer = answer + "\n" + rs.getString(3 + 2 * (i + 1));
+                            answer = answer + key[i];
                         }
                     }
 
@@ -327,25 +386,27 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
 
     @Override
     public HistoryRecord[] getHistoryRecordFromServeByStudentName(String studentName) {
-
         ArrayList quizID = new ArrayList();
         ArrayList<Date> date = new ArrayList();
         try (Connection con = DriverManager.getConnection(quizUrl,
                 quizUsername, quizPassword)) {
             Statement stmt = con.createStatement();
-            String sql = "Select quizID, finishDate from " + studentName;
+            String sql = "Select quizID, endTime from " + studentName;
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
-                quizID.add(rs.getString("quizID"));
-                date.add(rs.getDate("finishDate"));
+                quizID.add(rs.getString(1));
+                date.add(rs.getDate(2));
+                
             }
         } catch (SQLException se) {
             System.out.println("Exception: " + se);
         }
+        
         HistoryRecord[] record = new HistoryRecord[quizID.size()];
         for (int i = 0; i < quizID.size(); i++) {
             record[i] = new HistoryRecord(quizID.get(i).toString(), date.get(i));
         }
+           
         return record;
     }
 
@@ -358,7 +419,8 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
         ArrayList<Integer> ma = new ArrayList();
         int mc = 0;
         boolean tf = false;
-        Date startDate = null, finishDate = null;
+        Date startDate = new Date();
+        Date finishDate = new Date();
         StringToInt sti = new StringToInt();
         ArrayList<Answer> answerTemp = new ArrayList();
         int totalDiff = 0;
@@ -382,7 +444,7 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
                 sql = "Select * from Question where number = " + no.get(i);
                 rs = stmt.executeQuery(sql);
                 String[] choice = new String[4];
-                String correctAnswer = null;
+                String correctAnswer = "";
                 if (rs.getString("type").equals("MC") | rs.getString("type").equals("MA")) {
                     for (String a : choice) {
 
@@ -475,7 +537,7 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
     @Override
     public String[] getStudentRecordDateByStudentName(String studentName) {
         ArrayList date = new ArrayList();
-        SimpleDateFormat sdf = new SimpleDateFormat("YYYY/MM/dd HH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("YYYY/MM/dd");
         try (Connection con = DriverManager.getConnection(quizUrl,
                 quizUsername, quizPassword)) {
             Statement stmt = con.createStatement();
@@ -643,7 +705,7 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
 
     private String encryptPassW() {
 
-        String pass = null;
+        String pass = "";
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
             md.reset();

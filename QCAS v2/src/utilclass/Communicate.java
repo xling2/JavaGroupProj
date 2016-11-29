@@ -53,11 +53,11 @@ public class Communicate {
                 quizUsername, quizPassword)) {
             Statement stmt = con.createStatement();
             String sql = "";
-            if (quizDifficulty < 3) {
+            if (quizDifficulty < 3) {// select E\M\H
                 String diff = its.toStringDiff(quizDifficulty);
                 sql = "Select * from Question where difficulty = '" + diff
                         + "' order by Random() fetch first " + questionNumber + " rows only";
-            } else {
+            } else {// Select mixed
                 sql = "Select * from Question order by Random() fetch first " + questionNumber + " rows only";
             }
 
@@ -68,21 +68,22 @@ public class Communicate {
                 String answer = "";
                 if (rs.getString("type").equals("MC") | rs.getString("type").equals("MA")) {
                     for (int i = 0; i < 4; i++) {
-
+                        // Choice(String content, String correct)
                         Choice choice = new Choice(rs.getString(3 + 2 * (i + 1)),
                                 rs.getString(2 * (i + 1) + 4));
                         temp.add(choice);
                     }
+                    // randomly sort the choices
                     Collections.shuffle(temp);
                     String[] choices = new String[4];
                     for (int i = 0; i < 4; i++) {
                         choices[i] = temp.get(i).getContent();
-
+                        // record correct answer key
                         if (temp.get(i).getCorrect().equals("correct")) {
                             answer = answer + key[i];
                         }
                     }
-
+                    // construct objects questions 
                     Question ques = new Question(sti.toIntType(rs.getString("type")),
                             rs.getInt("number"), sti.toIntDiff(rs.getString("difficulty")),
                             rs.getString("description"), choices, answer);
@@ -101,7 +102,7 @@ public class Communicate {
             System.out.println("Exception: " + se);
 
         }
-
+        // change Arraylist to array
         question = questionBank.toArray(new Question[questionBank.size()]);
 
         return question;
@@ -111,16 +112,16 @@ public class Communicate {
         try (Connection con = DriverManager.getConnection(quizUrl,
                 quizUsername, quizPassword)) {
             Statement stmt = con.createStatement();
-            // DatabaseMetaData dbmd = con.getMetaData();
-            // ResultSet rs = dbmd.getTables(null, null, quizResult.studentName.toUpperCase(), null);
-            //if (!rs.next()) {
-            String sql = "create table " + quizResult.studentName
-                    + "(quizID varchar(40), difficulty varchar(40), score int, "
-                    + "number int, startTime date, endTime date";
-            for (int i = 1; i < 51; i++) {
+            DatabaseMetaData dbmd = con.getMetaData();
+            ResultSet rs = dbmd.getTables(null, null, quizResult.studentName.toUpperCase(), null);
+            if (!rs.next()) {
+                String sql = "create table " + quizResult.studentName
+                        + "(quizID varchar(40), difficulty varchar(40), score int, "
+                        + "number int, startTime date, endTime date";
+                for (int i = 1; i < 51; i++) {
 
-                sql = sql + " , no" + i + " int, answer" + i + " varchar(40), correct" + i + " varchar(40)";
-                // }
+                    sql = sql + " , no" + i + " int, answer" + i + " varchar(40), correct" + i + " varchar(40)";
+                }
                 sql = sql + ")";
 
                 stmt.execute(sql);
@@ -135,11 +136,12 @@ public class Communicate {
                 quizUsername, quizPassword)) {
             Statement stmt = con.createStatement();
             IntToString its = new IntToString();
-            String sql = "Select quizID, endTime from " + quizResult.studentName;
+            String sql = "Select quizID from " + quizResult.studentName;
             ResultSet rs = stmt.executeQuery(sql);
             int count = 1;
             while (rs.next()) {
                 count++;
+                //System.out.println(rs.getString(1));
             }
             String quizID = quizResult.studentName + count;
             quizResult.quizId = quizID;
@@ -153,14 +155,13 @@ public class Communicate {
             for (int i = 0; i < quizResult.answerOfStudent.length; i++) {
                 String correct = "";
 
-                // if (quizResult.questionsOfQuiz[i].questionType == 2) {// TF
-                // if (quizResult.answerOfStudent[i].toString().equals(quizResult.questionsOfQuiz[i].correctAnswer.toLowerCase())) {
-                //     correct = "correct";
-                //  } else {
-                //   correct = "incorrect";
-                // }
-                // } else 
-                if (quizResult.answerOfStudent[i].toString().equals(quizResult.questionsOfQuiz[i].correctAnswer)) {
+                if (quizResult.questionsOfQuiz[i].questionType == 2) {// TF
+                    if (quizResult.answerOfStudent[i].toString().equals(quizResult.questionsOfQuiz[i].correctAnswer.toLowerCase())) {
+                        correct = "correct";
+                    } else {
+                        correct = "incorrect";
+                    }
+                } else if (quizResult.answerOfStudent[i].toString().equals(quizResult.questionsOfQuiz[i].correctAnswer)) {
                     correct = "correct";
                 } else {
                     correct = "incorrect";
@@ -175,11 +176,11 @@ public class Communicate {
             }
 
             sql = sql + 0 + ", '', '')";
-            System.out.println(sql);
             PreparedStatement pstmt = con.prepareStatement(sql);
             pstmt.setDate(1, startDate);
             pstmt.setDate(2, endDate);
             pstmt.executeUpdate();
+
         } catch (SQLException se) {
             System.out.println("Exception: " + se);
         }
@@ -587,13 +588,13 @@ public class Communicate {
         passW = letters + num;
     }
 
-    public void sendMail(String text, String password) {
+    public void sendMail(String text) {
         String from = "lxy125@gmail.com";
         String pass = "lingxingyu125";
         String[] to = {text + "@andrew.cmu.edu"}; // list of recipient email addresses
         String subject = "Your Exam Password";
         String body = "Dear Student,\n\nHere is your exam password:\n"
-                + password + "\n\nRegards\nCMU";
+                + passW + "\n\nRegards\nCMU";
 
         sendFromGMail(from, pass, to, subject, body);
 

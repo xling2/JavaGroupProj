@@ -166,18 +166,6 @@ public class Communicate1 {
     }
 
 
-    public void deleteById(int questionID) {
-       String sql = "DELETE FROM QUESTION WHERE NUMBER = '"+questionID+"'";  
-       try (Connection con = DriverManager.getConnection(resUrl, quizUsername, quizPassword)){
-           Statement stmt = con.createStatement();
-           stmt.executeUpdate(sql);
-           // add a check, whether successfully deleted?
-        }catch (SQLException e) {
-            System.out.println("Exception creating connection: " + e);
-            e.printStackTrace();
-            System.exit(0);
-        }
-
-    }
+    
 
 }

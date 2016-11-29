@@ -153,14 +153,14 @@ public class Communicate {
             for (int i = 0; i < quizResult.answerOfStudent.length; i++) {
                 String correct = "";
 
-               // if (quizResult.questionsOfQuiz[i].questionType == 2) {// TF
-                   // if (quizResult.answerOfStudent[i].toString().equals(quizResult.questionsOfQuiz[i].correctAnswer.toLowerCase())) {
-                   //     correct = "correct";
-                  //  } else {
-                     //   correct = "incorrect";
-                   // }
-               // } else 
-               if (quizResult.answerOfStudent[i].toString().equals(quizResult.questionsOfQuiz[i].correctAnswer)) {
+                // if (quizResult.questionsOfQuiz[i].questionType == 2) {// TF
+                // if (quizResult.answerOfStudent[i].toString().equals(quizResult.questionsOfQuiz[i].correctAnswer.toLowerCase())) {
+                //     correct = "correct";
+                //  } else {
+                //   correct = "incorrect";
+                // }
+                // } else 
+                if (quizResult.answerOfStudent[i].toString().equals(quizResult.questionsOfQuiz[i].correctAnswer)) {
                     correct = "correct";
                 } else {
                     correct = "incorrect";
@@ -191,12 +191,12 @@ public class Communicate {
         try (Connection con = DriverManager.getConnection(quizUrl,
                 quizUsername, quizPassword)) {
             Statement stmt = con.createStatement();
-             //check if the table exsit
+            //check if the table exsit
             DatabaseMetaData dbmd = con.getMetaData();
             ResultSet rs = dbmd.getTables(null, null, "Question".toUpperCase(), null);
             if (!rs.next()) {
                 // create the table question
-               // stmt.execute("drop table Question");
+                // stmt.execute("drop table Question");
                 stmt.execute("create table Question(number int, type varchar(40), "
                         + "difficulty varchar(40), description long varchar, "
                         + "choice1 varchar(255), correct1 varchar(40), "
@@ -252,8 +252,8 @@ public class Communicate {
                         ques.add(question);
                     } else {
                         // import FIB and TF
-                        if(line[0].equals("TF")){
-                        line[3] = line[3].toLowerCase();
+                        if (line[0].equals("TF")) {
+                            line[3] = line[3].toLowerCase();
                         }
                         String sql = "insert into Question values (" + count + ", '"
                                 + line[0] + "', '" + line[1] + "', '" + line[2] + "', '";
@@ -262,7 +262,7 @@ public class Communicate {
                         }
                         sql = sql + line[3] + "')";
                         String[] choice = {"", "", "", ""};
-                        stmt.execute(sql);  
+                        stmt.execute(sql);
                         Question question = new Question(sti.toIntType(line[0]),
                                 count, sti.toIntDiff(line[1]),
                                 line[2], choice, line[3]);
@@ -493,41 +493,56 @@ public class Communicate {
 
     public int[] getStudentAverageScoreOfThreeDifficulty(String studentName) {
         int[] avgScore = new int[3];
-        int num;// the number of question of this quiz
-        int count = 0;
-        int[] diff = new int[3];
-        ArrayList<Integer> no = new ArrayList();// question number in question bank
+        double[] diff = new double[3];
+        double[] diffCorrect = new double[3];
+        ArrayList<Integer> numCorrect = new ArrayList();// question number in question bank
+        ArrayList<Integer> num = new ArrayList();
         try (Connection con = DriverManager.getConnection(quizUrl,
                 quizUsername, quizPassword)) {
             Statement stmt = con.createStatement();
             String sql = "Select * from " + studentName;
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
-                count++;
+                num.add(rs.getInt("number"));
                 for (int i = 0; i < 50; i++) {
                     if (rs.getString(6 + 3 * (i + 1)).equals("correct")) {
-                        no.add(rs.getInt("number"));
-                    }
-                }
-                for (int i = 0; i < no.size(); i++) {
-                    sql = "Select difficulty from Question where number = " + no.get(i);
-                    rs = stmt.executeQuery(sql);
-                    while (rs.next()) {
-                        if (rs.getString(1).equals("E")) {
-                            diff[0]++;
-                        } else if (rs.getString(1).equals("M")) {
-                            diff[1]++;
-                        } else {
-                            diff[2]++;
-                        }
+                        numCorrect.add(rs.getInt("number"));
                     }
                 }
             }
+            for (int i = 0; i < num.size(); i++) {
+                sql = "Select difficulty from Question where number = " + num.get(i);
+                rs = stmt.executeQuery(sql);
+                while (rs.next()) {
+                    if (rs.getString(1).equals("E")) {
+                        diff[0]++;
+                    } else if (rs.getString(1).equals("M")) {
+                        diff[1]++;
+                    } else {
+                        diff[2]++;
+                    }
+                }
+            }
+            for (int i = 0; i < numCorrect.size(); i++) {
+                sql = "Select difficulty from Question where number = " + numCorrect.get(i);
+                rs = stmt.executeQuery(sql);
+                while (rs.next()) {
+                    if (rs.getString(1).equals("E")) {
+                        diffCorrect[0]++;
+                    } else if (rs.getString(1).equals("M")) {
+                        diffCorrect[1]++;
+                    } else {
+                        diffCorrect[2]++;
+                    }
+                }
+            }
+
         } catch (SQLException se) {
             System.out.println("Exception: " + se);
         }
+
         for (int i = 0; i < 3; i++) {
-            avgScore[i] = (int) (((double) diff[i] / count) * 100);
+            avgScore[i] = (int) ((diffCorrect[i] / diff[i]) * 100);
         }
 
         return avgScore;
@@ -632,7 +647,7 @@ public class Communicate {
             md.update(passW.getBytes());
             byte[] digest = md.digest();
             BigInteger bigInt = new BigInteger(1, digest);
-            pass = bigInt.toString();
+            pass = bigInt.toString(16);
 
         } catch (Exception e) {
 

@@ -11,15 +11,19 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
-import java.text.SimpleDateFormat;
-import java.text.DateFormat;
+import java.sql.Date;
+import java.sql.DatabaseMetaData;
+
 
 public class DBConnection {
 
     // URL needs to be consistent with Xingyu
     private String stuUrl = "jdbc:derby:UserDB;create = true"; 
+    private String userUsername = "user";
+    private String userPassword = "user";
     private String resUrl = "jdbc:derby:QuizDB;create = true";
+    private String quizUsername = "quiz";
+    private String quizPassword = "quiz";
     private ArrayList <String> AndrewIDs = new ArrayList <String> ();
     private int numberTestLM, numberTestLQ, numberTestLY,avgScoreLM, avgScoreLQ,
             avgScoreLY, avgScoreE, avgScoreM, avgScoreH, avgScoreELM, avgScoreELQ,
@@ -34,7 +38,8 @@ public class DBConnection {
     
     
     public ArrayList<String> getAndrewID(){
-        try (java.sql.Connection con = DriverManager.getConnection(stuUrl)){
+        try (java.sql.Connection con = DriverManager.getConnection(stuUrl, userUsername,
+                userPassword)){
             Statement stmt = con.createStatement();
             String query = "SELECT * FROM STUDENTS";
             ResultSet rs = stmt.executeQuery(query);
@@ -84,208 +89,215 @@ public class DBConnection {
         int numberQHLQ = 0;
         int numberQHLY = 0;
         
-        //*** assume startTime and endTime as "yyyy/MM/dd"
-        try (java.sql.Connection con = DriverManager.getConnection(resUrl)){
-            Statement stmt = con.createStatement();
+        
+        try (java.sql.Connection con = DriverManager.getConnection(resUrl, quizUsername, quizPassword)){
+            
             for (String a : AndrewIDs){
-                //*** SQL concatenation might have problems
-                String query = "SELECT * FROM" + a;
-                ResultSet rs = stmt.executeQuery(query);
+                // check whether this andrewID table exists
+                DatabaseMetaData meta = con.getMetaData();
+                ResultSet res = meta.getTables(null, null, "QuizDB", 
+                    new String[] {a});
                 
-                double avgScoreLM_P = 0;
-                double avgScoreLQ_P = 0;
-                double avgScoreLY_P = 0;
-                int numberTestPLM = 0;
-                int numberTestPLQ = 0;
-                int numberTestPLY = 0;
-                double tsPLM = 0;
-                double tsPLQ = 0;
-                int tsPLY = 0;
-                
-                // use endTime to get year and month
-                while(rs.next()){
-                    // convert Date to String
-                    Date endTime = rs.getDate(6); // YYYY/MM/dd HH:mm:ss
-                    DateFormat df = new SimpleDateFormat("YYYY/MM/dd HH:mm:ss");
-                    String entimeS = df.format(endTime);
-                    String examYear = entimeS.substring(0,4);
-                    String examMonth = entimeS.substring(5,7);
-                    String diffLevel = rs.getString(2);   
-                    int score = rs.getInt(3);
-                    int numberQ = rs.getInt(4);
-                    
+                while (res.next()){
+                    Statement stmt = con.createStatement();
+                    String query = "SELECT * FROM" + " " + a;
+                    ResultSet rs = stmt.executeQuery(query);
 
-                    // check for number of Tests and Scores by quiz time
-                    if (examYear.equals(lastYear)){
-                        numberTestLY++;
-                        numberTestPLY++;
-                        tsLY += score;  
-                        tsPLY += score;
-                    }
-                    if (examYear.equals(thisYear) && examMonth.equals(lastMonth)){
-                        numberTestLM++;
-                        numberTestPLM++;
-                        tsLM += score;
-                        tsPLM += score;
-                    }
-                    if (examYear.equals(thisYear) && examMonth.equals(lastQuarter)) {
-                        numberTestLQ++;
-                        numberTestPLQ++;
-                        tsLQ += score;
-                        tsPLQ += score;
-                    }
-                     
-                    // check for Scores by level of difficulty. AVG SCORE FOR EACH QUESTION!!!
-                    if (diffLevel.equals("E")){
-                        numberQE += numberQ;
-                        tsE += score;
-                        if (examYear.equals(thisYear) && examMonth.equals(lastMonth)){
-                            numberQELM += numberQ;
-                            tsELM += score;
-                        }
-                        if (examYear.equals(thisYear) && examMonth.equals(lastQuarter)){
-                            numberQELQ += numberQ;
-                            tsELQ += score;
-                        }
+                    double avgScoreLM_P = 0;
+                    double avgScoreLQ_P = 0;
+                    double avgScoreLY_P = 0;
+                    int numberTestPLM = 0;
+                    int numberTestPLQ = 0;
+                    int numberTestPLY = 0;
+                    double tsPLM = 0;
+                    double tsPLQ = 0;
+                    int tsPLY = 0;
+                    // use endTime to get year and month
+                    while(rs.next()){
+                        // convert Date to String
+                        Date endTime = rs.getDate(6); 
+                        String entimeS = endTime.toString(); //  yyyy-mm-dd
+                        String examYear = entimeS.substring(0,4);
+                        String examMonth = entimeS.substring(5,7);
+                        String diffLevel = rs.getString(2);   
+                        int score = rs.getInt(3);
+                        int numberQ = rs.getInt(4);
+
+
+                        // check for number of Tests and Scores by quiz time
                         if (examYear.equals(lastYear)){
-                            numberQELY += numberQ;
-                            tsELY += score;  
+                            numberTestLY++;
+                            numberTestPLY++;
+                            tsLY += score;  
+                            tsPLY += score;
                         }
-                    }
-                    else if (diffLevel.equals("M")){
-                        numberQM += numberQ;
-                        tsM += score;
-                        // add
                         if (examYear.equals(thisYear) && examMonth.equals(lastMonth)){
-                            numberQMLM += numberQ;
-                            tsMLM += score;
+                            numberTestLM++;
+                            numberTestPLM++;
+                            tsLM += score;
+                            tsPLM += score;
                         }
-                        if (examYear.equals(thisYear) && examMonth.equals(lastQuarter)){
-                            numberQMLQ += numberQ;
-                            tsMLQ += score;
+                        if (examYear.equals(thisYear) && examMonth.equals(lastQuarter)) {
+                            numberTestLQ++;
+                            numberTestPLQ++;
+                            tsLQ += score;
+                            tsPLQ += score;
                         }
-                        if (examYear.equals(lastYear)){
-                            numberQMLY += numberQ;
-                            tsMLY += score;  
-                        }
-                        
-                    }
-                    else if (diffLevel.equals("H")){
-                        numberQH += numberQ;
-                        tsH += score;
-                        //add
-                        if (examYear.equals(thisYear) && examMonth.equals(lastMonth)){
-                            numberQHLM += numberQ;
-                            tsHLM += score;
-                        }
-                        if (examYear.equals(thisYear) && examMonth.equals(lastQuarter)){
-                            numberQHLQ += numberQ;
-                            tsHLQ += score;
-                        }
-                        if (examYear.equals(lastYear)){
-                            numberQHLY += numberQ;
-                            tsHLY += score;  
-                        }
-                    }
-                    else{
-                        // mixed exam
-                        int originalNumber;
-                        String answer;
-                        String diffQ;
-                        for (int i = 0; i < numberQ; i++){
-                            originalNumber = rs.getInt(7 + 2 * i);
-                            answer = rs.getString(9 + 2 * i);
-                            String getDiff = "SELECT DIFFICULTY FROM QUESTIONS WHERE NUMBER = '"+originalNumber+"'";
-                            ResultSet rsn = stmt.executeQuery(getDiff);
-                            //************* need check
-                            while (rsn.next()){
-                                diffQ = rsn.getString(1);
-                                // check if Easy question
-                                if (diffQ.equals("E")){
-                                    numberQE ++;
-                                    if (examYear.equals(thisYear) && examMonth.equals(lastMonth))
-                                        numberQELM ++;
-                                    if (examYear.equals(thisYear) && examMonth.equals(lastQuarter))
-                                        numberQELQ ++;
-                                    if (examYear.equals(lastYear))
-                                        numberQELY ++;
-                                }
-                                
-                                if (answer.equals("correct")){
-                                    tsE ++;
-                                    if (examYear.equals(thisYear) && examMonth.equals(lastMonth))
-                                        tsELM ++;
-                                    if (examYear.equals(thisYear) && examMonth.equals(lastQuarter))
-                                        tsELQ ++;
-                                    if (examYear.equals(lastYear))
-                                        tsELY ++;     
-                                }
-                                
-                                // check if Medium question
-                                if (diffQ.equals("M")){
-                                    numberQM ++;
-                                    if (examYear.equals(thisYear) && examMonth.equals(lastMonth))
-                                        numberQMLM ++;
-                                    if (examYear.equals(thisYear) && examMonth.equals(lastQuarter))
-                                        numberQMLQ ++;
-                                    if (examYear.equals(lastYear))
-                                        numberQMLY ++;
-                                }
-                                
-                                if (answer.equals("correct")){
-                                    tsM ++;
-                                    if (examYear.equals(thisYear) && examMonth.equals(lastMonth))
-                                        tsMLM ++;
-                                    if (examYear.equals(thisYear) && examMonth.equals(lastQuarter))
-                                        tsMLQ ++;
-                                    if (examYear.equals(lastYear))
-                                        tsMLY ++;     
-                                }
-                                // check if Hard question
-                                if (diffQ.equals("H")){
-                                    numberQH ++;
-                                    if (examYear.equals(thisYear) && examMonth.equals(lastMonth))
-                                        numberQHLM ++;
-                                    if (examYear.equals(thisYear) && examMonth.equals(lastQuarter))
-                                        numberQHLQ ++;
-                                    if (examYear.equals(lastYear))
-                                        numberQHLY ++;
-                                }
-                                
-                                if (answer.equals("correct")){
-                                    tsH ++;
-                                    if (examYear.equals(thisYear) && examMonth.equals(lastMonth))
-                                        tsHLM ++;
-                                    if (examYear.equals(thisYear) && examMonth.equals(lastQuarter))
-                                        tsHLQ ++;
-                                    if (examYear.equals(lastYear))
-                                        tsHLY ++;     
-                                }
+
+                        // check for Scores by level of difficulty. AVG SCORE FOR EACH QUESTION!!!
+                        if (diffLevel.equals("E")){
+                            numberQE += numberQ;
+                            tsE += score;
+                            if (examYear.equals(thisYear) && examMonth.equals(lastMonth)){
+                                numberQELM += numberQ;
+                                tsELM += score;
                             }
-                              
+                            if (examYear.equals(thisYear) && examMonth.equals(lastQuarter)){
+                                numberQELQ += numberQ;
+                                tsELQ += score;
+                            }
+                            if (examYear.equals(lastYear)){
+                                numberQELY += numberQ;
+                                tsELY += score;  
+                            }
                         }
-      
+                        else if (diffLevel.equals("M")){
+                            numberQM += numberQ;
+                            tsM += score;
+                            // add
+                            if (examYear.equals(thisYear) && examMonth.equals(lastMonth)){
+                                numberQMLM += numberQ;
+                                tsMLM += score;
+                            }
+                            if (examYear.equals(thisYear) && examMonth.equals(lastQuarter)){
+                                numberQMLQ += numberQ;
+                                tsMLQ += score;
+                            }
+                            if (examYear.equals(lastYear)){
+                                numberQMLY += numberQ;
+                                tsMLY += score;  
+                            }
+
+                        }
+                        else if (diffLevel.equals("H")){
+                            numberQH += numberQ;
+                            tsH += score;
+                            //add
+                            if (examYear.equals(thisYear) && examMonth.equals(lastMonth)){
+                                numberQHLM += numberQ;
+                                tsHLM += score;
+                            }
+                            if (examYear.equals(thisYear) && examMonth.equals(lastQuarter)){
+                                numberQHLQ += numberQ;
+                                tsHLQ += score;
+                            }
+                            if (examYear.equals(lastYear)){
+                                numberQHLY += numberQ;
+                                tsHLY += score;  
+                            }
+                        }
+                        else{
+                            // mixed exam
+                            int originalNumber;
+                            String answer;
+                            String diffQ;
+                            for (int i = 0; i < numberQ; i++){
+                                originalNumber = rs.getInt(7 + 2 * i);
+                                answer = rs.getString(9 + 2 * i);
+                                String getDiff = "SELECT DIFFICULTY FROM QUESTION WHERE NUMBER = '"+originalNumber+"'";
+                                ResultSet rsn = stmt.executeQuery(getDiff);
+                                //************* need check
+                                while (rsn.next()){
+                                    diffQ = rsn.getString(1);
+                                    // check if Easy question
+                                    if (diffQ.equals("E")){
+                                        numberQE ++;
+                                        if (examYear.equals(thisYear) && examMonth.equals(lastMonth))
+                                            numberQELM ++;
+                                        if (examYear.equals(thisYear) && examMonth.equals(lastQuarter))
+                                            numberQELQ ++;
+                                        if (examYear.equals(lastYear))
+                                            numberQELY ++;
+                                    }
+
+                                    if (answer.equals("correct")){
+                                        tsE ++;
+                                        if (examYear.equals(thisYear) && examMonth.equals(lastMonth))
+                                            tsELM ++;
+                                        if (examYear.equals(thisYear) && examMonth.equals(lastQuarter))
+                                            tsELQ ++;
+                                        if (examYear.equals(lastYear))
+                                            tsELY ++;     
+                                    }
+
+                                    // check if Medium question
+                                    if (diffQ.equals("M")){
+                                        numberQM ++;
+                                        if (examYear.equals(thisYear) && examMonth.equals(lastMonth))
+                                            numberQMLM ++;
+                                        if (examYear.equals(thisYear) && examMonth.equals(lastQuarter))
+                                            numberQMLQ ++;
+                                        if (examYear.equals(lastYear))
+                                            numberQMLY ++;
+                                    }
+
+                                    if (answer.equals("correct")){
+                                        tsM ++;
+                                        if (examYear.equals(thisYear) && examMonth.equals(lastMonth))
+                                            tsMLM ++;
+                                        if (examYear.equals(thisYear) && examMonth.equals(lastQuarter))
+                                            tsMLQ ++;
+                                        if (examYear.equals(lastYear))
+                                            tsMLY ++;     
+                                    }
+                                    // check if Hard question
+                                    if (diffQ.equals("H")){
+                                        numberQH ++;
+                                        if (examYear.equals(thisYear) && examMonth.equals(lastMonth))
+                                            numberQHLM ++;
+                                        if (examYear.equals(thisYear) && examMonth.equals(lastQuarter))
+                                            numberQHLQ ++;
+                                        if (examYear.equals(lastYear))
+                                            numberQHLY ++;
+                                    }
+
+                                    if (answer.equals("correct")){
+                                        tsH ++;
+                                        if (examYear.equals(thisYear) && examMonth.equals(lastMonth))
+                                            tsHLM ++;
+                                        if (examYear.equals(thisYear) && examMonth.equals(lastQuarter))
+                                            tsHLQ ++;
+                                        if (examYear.equals(lastYear))
+                                            tsHLY ++;     
+                                    }
+                                }
+
+                            }
+
+                        }
                     }
-                }
-                // students passing and failing over different periods
-                avgScoreLM_P = tsPLM/numberTestPLM;
-                avgScoreLQ_P = tsPLM/numberTestPLQ;
-                avgScoreLY_P = tsPLM/numberTestPLY;
-                if (avgScoreLM_P >= 0.6)
-                    getStudentPassLM().add(a);
-                else
-                    getStudentFailLM().add(a);
-                
-                if (avgScoreLQ_P >= 0.6)
-                    getStudentPassLQ().add(a);
-                else
-                    getStudentFailLQ().add(a);
-                
-                if (avgScoreLY_P >= 0.6)
-                    getStudentPassLY().add(a);
-                else
-                    getStudentFailLY().add(a);        
+                    // students passing and failing over different periods
+                    avgScoreLM_P = tsPLM/numberTestPLM;
+                    avgScoreLQ_P = tsPLQ/numberTestPLQ;
+                    avgScoreLY_P = tsPLY/numberTestPLY;
+                    if (avgScoreLM_P >= 0.6)
+                        getStudentPassLM().add(a);
+                    else
+                        getStudentFailLM().add(a);
+
+                    if (avgScoreLQ_P >= 0.6)
+                        getStudentPassLQ().add(a);
+                    else
+                        getStudentFailLQ().add(a);
+
+                    if (avgScoreLY_P >= 0.6)
+                        getStudentPassLY().add(a);
+                    else
+                        getStudentFailLY().add(a);        
+                    }
+                 
             }
+                
                       
         }catch (SQLException e) {
             System.out.println("Exception creating connection: " + e);

@@ -61,15 +61,15 @@ public class loginController implements Initializable {
         }
     }
 
-    private void login() throws
-            NoSuchAlgorithmException, IOException {
+    private void login() {
 
         String username = examIDTextField.getText();
         String passwd = passwordField.getText();
+        
+        System.out.println(passwd);
 
-        loginDetector detector = new loginDetector(username, passwd);
-
-        if (detector.getLoginSuccess()) {
+        //loginDetector detector = new loginDetector(username, passwd);
+        if (GoPage.getGoPage().communicateWithServe.login(username, passwd)) {
             if (username.equals("instructor")) {
                 goPage.goPage("/Instructer_panel.fxml", loginButton);
             } else {

@@ -13,7 +13,7 @@ public interface ICommunicate2 {
 
     public abstract void recordQuizResultToServe(QuizOfStudent quizResult);
 
-    public abstract boolean login(int loginType, String userName, String password);
+    public abstract boolean login(String userName, String password);
 
     public abstract Question[] importQuestionFromCSV(File CSVFile);// success->true
     // fail->false;

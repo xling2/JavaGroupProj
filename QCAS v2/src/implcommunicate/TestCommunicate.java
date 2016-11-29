@@ -18,6 +18,7 @@ import java.util.Random;
 import com.opencsv.CSVReader;
 import java.math.BigInteger;
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.PreparedStatement;
 import java.util.Properties;
 import utilclass.Answer;
@@ -30,6 +31,7 @@ import javax.mail.*;
 import javax.mail.internet.*;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
+import qcas.GoPage;
 import utilclass.Choice;
 
 public class TestCommunicate extends Communicate1 implements ICommunicate2 {
@@ -64,26 +66,26 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
 
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
-               ArrayList<Choice> temp = new ArrayList();
+                ArrayList<Choice> temp = new ArrayList();
                 String[] key = {"A", "B", "C", "D"};
-                 String answer = "";
+                String answer = "";
                 if (rs.getString("type").equals("MC") | rs.getString("type").equals("MA")) {
                     for (int i = 0; i < 4; i++) {
 
-                        Choice choice = new Choice(rs.getString(3 + 2 * (i + 1)), 
+                        Choice choice = new Choice(rs.getString(3 + 2 * (i + 1)),
                                 rs.getString(2 * (i + 1) + 4));
                         temp.add(choice);
                     }
-                   Collections.shuffle(temp); 
-                   String[] choices = new String[4];
-                   for(int i = 0; i < 4; i++){
-                       choices[i] = temp.get(i).getContent();
-                  
+                    Collections.shuffle(temp);
+                    String[] choices = new String[4];
+                    for (int i = 0; i < 4; i++) {
+                        choices[i] = temp.get(i).getContent();
+
                         if (temp.get(i).getCorrect().equals("correct")) {
                             answer = answer + key[i];
                         }
-                   }
-                
+                    }
+
                     Question ques = new Question(sti.toIntType(rs.getString("type")),
                             rs.getInt("number"), sti.toIntDiff(rs.getString("difficulty")),
                             rs.getString("description"), choices, answer);
@@ -119,18 +121,18 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
         try (Connection con = DriverManager.getConnection(quizUrl,
                 quizUsername, quizPassword)) {
             Statement stmt = con.createStatement();
-           // DatabaseMetaData dbmd = con.getMetaData();
-           // ResultSet rs = dbmd.getTables(null, null, quizResult.studentName.toUpperCase(), null);
+            // DatabaseMetaData dbmd = con.getMetaData();
+            // ResultSet rs = dbmd.getTables(null, null, quizResult.studentName.toUpperCase(), null);
             //if (!rs.next()) {
-                String sql = "create table " + quizResult.studentName
-                        + "(quizID varchar(40), difficulty varchar(40), score int, "
-                        + "number int, startTime date, endTime date";
-                for (int i = 1; i < 51; i++) {
+            String sql = "create table " + quizResult.studentName
+                    + "(quizID varchar(40), difficulty varchar(40), score int, "
+                    + "number int, startTime date, endTime date";
+            for (int i = 1; i < 51; i++) {
 
-                    sql = sql + " , no" + i + " int, answer" + i + " varchar(40), correct" + i + " varchar(40)";
-               // }
+                sql = sql + " , no" + i + " int, answer" + i + " varchar(40), correct" + i + " varchar(40)";
+                // }
                 sql = sql + ")";
-   
+
                 stmt.execute(sql);
             }
         } catch (SQLException se) {
@@ -147,7 +149,7 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
             ResultSet rs = stmt.executeQuery(sql);
             int count = 1;
             while (rs.next()) {
-                count ++;
+                count++;
             }
             String quizID = quizResult.studentName + count;
             quizResult.quizId = quizID;
@@ -161,30 +163,25 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
             for (int i = 0; i < quizResult.answerOfStudent.length; i++) {
                 String correct = "";
 
-               System.out.println(quizResult.answerOfStudent[i].toString());
-               System.out.println(quizResult.questionsOfQuiz[i].correctAnswer);
-              if(quizResult.questionsOfQuiz[i].questionType == 2){// TF
-                  if (quizResult.answerOfStudent[i].toString().equals
-        (quizResult.questionsOfQuiz[i].correctAnswer.toLowerCase())){
-                   correct = "correct";
-                } else {
-                    correct = "incorrect";
-                }   
-              }
-              else{ 
-               if (quizResult.answerOfStudent[i].toString().equals
-        (quizResult.questionsOfQuiz[i].correctAnswer)) {
+                System.out.println(quizResult.answerOfStudent[i].toString());
+                System.out.println(quizResult.questionsOfQuiz[i].correctAnswer);
+                if (quizResult.questionsOfQuiz[i].questionType == 2) {// TF
+                    if (quizResult.answerOfStudent[i].toString().equals(quizResult.questionsOfQuiz[i].correctAnswer.toLowerCase())) {
+                        correct = "correct";
+                    } else {
+                        correct = "incorrect";
+                    }
+                } else if (quizResult.answerOfStudent[i].toString().equals(quizResult.questionsOfQuiz[i].correctAnswer)) {
                     correct = "correct";
                 } else {
                     correct = "incorrect";
                 }
-              }
                 sql = sql + quizResult.questionsOfQuiz[i].questionID
                         + ", '" + quizResult.answerOfStudent[i].toString() + "', '"
                         + correct + "', ";
             }
 
-            for (int i =  quizResult.answerOfStudent.length; i < 49; i++) {
+            for (int i = quizResult.answerOfStudent.length; i < 49; i++) {
                 sql = sql + 0 + ", '', '', ";
             }
 
@@ -193,7 +190,7 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
             PreparedStatement pstmt = con.prepareStatement(sql);
             pstmt.setDate(1, startDate);
             pstmt.setDate(2, endDate);
-             pstmt.executeUpdate();
+            pstmt.executeUpdate();
         } catch (SQLException se) {
             System.out.println("Exception: " + se);
         }
@@ -201,9 +198,34 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
     }
 
     @Override
-    public boolean login(int loginType, String userName, String password) {
-        // TODO Auto-generated method stub
-        return false;
+    public boolean login(String userName, String password) {
+        String encryptedPwd = new String();
+        boolean loginSuccess = false;
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update(password.getBytes(), 0, password.length());
+            encryptedPwd = new BigInteger(1, md.digest()).toString(16);
+            System.out.println("Encrypted: " + encryptedPwd);
+        } catch (NoSuchAlgorithmException nae) {
+            System.out.println("NoSuchAlgorithmException @ login: " + nae);
+        }
+
+        String pQuery = "SELECT * FROM \"USER\".STUDENTS WHERE ANDREWID LIKE '"
+                + userName + "' AND PASSWORD LIKE '" + encryptedPwd + "'";
+
+        try (Connection con = DriverManager.getConnection(userUrl,
+                userUsername, userPassword);
+                PreparedStatement pStmt = con.prepareStatement(pQuery);) {
+            ResultSet userRS = pStmt.executeQuery();
+            if (userRS.next()) {
+                GoPage.getGoPage().studentName = userName;
+                loginSuccess = true;
+                System.out.println(loginSuccess);
+            }
+        } catch (SQLException e) {
+            System.out.println("SQL Exception @ login: " + e);
+        }
+        return loginSuccess;
     }
 
     @Override
@@ -257,26 +279,19 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
                     count++;
                     if (line[2].equals(q.content)) {
                         exist = true;
-                }
- 
-                if(!exist){
-                if (line[0].equals("MA") | line[0].equals("MC")) {
-                    String sql = "insert into Question values (" + count + ", '";
-                    for (int i = 0; i < line.length - 1; i++) {
-                        sql = sql + line[i] + "', '";
                     }
-                    sql = sql + line[line.length - 1] + "', '')";
-                    stmt.execute(sql);
-                    String[] choice = {line[3], line[5], line[7], line[9]};
-                    String answer = "";
-                    for (int i = 0; i < line.length; i++) {
-                        if (line[i].equals("correct")) {
-                            answer = line[i - 1];
+                }
+
+                if (!exist) {
+                    if (line[0].equals("MA") | line[0].equals("MC")) {
+                        String sql = "insert into Question values (" + count + ", '";
+                        for (int i = 0; i < line.length - 1; i++) {
+                            sql = sql + line[i] + "', '";
                         }
                         sql = sql + line[line.length - 1] + "', '')";
                         stmt.execute(sql);
                         String[] choice = {line[3], line[5], line[7], line[9]};
-                        String answer = null;
+                        String answer = "";
                         for (int i = 0; i < line.length; i++) {
                             if (line[i].equals("correct")) {
                                 answer = line[i - 1];
@@ -294,31 +309,14 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
                             sql = sql + "" + "', '";
                         }
                         sql = sql + line[3] + "')";
-                        //System.out.println(sql);
+                        String[] choice = {"", "", "", ""};
                         stmt.execute(sql);
                         Question question = new Question(sti.toIntType(line[0]),
                                 count, sti.toIntDiff(line[1]),
-                                line[2], null, line[3]);
+                                line[2], choice, line[3]);
                         ques.add(question);
                     }
-                    Question question = new Question(sti.toIntType(line[0]),
-                            count, sti.toIntDiff(line[1]),
-                            line[2], choice, answer);
-                    ques.add(question);
-                } else {
-                    // import FIB and TF
-                    String sql = "insert into Question values (" + count + ", '"
-                            + line[0] + "', '" + line[1] + "', '" + line[2] + "', '";
-                    for (int i = 3; i < 11; i++) {
-                        sql = sql + "" + "', '";
-                    }
-                    sql = sql + line[3] + "')";
-                   String[] choice = {"", "", "", ""};
-                    stmt.execute(sql);
-                    Question question = new Question(sti.toIntType(line[0]),
-                            count, sti.toIntDiff(line[1]),
-                            line[2], choice, line[3]);
-                    ques.add(question);
+                    count++;
                 }
             }
         } catch (SQLException se) {
@@ -348,8 +346,8 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
             ResultSet rs = stmt.executeQuery(sql);
 
             while (rs.next()) {
-                 String[] choice = new String[4];
-                 String[] key = {"A", "B", "C", "D"};
+                String[] choice = new String[4];
+                String[] key = {"A", "B", "C", "D"};
                 if (rs.getString("type").equals("MC") | rs.getString("type").equals("MA")) {
                     for (int i = 0; i < 4; i++) {
 
@@ -396,17 +394,17 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
             while (rs.next()) {
                 quizID.add(rs.getString(1));
                 date.add(rs.getDate(2));
-                
+
             }
         } catch (SQLException se) {
             System.out.println("Exception: " + se);
         }
-        
+
         HistoryRecord[] record = new HistoryRecord[quizID.size()];
         for (int i = 0; i < quizID.size(); i++) {
             record[i] = new HistoryRecord(quizID.get(i).toString(), date.get(i));
         }
-           
+
         return record;
     }
 
@@ -708,16 +706,10 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
         String pass = "";
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
-            md.reset();
-            md.update(passW.getBytes());
-            byte[] digest = md.digest();
-            BigInteger bigInt = new BigInteger(1, digest);
-            pass = bigInt.toString();
-
-        } catch (Exception e) {
-
-            System.out.println("Exception: " + e);
-
+            md.update(passW.getBytes(), 0, passW.length());
+            pass = new BigInteger(1, md.digest()).toString(16);
+        } catch (NoSuchAlgorithmException nae) {
+            System.out.println("NoSuchAlgorithmException @ login: " + nae);
         }
         return pass;
     }

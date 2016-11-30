@@ -30,6 +30,8 @@ public class Add_student_inputController implements Initializable {
     private Label msgLabel;
 
     @FXML
+    private Label hintLabel;
+    @FXML
     private Button addButton;
 
     @FXML
@@ -39,6 +41,8 @@ public class Add_student_inputController implements Initializable {
 
     @FXML
     private void addButtonAction(ActionEvent ae) {
+        hintLabel.setVisible(false);
+        msgLabel.setText("Processing, please wait...");
         msgLabel.setVisible(true);
 
         String andrewID = andrewIDTextField.getText();
@@ -51,6 +55,7 @@ public class Add_student_inputController implements Initializable {
                         = new PauseTransition(Duration.seconds(3));
                 visiblePause.setOnFinished(e -> {
                     msgLabel.setVisible(false);
+                    hintLabel.setVisible(true);
                 });
                 visiblePause.play();
             } else {
@@ -61,6 +66,8 @@ public class Add_student_inputController implements Initializable {
                         = new PauseTransition(Duration.seconds(3));
                 visiblePause.setOnFinished(e -> {
                     msgLabel.setVisible(false);
+                    hintLabel.setVisible(true);
+                    andrewIDTextField.clear();
                 });
                 visiblePause.play();
             }
@@ -72,6 +79,5 @@ public class Add_student_inputController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         addSuccess = false;
-        msgLabel.setVisible(false);
     }
 }

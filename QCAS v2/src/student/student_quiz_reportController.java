@@ -92,6 +92,7 @@ public class student_quiz_reportController implements Initializable {
         hidebtn.setVisible(false);
         questionDetailScrollPane.setVisible(false);
         questionLabel.setVisible(false);
+        
     }
 
     @FXML

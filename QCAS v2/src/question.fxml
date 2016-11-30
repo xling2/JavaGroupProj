@@ -22,16 +22,16 @@
             <Font name="System Bold" size="17.0" />
          </font>
       </Label>
-      <RadioButton fx:id="choice1" layoutX="34.0" layoutY="317.0" mnemonicParsing="false" onAction="#radioAction" text="RadioButton" textFill="WHITE" visible="false">
+      <RadioButton fx:id="choice1" layoutX="33.0" layoutY="317.0" mnemonicParsing="false" onAction="#radioAction" text="RadioButton" textFill="WHITE" visible="false">
          <toggleGroup>
             <ToggleGroup fx:id="select" />
          </toggleGroup>
       </RadioButton>
-      <RadioButton fx:id="choice2" layoutX="34.0" layoutY="362.0" mnemonicParsing="false" onAction="#radioAction" text="RadioButton" textFill="WHITE" toggleGroup="$select" visible="false" />
-      <RadioButton fx:id="choice3" layoutX="34.0" layoutY="408.0" mnemonicParsing="false" onAction="#radioAction" text="RadioButton" textFill="WHITE" toggleGroup="$select" visible="false" />
-      <RadioButton fx:id="choice4" layoutX="34.0" layoutY="454.0" mnemonicParsing="false" onAction="#radioAction" text="RadioButton" textFill="WHITE" toggleGroup="$select" visible="false" />
+      <RadioButton fx:id="choice2" layoutX="33.0" layoutY="362.0" mnemonicParsing="false" onAction="#radioAction" text="RadioButton" textFill="WHITE" toggleGroup="$select" visible="false" />
+      <RadioButton fx:id="choice3" layoutX="33.0" layoutY="408.0" mnemonicParsing="false" onAction="#radioAction" text="RadioButton" textFill="WHITE" toggleGroup="$select" visible="false" />
+      <RadioButton fx:id="choice4" layoutX="33.0" layoutY="454.0" mnemonicParsing="false" onAction="#radioAction" text="RadioButton" textFill="WHITE" toggleGroup="$select" visible="false" />
       <Button fx:id="preview" layoutX="482.0" layoutY="514.0" mnemonicParsing="false" onAction="#preview" prefHeight="27.0" prefWidth="93.0" stylesheets="@red-button-on-hover.css" text="&lt;&lt; Previous" />
-      <CheckBox fx:id="choice5" layoutX="35.0" layoutY="317.0" mnemonicParsing="false" onAction="#checkAction" text="CheckBox" textFill="WHITE" visible="false" />
+      <CheckBox fx:id="choice5" layoutX="33.0" layoutY="317.0" mnemonicParsing="false" onAction="#checkAction" text="CheckBox" textFill="WHITE" visible="false" />
       <CheckBox fx:id="choice6" layoutX="33.0" layoutY="362.0" mnemonicParsing="false" onAction="#checkAction" text="CheckBox" textFill="WHITE" visible="false" />
       <CheckBox fx:id="choice7" layoutX="33.0" layoutY="408.0" mnemonicParsing="false" onAction="#checkAction" text="CheckBox" textFill="WHITE" visible="false" />
       <CheckBox fx:id="choice8" layoutX="33.0" layoutY="454.0" mnemonicParsing="false" onAction="#checkAction" text="CheckBox" textFill="WHITE" visible="false" />

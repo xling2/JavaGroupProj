@@ -16,6 +16,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import qcas.GoPage;
+import qcas.popUpPage;
 import utilclass.HistoryRecord;
 
 /**
@@ -24,9 +25,9 @@ import utilclass.HistoryRecord;
  */
 public class view_historyController implements Initializable {
 
-	@FXML
+    @FXML
     private ListView<HistoryRecord> historyList;
-   
+
     @FXML
     private Label tips;
 
@@ -40,20 +41,20 @@ public class view_historyController implements Initializable {
     @FXML
     private ListView<?> historyListView;
 
+    private popUpPage pup = new popUpPage();
+
     @FXML
     private void backAction(ActionEvent event) {
-        if (goPage.userName.equals("instructor")) {
-            goPage.goPage("/Instructer_panel.fxml", tips);
-        } else {
-            goPage.goPage("/student_panel.fxml", tips);
-        }
+
+        goPage.goPage("/student_panel.fxml", tips);
 
     }
 
     @FXML
     private void viewGenerateReport(ActionEvent event) {
         //System.out.println("view_historyController.viewGenerateReport");
-        goPage.goPage("/student_general_report.fxml", tips, 438, 1000);
+        popUpPage.setParentScene(tips);
+        pup.open("/student_general_report.fxml");
     }
 
     @FXML
@@ -80,5 +81,9 @@ public class view_historyController implements Initializable {
         ObservableList<HistoryRecord> historyItems = FXCollections.observableArrayList(goPage.historyRecordItems);
         historyList.setItems(historyItems);
         tips.setVisible(false);
+        
+        if(GoPage.getGoPage().studentName.equals("instructor")){
+            backButton.setVisible(false);
+        }
     }
 }

@@ -34,7 +34,7 @@
          <children>
             <Button fx:id="addButton" layoutX="42.0" layoutY="45.0" mnemonicParsing="false" onAction="#addAction" prefHeight="30.0" prefWidth="62.0" stylesheets="@white-button-on-hover.css" text="Add" />
             <Button fx:id="deleteButton" layoutX="114.0" layoutY="44.0" mnemonicParsing="false" onAction="#deleteAction" prefHeight="33.0" prefWidth="65.0" stylesheets="@small-black-button-on-hover.css" text="Delete" />
-            <Button fx:id="viewButton" layoutX="229.0" layoutY="44.0" mnemonicParsing="false" onAction="#addAction" prefHeight="33.0" prefWidth="131.0" stylesheets="@red-button-on-hover.css" text="View performance" />
+            <Button fx:id="viewButton" layoutX="229.0" layoutY="44.0" mnemonicParsing="false" onAction="#viewAction" prefHeight="33.0" prefWidth="131.0" stylesheets="@red-button-on-hover.css" text="View performance" />
             <TableView fx:id="studentTable" layoutX="42.0" layoutY="107.0" prefHeight="261.0" prefWidth="318.0">
               <columns>
                 <TableColumn fx:id="andrewIDColumn" prefWidth="317.0" text="Andrew ID" />

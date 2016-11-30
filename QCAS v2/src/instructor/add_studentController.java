@@ -36,6 +36,10 @@ public class add_studentController implements Initializable {
 
     @FXML
     private Button backButton;
+    
+    @FXML
+    private Button viewButton;
+   
 
     @FXML
     private TableView<studentInTable> studentTable;
@@ -48,6 +52,11 @@ public class add_studentController implements Initializable {
     @FXML
     private TableColumn<studentInTable, String> andrewIDColumn;
 
+    private void viewAction(ActionEvent event) {
+        popUpPage.setParentScene(backButton);
+        pup.open("/view_history.fxml");
+    }
+    
     @FXML
     private void addAction(ActionEvent event) {
         popUpPage.setParentScene(backButton);
@@ -57,7 +66,6 @@ public class add_studentController implements Initializable {
             studentData = FXCollections.observableArrayList(createStudentTableList(GoPage.getGoPage().communicateWithServe.getAllStudent()));
             studentTable.setItems(studentData);
         }
-        
     }
 
     @FXML
@@ -96,7 +104,9 @@ public class add_studentController implements Initializable {
 
         ArrayList<studentInTable> studentList = new ArrayList<>();
         for (String s : studentIDList) {
-            studentList.add(0, new studentInTable(s));
+            if (!s.equals("instructor")) {
+                studentList.add(0, new studentInTable(s));
+            }
         }
         return studentList;
     }

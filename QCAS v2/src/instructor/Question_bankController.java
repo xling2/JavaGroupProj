@@ -171,7 +171,7 @@ public class Question_bankController implements Initializable {
                     new TableUse(q.questionID,
                             Question.TYPENAME[q.questionType],
                             Question.DIFFICULTY[q.questionDifficult],
-                            q.getCorrectAnswer(),
+                            q.correctAnswer,
                             description));
         }
         return questionTableList;

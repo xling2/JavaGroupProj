@@ -75,6 +75,7 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
                 GoPage.getGoPage().studentName = userName;
                 loginSuccess = true;
                 System.out.println(loginSuccess);
+                System.out.println(GoPage.getGoPage().studentName);
             }
         } catch (SQLException e) {
             System.out.println("SQL Exception @ login: " + e);

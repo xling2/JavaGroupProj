@@ -55,19 +55,5 @@ public class Question {
         return s;
     }
 
-    public String getCorrectAnswer() {
-        String s = correctAnswer;
-        String result;
-        if (questionType == 0) {
 
-            s = s.substring(s.indexOf("\n") + 1);
-            s = "- " + s;
-            result = s.replace("\n", "\n- ");
-            return result;
-
-        }else{
-            return s;
-        }
-        
-    }
 }

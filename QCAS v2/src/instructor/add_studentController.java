@@ -52,8 +52,14 @@ public class add_studentController implements Initializable {
     @FXML
     private TableColumn<studentInTable, String> andrewIDColumn;
 
+    @FXML
     private void viewAction(ActionEvent event) {
         popUpPage.setParentScene(backButton);
+        ObservableList<studentInTable> studentListSelected;
+        studentListSelected = studentTable.getSelectionModel().getSelectedItems();
+        
+        GoPage.getGoPage().studentName = studentListSelected.get(0).getAndrewID();
+        
         pup.open("/view_history.fxml");
     }
     

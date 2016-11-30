@@ -23,7 +23,6 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.Statement;
 import qcas.GoPage;
 
-
 public class TestCommunicate extends Communicate1 implements ICommunicate2 {
 
     private String quizUrl = "jdbc:derby:QuizDB;"
@@ -37,8 +36,7 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
 
     @Override
     public Question[] getRandomQuestionListOfQuiz(int quizDifficulty, int questionNumber) {
- 
-              
+
         return comm.getRandomQuestion(quizDifficulty, questionNumber);
     }
 
@@ -48,8 +46,6 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
         comm.createTableQuiz(quizResult);
         comm.insertTableQuiz(quizResult);
     }
-
-    
 
     @Override
     public boolean login(String userName, String password) {
@@ -73,9 +69,14 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
             ResultSet userRS = pStmt.executeQuery();
             if (userRS.next()) {
                 GoPage.getGoPage().studentName = userName;
+                GoPage.getGoPage().userName = 
+                        (userName.equals("instructor")) ? "instructor" : "student";             
+                System.out.println("GoPage.getGoPage().userName: " + 
+                        GoPage.getGoPage().userName);
                 loginSuccess = true;
                 System.out.println(loginSuccess);
-                System.out.println(GoPage.getGoPage().studentName);
+                System.out.println("GoPage.getGoPage().studentName: " +
+                        GoPage.getGoPage().studentName);
             }
         } catch (SQLException e) {
             System.out.println("SQL Exception @ login: " + e);
@@ -85,24 +86,21 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
 
     @Override
     public Question[] importQuestionFromCSV(File CSVFile) {
-        
+
         comm.createTableQuestion();
         return comm.insertQuestion(CSVFile);
 
     }
 
-    
-    
     @Override
-    public Question[] getAllQuestions(){
-        
+    public Question[] getAllQuestions() {
+
         return comm.getAllQuestions();
     }
 
     @Override
     public HistoryRecord[] getHistoryRecordFromServeByStudentName(String studentName) {
-        
-           
+
         return comm.getHistoryRecord(studentName);
     }
 
@@ -115,13 +113,12 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
     @Override
     public int[] getStudentAllRecordScoreByStudentName(String studentName) {
 
-        
         return comm.getStudentAllRecordScore(studentName);
     }
 
     @Override
     public String[] getStudentRecordDateByStudentName(String studentName) {
-        
+
         return comm.getStudentRecordDate(studentName);
     }
 
@@ -135,43 +132,41 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
     public boolean addStudent(String text) {
         boolean success = false;
         comm.createTable();
-        
+
         if (!comm.checkID(text)) {
             comm.createPassword();
             comm.sendMail(text);
             comm.insertStudent(comm.encryptPassW(), text);
             success = true;
         }
-        
+
         return success;
 
     }
 
-    
-
     @Override
     public ArrayList<String> getAllStudent() {
-       
+
         return comm.getAllStudent();
     }
 
     @Override
     public boolean deleteStudent(String andrewID) {
-        
+
         comm.deleteStudent(andrewID);
         return true;
 
     }
-    
+
     public void deleteById(int questionID) {
-       String sql = "DELETE FROM QUESTION WHERE NUMBER = " + questionID;  
-       try (Connection con = DriverManager.getConnection(quizUrl, quizUsername, quizPassword)){
-           Statement stmt = con.createStatement();
-           stmt.execute(sql);
-           // add a check, whether successfully deleted?
-        }catch (SQLException e) {
+        String sql = "DELETE FROM QUESTION WHERE NUMBER = " + questionID;
+        try (Connection con = DriverManager.getConnection(quizUrl, quizUsername, quizPassword)) {
+            Statement stmt = con.createStatement();
+            stmt.execute(sql);
+            // add a check, whether successfully deleted?
+        } catch (SQLException e) {
             System.out.println("Exception creating connection: " + e);
-           
+
         }
 
     }

@@ -12,7 +12,6 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import qcas.GoPage;
@@ -23,22 +22,12 @@ import utilclass.HistoryRecord;
  * @author mica
  */
 public class view_historyController implements Initializable {
-
-	@FXML
-    private ListView<HistoryRecord> historyList;
    
     @FXML
     private Label tips;
 
     @FXML
-    private Button generateReportButton;
-
-    @FXML
-    private Button viewReportButton;
-    @FXML
-    private Button backButton;
-    @FXML
-    private ListView<?> historyListView;
+    private ListView<HistoryRecord> historyListView;
 
     @FXML
     private void backAction(ActionEvent event) {
@@ -58,11 +47,11 @@ public class view_historyController implements Initializable {
 
     @FXML
     private void viewReport(ActionEvent event) {
-        if (historyList.getSelectionModel().getSelectedIndex() == -1) {
+        if (historyListView.getSelectionModel().getSelectedIndex() == -1) {
             tips.setVisible(true);
         } else {
             tips.setVisible(false);
-            goPage.getQuizFromServeById(historyList.getSelectionModel().getSelectedItem().quizId);
+            goPage.getQuizFromServeById(historyListView.getSelectionModel().getSelectedItem().quizId);
             goPage.back = "/view_history.fxml";
             goPage.backX = tips.getScene().getWidth();
             goPage.backY = tips.getScene().getHeight();
@@ -78,7 +67,7 @@ public class view_historyController implements Initializable {
         goPage = GoPage.getGoPage();
         goPage.getStudentHistoryRecordFromServe();
         ObservableList<HistoryRecord> historyItems = FXCollections.observableArrayList(goPage.historyRecordItems);
-        historyList.setItems(historyItems);
+        historyListView.setItems(historyItems);
         tips.setVisible(false);
     }
 }

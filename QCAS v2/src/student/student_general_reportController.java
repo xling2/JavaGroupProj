@@ -135,8 +135,7 @@ public class student_general_reportController implements Initializable {
         quizRecord.getData().add(series);
     }
 
-    @FXML
-    private Label quizzesNumer;
+
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -149,6 +148,10 @@ public class student_general_reportController implements Initializable {
             totalScore += goPage.getOneStudentScoresOfAllRecord()[i];
         }
         averageScore.setText(totalScore / goPage.getOneStudentScoresOfAllRecord().length + "");
+        
+        System.out.println("goPage.getOneStudentScoresOfAllRecord().length: " 
+                + goPage.getOneStudentScoresOfAllRecord().length);
+        
         initialBarChart();
         initialLineChart();
     }

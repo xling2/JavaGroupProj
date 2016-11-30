@@ -9,10 +9,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<ScrollPane prefHeight="499.0" prefWidth="572.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="instructor.instructor_review_quizzs_general_detailController">
+<ScrollPane prefHeight="499.0" prefWidth="572.0" style="-fx-background-color: rgb(51,51,51);" stylesheets="@dark-scroll-pane.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="instructor.instructor_review_quizzs_general_detailController">
    <content>
-      <Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="600.0" style="-fx-background-color: rgb(51,51,51);" stylesheets="@no-divider.css">
+      <Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="551.0" style="-fx-background-color: rgb(51,51,51);" stylesheets="@no-divider.css">
          <children>
             <Label layoutX="50.0" layoutY="44.0" text="Quizzes review" textFill="WHITE">
                <font>
@@ -110,8 +109,8 @@
             </Label>
             <Label fx:id="tips" alignment="CENTER" layoutX="49.0" layoutY="712.0" prefHeight="53.0" prefWidth="332.0" text="Export failed, File is exist." textFill="RED" visible="false" wrapText="true" />
             <Label fx:id="successedTips" alignment="CENTER" layoutX="59.0" layoutY="708.0" prefHeight="59.0" prefWidth="292.0" text="success" textFill="LIME" visible="false" wrapText="true" />
-            <Button fx:id="export" layoutX="438.0" layoutY="49.0" mnemonicParsing="false" onAction="#export" stylesheets="@red-button-on-hover.css" text="Export to PDF" />
-            <LineChart fx:id="lineChart" layoutX="49.0" layoutY="533.0" prefHeight="204.0" prefWidth="489.0">
+            <Button fx:id="export" layoutX="428.0" layoutY="49.0" mnemonicParsing="false" onAction="#export" stylesheets="@red-button-on-hover.css" text="Export to PDF" />
+            <LineChart fx:id="lineChart" layoutX="38.0" layoutY="533.0" prefHeight="204.0" prefWidth="489.0">
                <xAxis>
                   <CategoryAxis side="BOTTOM" tickLabelFill="WHITE" />
                </xAxis>

@@ -8,66 +8,71 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="600.0" style="-fx-background-color: rgb(51,51,51);" stylesheets="@no-divider.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="instructor.instructor_review_quizzs_detailController">
-   <children>
-      <BarChart fx:id="difficultyChart" focusTraversable="false" horizontalGridLinesVisible="true" horizontalZeroLineVisible="true" layoutX="-265.0" layoutY="111.0" legendVisible="false" mouseTransparent="false" prefHeight="283.0" prefWidth="805.0" verticalGridLinesVisible="false" verticalZeroLineVisible="true">
-         <xAxis>
-            <NumberAxis animated="false" autoRanging="false" minorTickCount="2" minorTickLength="2.0" prefHeight="125.0" prefWidth="28.0" side="TOP" tickLabelFill="WHITE" tickUnit="50.0" />
-         </xAxis>
-         <yAxis>
-            <CategoryAxis prefHeight="26.0" prefWidth="311.0" side="LEFT" tickLabelFill="WHITE" />
-         </yAxis>
-      </BarChart>
-      <Label layoutX="55.0" layoutY="44.0" text="Quizzes review" textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="31.0" />
-         </font>
-      </Label>
-      <Label layoutX="61.0" layoutY="109.0" text="Number fo quizzes taken:" textFill="#bfbfbf">
-         <font>
-            <Font name="System Bold" size="16.0" />
-         </font>
-      </Label>
-      <Label layoutX="62.0" layoutY="142.0" text="Average Score:" textFill="#bfbfbf">
-         <font>
-            <Font name="System Bold" size="16.0" />
-         </font>
-      </Label>
-      <Label layoutX="62.0" layoutY="193.0" text="Score vs. Difficulty" textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="23.0" />
-         </font>
-      </Label>
-      <Label layoutX="62.0" layoutY="423.0" text="Detailed performance" textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="23.0" />
-         </font>
-      </Label>
-      <ListView fx:id="studentList" layoutX="59.0" layoutY="505.0" prefHeight="200.0" prefWidth="316.0" />
-      <Label fx:id="tips" alignment="CENTER" layoutX="49.0" layoutY="712.0" prefHeight="53.0" prefWidth="332.0" text="Export failed, File is exist." textFill="RED" visible="false" wrapText="true" />
-      <Label fx:id="successedTips" alignment="CENTER" layoutX="59.0" layoutY="708.0" prefHeight="59.0" prefWidth="292.0" text="success" textFill="LIME" visible="false" wrapText="true" />
-      <Button fx:id="export" layoutX="456.0" layoutY="51.0" mnemonicParsing="false" onAction="#export" stylesheets="@red-button-on-hover.css" text="Export to PDF" />
-      <Label fx:id="checkTips" layoutX="143.0" layoutY="721.0" text="Select to check student's quiz report." textFill="WHITE">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Label>
-      <Button layoutX="59.0" layoutY="718.0" mnemonicParsing="false" onAction="#checkStudent" prefHeight="25.0" prefWidth="61.0" stylesheets="@red-button-on-hover.css" text="Check" />
-      <Label fx:id="quizzesNumber" layoutX="268.0" layoutY="110.0" text="3" textFill="RED">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Label>
-      <Label fx:id="averageScore" layoutX="189.0" layoutY="143.0" text="3" textFill="RED">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Label>
-      <ChoiceBox fx:id="passOrFail" layoutX="58.0" layoutY="466.0" prefHeight="27.0" prefWidth="137.0" style="-fx-background-color: white;" />
-      <Label fx:id="reviewTimeLabel" layoutX="284.0" layoutY="49.0" prefHeight="31.0" prefWidth="145.0" text="- last month" textFill="WHITE">
-         <font>
-            <Font size="22.0" />
-         </font>
-      </Label>
-   </children>
-</Pane>
+<ScrollPane prefHeight="499.0" prefWidth="572.0" style="-fx-background-color: rgb(51,51,51);" stylesheets="@dark-scroll-pane.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="instructor.instructor_review_quizzs_detailController">
+   <content>
+      <Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="799.0" prefWidth="551.0" style="-fx-background-color: rgb(51,51,51);" stylesheets="@no-divider.css">
+         <children>
+            <BarChart fx:id="difficultyChart" focusTraversable="false" horizontalGridLinesVisible="true" horizontalZeroLineVisible="true" layoutX="-245.0" layoutY="111.0" legendVisible="false" mouseTransparent="false" prefHeight="283.0" prefWidth="725.0" verticalGridLinesVisible="false" verticalZeroLineVisible="true">
+               <xAxis>
+                  <NumberAxis animated="false" autoRanging="false" minorTickCount="2" minorTickLength="2.0" prefHeight="125.0" prefWidth="28.0" side="TOP" tickLabelFill="WHITE" tickUnit="50.0" />
+               </xAxis>
+               <yAxis>
+                  <CategoryAxis prefHeight="26.0" prefWidth="311.0" side="LEFT" tickLabelFill="WHITE" />
+               </yAxis>
+            </BarChart>
+            <Label layoutX="55.0" layoutY="44.0" text="Quizzes review" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="31.0" />
+               </font>
+            </Label>
+            <Label layoutX="61.0" layoutY="109.0" text="Quizzes taken:" textFill="#bfbfbf">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="62.0" layoutY="142.0" text="Average Score:" textFill="#bfbfbf">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="62.0" layoutY="193.0" text="Score vs. Difficulty" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="23.0" />
+               </font>
+            </Label>
+            <Label layoutX="62.0" layoutY="423.0" text="Detailed performance" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="23.0" />
+               </font>
+            </Label>
+            <ListView fx:id="studentList" layoutX="66.0" layoutY="505.0" prefHeight="200.0" prefWidth="316.0" />
+            <Label fx:id="failTip" alignment="CENTER" layoutX="419.0" layoutY="76.0" prefHeight="32.0" prefWidth="98.0" text="Export failed." textFill="RED" visible="false" wrapText="true" />
+            <Label fx:id="successTip" alignment="CENTER" layoutX="391.0" layoutY="69.0" prefHeight="59.0" prefWidth="132.0" text="Exported to desktop." textFill="LIME" visible="false" wrapText="true" />
+            <Button fx:id="export" layoutX="415.0" layoutY="51.0" mnemonicParsing="false" onAction="#export" stylesheets="@red-button-on-hover.css" text="Export to PDF" />
+            <Label fx:id="checkTips" layoutX="143.0" layoutY="721.0" text="Select to check student's report." textFill="WHITE">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Button layoutX="67.0" layoutY="718.0" mnemonicParsing="false" onAction="#checkStudent" prefHeight="25.0" prefWidth="61.0" stylesheets="@red-button-on-hover.css" text="Check" />
+            <Label fx:id="quizzesNumber" layoutX="188.0" layoutY="110.0" text="3" textFill="RED">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="averageScore" layoutX="189.0" layoutY="143.0" text="3" textFill="RED">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <ChoiceBox fx:id="passOrFail" layoutX="66.0" layoutY="466.0" prefHeight="27.0" prefWidth="137.0" style="-fx-background-color: white;" />
+            <Label fx:id="reviewTimeLabel" layoutX="279.0" layoutY="49.0" prefHeight="31.0" prefWidth="145.0" text="-last month" textFill="WHITE">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Label>
+            <Label fx:id="existLabel" alignment="CENTER" layoutX="419.0" layoutY="94.0" prefHeight="32.0" prefWidth="98.0" text="File existed." textFill="RED" visible="false" wrapText="true" />
+         </children>
+      </Pane>
+   </content>
+</ScrollPane>

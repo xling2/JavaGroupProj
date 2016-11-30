@@ -447,17 +447,14 @@ public class Communicate {
 
     public int[] getStudentAllRecordScore(String studentName) {
 
-        String ID = studentName;
-        ArrayList<Integer> score = new ArrayList();
-        ArrayList<Integer> num = new ArrayList();
+         ArrayList<Integer> score = new ArrayList();
         try (Connection con = DriverManager.getConnection(quizUrl,
                 quizUsername, quizPassword)) {
             Statement stmt = con.createStatement();
-            String sql = "Select score,　number from " + studentName;
+            String sql = "Select score from " + studentName;
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 score.add(rs.getInt(1));
-                num.add(rs.getInt(2));
             }
 
         } catch (SQLException se) {
@@ -465,7 +462,7 @@ public class Communicate {
         }
         int[] scores = new int[score.size()];
         for (int i = 0; i < score.size(); i++) {
-            scores[i] = (int) ((((double) score.get(i) / num.get(i))) * 100);
+            scores[i] = score.get(i);
         }
         return scores;
     }

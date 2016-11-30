@@ -12,6 +12,16 @@ import utilclass.HistoryRecord;
 import utilclass.Question;
 import utilclass.QuizOfStudent;
 import utilclass.Communicate;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.security.NoSuchAlgorithmException;
+import java.sql.Statement;
+import qcas.GoPage;
 
 
 public class TestCommunicate extends Communicate1 implements ICommunicate2 {
@@ -23,7 +33,6 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
     private String userUrl = "jdbc:derby:UserDB; create=true";
     private String userUsername = "user";
     private String userPassword = "user";
-    private String passW;
     Communicate comm = new Communicate();
 
     @Override
@@ -123,13 +132,16 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
 
     @Override
     public boolean addStudent(String text) {
+        boolean success = false;
         comm.createTable();
+        
         if (!comm.checkID(text)) {
             comm.createPassword();
-            comm.sendMail(text, passW);
+            comm.sendMail(text);
             comm.insertStudent(comm.encryptPassW(), text);
+            success = true;
         }
-        boolean success = true;
+        
         return success;
 
     }
@@ -147,6 +159,19 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
         
         comm.deleteStudent(andrewID);
         return true;
+
+    }
+    
+    public void deleteById(int questionID) {
+       String sql = "DELETE FROM QUESTION WHERE NUMBER = " + questionID;  
+       try (Connection con = DriverManager.getConnection(quizUrl, quizUsername, quizPassword)){
+           Statement stmt = con.createStatement();
+           stmt.execute(sql);
+           // add a check, whether successfully deleted?
+        }catch (SQLException e) {
+            System.out.println("Exception creating connection: " + e);
+           
+        }
 
     }
 

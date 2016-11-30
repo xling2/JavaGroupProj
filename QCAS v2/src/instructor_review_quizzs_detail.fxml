@@ -8,7 +8,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<ScrollPane prefHeight="499.0" prefWidth="572.0" style="-fx-background-color: rgb(51,51,51);" stylesheets="@dark-scroll-pane.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="instructor.instructor_review_quizzs_detailController">
+<ScrollPane fx:id="wholeScrollPane" prefHeight="499.0" prefWidth="572.0" style="-fx-background-color: rgb(51,51,51);" stylesheets="@dark-scroll-pane.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="instructor.instructor_review_quizzs_detailController">
    <content>
       <Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="799.0" prefWidth="551.0" style="-fx-background-color: rgb(51,51,51);" stylesheets="@no-divider.css">
          <children>
@@ -20,27 +20,27 @@
                   <CategoryAxis prefHeight="26.0" prefWidth="311.0" side="LEFT" tickLabelFill="WHITE" />
                </yAxis>
             </BarChart>
-            <Label layoutX="55.0" layoutY="44.0" text="Quizzes review" textFill="WHITE">
+            <Label layoutX="35.0" layoutY="44.0" text="Quizzes review" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="31.0" />
                </font>
             </Label>
-            <Label layoutX="61.0" layoutY="109.0" text="Quizzes taken:" textFill="#bfbfbf">
+            <Label layoutX="41.0" layoutY="109.0" text="Quizzes taken:" textFill="#bfbfbf">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
             </Label>
-            <Label layoutX="62.0" layoutY="142.0" text="Average Score:" textFill="#bfbfbf">
+            <Label layoutX="42.0" layoutY="142.0" text="Average score:" textFill="#bfbfbf">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
             </Label>
-            <Label layoutX="62.0" layoutY="193.0" text="Score vs. Difficulty" textFill="WHITE">
+            <Label layoutX="42.0" layoutY="193.0" text="Score vs. Difficulty" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="23.0" />
                </font>
             </Label>
-            <Label layoutX="62.0" layoutY="423.0" text="Detailed performance" textFill="WHITE">
+            <Label layoutX="42.0" layoutY="423.0" text="Detailed performance" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="23.0" />
                </font>
@@ -55,18 +55,18 @@
                </font>
             </Label>
             <Button layoutX="67.0" layoutY="718.0" mnemonicParsing="false" onAction="#checkStudent" prefHeight="25.0" prefWidth="61.0" stylesheets="@red-button-on-hover.css" text="Check" />
-            <Label fx:id="quizzesNumber" layoutX="188.0" layoutY="110.0" text="3" textFill="RED">
+            <Label fx:id="quizzesNumber" layoutX="168.0" layoutY="110.0" text="3" textFill="RED">
                <font>
                   <Font size="16.0" />
                </font>
             </Label>
-            <Label fx:id="averageScore" layoutX="189.0" layoutY="143.0" text="3" textFill="RED">
+            <Label fx:id="averageScore" layoutX="169.0" layoutY="143.0" text="3" textFill="RED">
                <font>
                   <Font size="16.0" />
                </font>
             </Label>
             <ChoiceBox fx:id="passOrFail" layoutX="66.0" layoutY="466.0" prefHeight="27.0" prefWidth="137.0" style="-fx-background-color: white;" />
-            <Label fx:id="reviewTimeLabel" layoutX="279.0" layoutY="49.0" prefHeight="31.0" prefWidth="145.0" text="-last month" textFill="WHITE">
+            <Label fx:id="reviewTimeLabel" layoutX="259.0" layoutY="49.0" prefHeight="31.0" prefWidth="145.0" text="-last month" textFill="WHITE">
                <font>
                   <Font size="22.0" />
                </font>

@@ -52,7 +52,7 @@ public class instructor_review_quizzs_detailController implements Initializable 
                 "General record"};
     @FXML
     private ScrollPane wholeScrollPane;
-    
+
     @FXML
     private Pane pane;
 
@@ -61,7 +61,7 @@ public class instructor_review_quizzs_detailController implements Initializable 
 
     @FXML
     private Label failTip;
-    
+
     @FXML
     private Label existLabel;
 
@@ -80,10 +80,13 @@ public class instructor_review_quizzs_detailController implements Initializable 
     @FXML
     private Label averageScore;
 
+    @FXML
+    private Label reviewTimeLabel;
+
     private GoPage goPage;
 
     @FXML
-    private void backAction(ActionEvent event){
+    private void backAction(ActionEvent event) {
         GoPage.getGoPage().goPage("/Instructer_panel.fxml", pane);
     }
 
@@ -166,17 +169,24 @@ public class instructor_review_quizzs_detailController implements Initializable 
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        wholeScrollPane.setVvalue(0.0);
+
         goPage = GoPage.getGoPage();
         //get some data from serve
+        String period = (GoPage.getGoPage().quizzsReviewSelectOfInstructor == 0) ? 
+                "-last month" : 
+                (GoPage.getGoPage().quizzsReviewSelectOfInstructor == 1) ? 
+                "-last quarter" : "-last year";
+
+        reviewTimeLabel.setText(period);
+
         goPage.numberOfQuizzesTakenOfAll = goPage.communicateWithServe.getLastNumberOfALLQuizzes();
         goPage.averageScoreOfAll = goPage.communicateWithServe.getlastAverageOfALLQuizzes();
         //some initial
         quizzesNumber.setText(goPage.numberOfQuizzesTakenOfAll[goPage.quizzsReviewSelectOfInstructor] + "");
         averageScore.setText(goPage.averageScoreOfAll[goPage.quizzsReviewSelectOfInstructor] + "");
-        
+
         passOrFail.setItems(FXCollections.observableArrayList("Students Passed", "Students Failed"));
-        
+
         // select initial
         initialBarChart();
         // ListView default
@@ -200,7 +210,7 @@ public class instructor_review_quizzs_detailController implements Initializable 
                 }
             }
         });
-
+        wholeScrollPane.setVvalue(0.0);
     }
 
 }

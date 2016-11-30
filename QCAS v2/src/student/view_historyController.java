@@ -24,50 +24,38 @@ import utilclass.HistoryRecord;
  * @author mica
  */
 public class view_historyController implements Initializable {
-
-    @FXML
-    private ListView<HistoryRecord> historyList;
-
+   
     @FXML
     private Label tips;
-
-    @FXML
-    private Button generateReportButton;
-
-    @FXML
-    private Button viewReportButton;
+    
     @FXML
     private Button backButton;
+
     @FXML
-    private ListView<?> historyListView;
+    private ListView<HistoryRecord> historyListView;
 
     private popUpPage pup = new popUpPage();
-
     @FXML
-    private void backAction(ActionEvent event) {
-
-        goPage.goPage("/student_panel.fxml", tips);
+    private void backAction(ActionEvent event) {  
+            goPage.goPage("/student_panel.fxml", tips);
 
     }
 
     @FXML
     private void viewGenerateReport(ActionEvent event) {
         //System.out.println("view_historyController.viewGenerateReport");
-        popUpPage.setParentScene(tips);
-        pup.open("/student_general_report.fxml");
+        goPage.goPage("/student_general_report.fxml", tips, 438, 1000);
     }
 
     @FXML
     private void viewReport(ActionEvent event) {
-        if (historyList.getSelectionModel().getSelectedIndex() == -1) {
+        if (historyListView.getSelectionModel().getSelectedIndex() == -1) {
             tips.setVisible(true);
         } else {
             tips.setVisible(false);
-            goPage.getQuizFromServeById(historyList.getSelectionModel().getSelectedItem().quizId);
-            goPage.back = "/view_history.fxml";
-            goPage.backX = tips.getScene().getWidth();
-            goPage.backY = tips.getScene().getHeight();
-            goPage.goPage("/student_quiz_report_onetime.fxml", tips, 438, 1000);
+            goPage.getQuizFromServeById(historyListView.getSelectionModel().getSelectedItem().quizId);
+            popUpPage.setParentScene(tips);
+            pup.open("/student_quiz_report_onetime.fxml");
         }
     }
 
@@ -79,10 +67,10 @@ public class view_historyController implements Initializable {
         goPage = GoPage.getGoPage();
         goPage.getStudentHistoryRecordFromServe();
         ObservableList<HistoryRecord> historyItems = FXCollections.observableArrayList(goPage.historyRecordItems);
-        historyList.setItems(historyItems);
+        historyListView.setItems(historyItems);
         tips.setVisible(false);
         
-        if(GoPage.getGoPage().studentName.equals("instructor")){
+        if(goPage.studentName.equals("instructor")){
             backButton.setVisible(false);
         }
     }

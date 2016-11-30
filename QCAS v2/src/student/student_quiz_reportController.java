@@ -15,6 +15,7 @@ import java.util.ResourceBundle;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.pdf.PdfWriter;
+import javafx.animation.PauseTransition;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -35,6 +36,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 import pdfutil.PDFGeneral;
 import qcas.GoPage;
 import utilclass.Answer;
@@ -50,7 +52,9 @@ public class student_quiz_reportController implements Initializable {
     @FXML
     private ScrollPane wholeScrollPane;
     @FXML
-    private Label tips;
+    private Label failTip;
+    @FXML
+    private Label successTip;
     @FXML
     private Label name;
     @FXML
@@ -72,7 +76,8 @@ public class student_quiz_reportController implements Initializable {
     @FXML
     private Button hidebtn;
     @FXML
-    private Label successedTips;
+    private Label existLabel;
+
     @FXML
     private BarChart<Number, String> difficultyChart;
 
@@ -92,12 +97,12 @@ public class student_quiz_reportController implements Initializable {
         hidebtn.setVisible(false);
         questionDetailScrollPane.setVisible(false);
         questionLabel.setVisible(false);
-        
+
     }
 
     @FXML
     private void export(ActionEvent event) {
-        File folder = new File("./Ouptput");
+        File folder = new File(System.getProperty("user.home"), "Desktop");
         if (!folder.exists()) {
             folder.mkdirs();
         }
@@ -107,9 +112,15 @@ public class student_quiz_reportController implements Initializable {
                 + "_quiz_report" + ".PDF";
         File exportPDF = new File(folder + "/" + documentName);
         if (exportPDF.exists()) {
-            successedTips.setVisible(false);
-            tips.setText("Export failed, report already exist.");
-            tips.setVisible(true);
+            failTip.setVisible(true);
+            existLabel.setVisible(true);
+            PauseTransition visiblePause
+                    = new PauseTransition(Duration.seconds(3));
+            visiblePause.setOnFinished(e -> {
+                failTip.setVisible(false);
+                existLabel.setVisible(false);
+            });
+            visiblePause.play();
         } else {
             try {
                 PdfWriter.getInstance(document, new FileOutputStream(folder + "/" + documentName));
@@ -132,14 +143,22 @@ public class student_quiz_reportController implements Initializable {
                 PDFGeneral.addQuestionList(document,
                         new ArrayList<Question>(Arrays.asList(goPage.quizOfCurrentCheck.questionsOfQuiz)));
                 document.close();
-                tips.setVisible(false);
-                successedTips.setText("Export successed, file in " + folder.getAbsolutePath() + "/" + documentName);
-                successedTips.setVisible(true);
+                successTip.setVisible(true);
+                PauseTransition visiblePause
+                        = new PauseTransition(Duration.seconds(3));
+                visiblePause.setOnFinished(e -> {
+                    successTip.setVisible(false);
+                });
+                visiblePause.play();
             } catch (Exception e) {
                 e.printStackTrace();
-                successedTips.setVisible(false);
-                tips.setText("Export failed, Please check your config is right.");
-                tips.setVisible(true);
+                failTip.setVisible(true);
+                PauseTransition visiblePause
+                        = new PauseTransition(Duration.seconds(3));
+                visiblePause.setOnFinished(E -> {
+                    failTip.setVisible(false);
+                });
+                visiblePause.play();
             }
         }
     }
@@ -182,8 +201,6 @@ public class student_quiz_reportController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         goPage = GoPage.getGoPage();
-        tips.setVisible(false);
-        successedTips.setVisible(false);
         name.setText(goPage.quizOfCurrentCheck.studentName);
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         time.setText(df.format(goPage.quizOfCurrentCheck.finishDate));
@@ -251,9 +268,8 @@ public class student_quiz_reportController implements Initializable {
                                 .equals(goPage.quizOfCurrentCheck.questionsOfQuiz[getIndex()].correctAnswer)) {
                             text.setFill(Color.RED); // The text in red
                         }
-                        
+
                         setGraphic(text);
-                        
 
                     }
                 }

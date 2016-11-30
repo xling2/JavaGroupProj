@@ -76,23 +76,24 @@
               </xAxis>
             </BarChart>
             <Button fx:id="hidebtn" layoutX="470.0" layoutY="285.0" mnemonicParsing="false" onAction="#hideAction" stylesheets="@small-black-button-on-hover.css" text="hide" />
-            <TableView fx:id="table" layoutX="24.0" layoutY="286.0" prefHeight="236.0" prefWidth="429.0" style="-fx-background-color: rgb(51,51,51);">
+            <TableView fx:id="table" layoutX="24.0" layoutY="286.0" prefHeight="236.0" prefWidth="432.0" style="-fx-background-color: rgb(51,51,51);">
               <columns>
                 <TableColumn fx:id="number" editable="false" prefWidth="36.0" text="No." />
                 <TableColumn fx:id="questionType" editable="false" prefWidth="67.0" text="Type" />
-                  <TableColumn fx:id="difficulty" editable="false" prefWidth="137.0" text="Difficulties" />
+                  <TableColumn fx:id="difficulty" editable="false" prefWidth="137.0" text="Difficulty" />
                   <TableColumn fx:id="answer" editable="false" prefWidth="173.0" sortable="false" text="Your Answer" />
               </columns>
             </TableView>
-            <Label fx:id="tips" alignment="CENTER" layoutX="450.0" layoutY="77.0" prefHeight="31.0" prefWidth="102.0" text="Export failed." textFill="RED" visible="false" wrapText="true" />
-            <Label fx:id="successedTips" alignment="CENTER" layoutX="443.0" layoutY="80.0" prefHeight="25.0" prefWidth="117.0" text="Export succeeded." textFill="LIME" visible="false" wrapText="true" />
-            <Label layoutX="25.0" layoutY="262.0" prefHeight="17.0" prefWidth="380.0" text="- Double click the question to check the detail" textFill="#b5b5b5" />
+            <Label fx:id="failTip" alignment="CENTER" layoutX="434.0" layoutY="77.0" prefHeight="31.0" prefWidth="102.0" text="Export failed." textFill="RED" visible="false" wrapText="true" />
+            <Label fx:id="successTip" alignment="CENTER" layoutX="396.0" layoutY="80.0" prefHeight="25.0" prefWidth="150.0" text="Exported to desktop. " textFill="LIME" visible="false" wrapText="true" />
+            <Label layoutX="25.0" layoutY="263.0" prefHeight="17.0" prefWidth="380.0" text="- Double click the question to check the detail" textFill="#b5b5b5" />
             <Label layoutX="374.0" layoutY="246.0" text="RED" textFill="RED" />
             <ScrollPane fx:id="questionDetailScrollPane" layoutX="25.0" layoutY="98.0" prefHeight="187.0" prefViewportHeight="197.0" prefViewportWidth="446.0" prefWidth="427.0" style="-fx-background-color: rgba(243,244,212,20); -fx-background-radius: 5 5 0 0;" stylesheets="@dark-scroll-pane.css" visible="false">
                <content>
                   <Label fx:id="questionLabel" alignment="TOP_LEFT" prefHeight="180.0" prefWidth="403.0" style="-fx-border-color: white; -fx-border-radius: 5;" visible="false" wrapText="true" />
                </content>
             </ScrollPane>
+            <Label fx:id="existLabel" layoutX="453.0" layoutY="101.0" text="File exists." textFill="RED" visible="false" />
          </children>
       </Pane>
    </content>

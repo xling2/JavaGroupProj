@@ -14,6 +14,7 @@ import java.util.ResourceBundle;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.pdf.PdfWriter;
+import javafx.animation.PauseTransition;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -24,6 +25,7 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Data;
 import javafx.scene.chart.XYChart.Series;
 import javafx.scene.control.Label;
+import javafx.util.Duration;
 import qcas.GoPage;
 import pdfutil.PDFGeneral;
 
@@ -34,15 +36,18 @@ import pdfutil.PDFGeneral;
 public class student_general_reportController implements Initializable {
 
     @FXML
-    private Label tips;
+    private Label successTip;
     @FXML
-    private Label studentName;
+    private Label failTip;
+    @FXML
+    private Label existLabel;
+    @FXML
+    private Label studentID;
     @FXML
     private Label quizzesNumber;
     @FXML
     private Label averageScore;
-    @FXML
-    private Label successedTips;
+
     @FXML
     private BarChart<Number, String> difficultyChart;
     @FXML
@@ -52,29 +57,35 @@ public class student_general_reportController implements Initializable {
 
     @FXML
     private void backAction(ActionEvent event) {
-        GoPage.getGoPage().goPage("/view_history.fxml", tips);
+        GoPage.getGoPage().goPage("/view_history.fxml", studentID);
     }
 
     @FXML
     private void export(ActionEvent event) {
-        File folder = new File("./Ouptput");
+        File folder = new File(System.getProperty("user.home"), "Desktop");
         if (!folder.exists()) {
             folder.mkdirs();
         }
         Document document = new Document();
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd-hh-mm");
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd-HH-mm");
         String documentName = goPage.studentName + df.format(new Date()) + "_general_report" + ".PDF";
         File exportPDF = new File(folder + "/" + documentName);
         if (exportPDF.exists()) {
-            successedTips.setVisible(false);
-            tips.setText("Export failed, report already exist.");
-            tips.setVisible(true);
+            failTip.setVisible(true);
+            existLabel.setVisible(true);
+            PauseTransition visiblePause
+                    = new PauseTransition(Duration.seconds(3));
+            visiblePause.setOnFinished(e -> {
+                failTip.setVisible(false);
+                existLabel.setVisible(false);
+            });
+            visiblePause.play();
         } else {
             try {
                 PdfWriter.getInstance(document, new FileOutputStream(folder + "/" + documentName));
                 document.open();
                 PDFGeneral.addTitleLine(document, "Quiz Report");
-                df = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+                df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
                 PDFGeneral.addContentLine(document, String.format("%s%s",
                         "studentName:", goPage.studentName));
                 PDFGeneral.addContentLine(document, String.format("%s%s",
@@ -84,14 +95,22 @@ public class student_general_reportController implements Initializable {
                 PDFGeneral.addContentLine(document, String.format("%s%s",
                         "Average score:", averageScore.getText()));
                 document.close();
-                successedTips.setText("Export successed, file in " + folder.getAbsolutePath() + "/" + documentName);
-                tips.setVisible(false);
-                successedTips.setVisible(true);
+                successTip.setVisible(true);
+                PauseTransition visiblePause
+                        = new PauseTransition(Duration.seconds(3));
+                visiblePause.setOnFinished(e -> {
+                    successTip.setVisible(false);
+                });
+                visiblePause.play();
             } catch (Exception e) {
                 e.printStackTrace();
-                tips.setText("Export failed, Please check your config is right.");
-                successedTips.setVisible(false);
-                tips.setVisible(true);
+                failTip.setVisible(true);
+                PauseTransition visiblePause
+                        = new PauseTransition(Duration.seconds(3));
+                visiblePause.setOnFinished(E -> {
+                    failTip.setVisible(false);
+                });
+                visiblePause.play();
             }
         }
     }
@@ -122,10 +141,8 @@ public class student_general_reportController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        tips.setVisible(false);
-        successedTips.setVisible(false);
         goPage = GoPage.getGoPage();
-        studentName.setText(goPage.studentName);
+        studentID.setText(goPage.studentName);
         quizzesNumber.setText(goPage.getOneStudentScoresOfAllRecord().length + "");
         int totalScore = 0;
         for (int i = 0; i < goPage.getOneStudentScoresOfAllRecord().length; i++) {

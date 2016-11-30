@@ -7,18 +7,16 @@ package instructor;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.ResourceBundle;
 
 import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.PdfWriter;
+import java.io.FileNotFoundException;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -26,10 +24,7 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Data;
 import javafx.scene.chart.XYChart.Series;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
-import javafx.scene.layout.Pane;
 import qcas.GoPage;
 import pdfutil.PDFGeneral;
 
@@ -39,14 +34,6 @@ import pdfutil.PDFGeneral;
  */
 public class instructor_review_quizzs_general_detailController implements Initializable {
 
-    private final static String[] TIMESTRING
-            = new String[]{
-                "Last month record",
-                "Last quarter record",
-                "Last year record",
-                "General record"};
-    @FXML
-    private Pane pane;
     @FXML
     private Label numberOfLastMouth;
     @FXML
@@ -59,15 +46,6 @@ public class instructor_review_quizzs_general_detailController implements Initia
     private Label averageScoreOfLastQuater;
     @FXML
     private Label averageScoreOfLastYear;
-    @FXML
-    private ChoiceBox<String> selectDetail;
-    @FXML
-    private Button back;
-
-    @FXML
-    private void backAction(ActionEvent event) throws IOException {
-        GoPage.getGoPage().goPage("/Instructer_panel.fxml", pane);
-    }
 
     @FXML
     private Label successedTips;
@@ -113,8 +91,7 @@ public class instructor_review_quizzs_general_detailController implements Initia
                 successedTips.setText("Export successed, file in " + folder.getAbsolutePath() + "/" + documentName);
                 tips.setVisible(false);
                 successedTips.setVisible(true);
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (DocumentException | FileNotFoundException e) {
                 tips.setText("Export failed, Please check your config is right.");
                 successedTips.setVisible(false);
                 tips.setVisible(true);
@@ -124,20 +101,48 @@ public class instructor_review_quizzs_general_detailController implements Initia
 
     @FXML
     private LineChart<String, Number> lineChart;
+    private void initialLineChart() {
+        Series<String, Number> series1 = new XYChart.Series<String, Number>();
+        Series<String, Number> series2 = new XYChart.Series<String, Number>();
+        Series<String, Number> series3 = new XYChart.Series<String, Number>();
+        series1.setName("Easy");
+        series2.setName("Medium");
+        series3.setName("Hard");
+        String[] diff = {"Last Month", "Last Quarter", "Last Year"};
+        //String[] date = goPage.getOneStudentRecordDate();
+        int[] scoreEasy = goPage.geteasyAverageScoreOfThreeLastTime();
+        int[] scoreMedium = goPage.getMediumAverageScoreOfThreeLastTime();
+        int[] scoreHard = goPage.getHardAverageScoreOfThreeLastTime();
+        for (int i = 0; i < scoreEasy.length; i++) {
+            series1.getData().add(new Data<String, Number>(diff[i], scoreEasy[i]));
+        }
+        lineChart.getData().add(series1);
+        for (int i = 0; i < scoreMedium.length; i++) {
+            series2.getData().add(new Data<String, Number>(diff[i], scoreMedium[i]));
+        }
+        lineChart.getData().add(series2);
+        for (int i = 0; i < scoreHard.length; i++) {
+            series3.getData().add(new Data<String, Number>(diff[i], scoreHard[i]));
+        }
+        lineChart.getData().add(series3);
+
+    }
+    
+    
 
     @SuppressWarnings("unchecked")
     private void initialBarChart() {
-        Series<String, Number> seriesEasy = new XYChart.Series<String, Number>();
-        Series<String, Number> seriesMedium = new XYChart.Series<String, Number>();
-        Series<String, Number> seriesHard = new XYChart.Series<String, Number>();
+        Series<String, Number> seriesEasy = new XYChart.Series<>();
+        Series<String, Number> seriesMedium = new XYChart.Series<>();
+        Series<String, Number> seriesHard = new XYChart.Series<>();
         seriesEasy.setName("Easy");
         seriesMedium.setName("Medium");
         seriesHard.setName("Hard");
         String[] lastTimeType = new String[]{"Last mouth", "Last Quater", "Last Year"};
         for (int i = 0; i < 3; i++) {
-            seriesEasy.getData().add(new Data<String, Number>(lastTimeType[i], easyAverageScoreOfThreeLastTime[i]));
-            seriesMedium.getData().add(new Data<String, Number>(lastTimeType[i], mediumAverageScoreOfThreeLastTime[i]));
-            seriesHard.getData().add(new Data<String, Number>(lastTimeType[i], hardAverageScoreOfThreeLastTime[i]));
+            seriesEasy.getData().add(new Data<>(lastTimeType[i], easyAverageScoreOfThreeLastTime[i]));
+            seriesMedium.getData().add(new Data<>(lastTimeType[i], mediumAverageScoreOfThreeLastTime[i]));
+            seriesHard.getData().add(new Data<>(lastTimeType[i], hardAverageScoreOfThreeLastTime[i]));
         }
         lineChart.getData().addAll(seriesEasy, seriesMedium, seriesHard);
     }
@@ -150,19 +155,7 @@ public class instructor_review_quizzs_general_detailController implements Initia
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         goPage = GoPage.getGoPage();
-        // select initial
-        selectDetail.setItems(FXCollections.observableArrayList(TIMESTRING));
-        selectDetail.getSelectionModel().select(goPage.quizzsReviewSelectOfInstructor);
-        selectDetail.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
-            public void changed(@SuppressWarnings("rawtypes") ObservableValue ov, Number value, Number new_value) {
-                goPage.quizzsReviewSelectOfInstructor = new_value.intValue();
-                if (new_value.intValue() == 3) {
-                    goPage.goPage("/instructor_review_quizzs_general.fxml", pane, 438, 1000);
-                } else {
-                    goPage.goPage("/instructor_review_quizzs_detail.fxml", pane, 438, 1000);
-                }
-            }
-        });
+
         // getSomeData from serve
         goPage.numberOfQuizzesTakenOfAll = goPage.communicateWithServe.getLastNumberOfALLQuizzes();
         goPage.averageScoreOfAll = goPage.communicateWithServe.getlastAverageOfALLQuizzes();
@@ -171,6 +164,7 @@ public class instructor_review_quizzs_general_detailController implements Initia
         hardAverageScoreOfThreeLastTime = goPage.communicateWithServe.getHardAverageScoreOfThreeLastTime();
         //initial some widget rely on serve data
         initialBarChart();
+        initialLineChart();
         numberOfLastMouth.setText(goPage.numberOfQuizzesTakenOfAll[0] + "");
         numberOfLastQuater.setText(goPage.numberOfQuizzesTakenOfAll[1] + "");
         numberOfLastYear.setText(goPage.numberOfQuizzesTakenOfAll[2] + "");

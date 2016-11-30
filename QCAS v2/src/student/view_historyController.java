@@ -24,10 +24,10 @@ import utilclass.HistoryRecord;
  * @author mica
  */
 public class view_historyController implements Initializable {
-   
+
     @FXML
     private Label tips;
-    
+
     @FXML
     private Button backButton;
 
@@ -35,16 +35,17 @@ public class view_historyController implements Initializable {
     private ListView<HistoryRecord> historyListView;
 
     private popUpPage pup = new popUpPage();
+
     @FXML
-    private void backAction(ActionEvent event) {  
-            goPage.goPage("/student_panel.fxml", tips);
+    private void backAction(ActionEvent event) {
+        goPage.goPage("/student_panel.fxml", tips);
 
     }
 
     @FXML
     private void viewGenerateReport(ActionEvent event) {
         //System.out.println("view_historyController.viewGenerateReport");
-        goPage.goPage("/student_general_report.fxml", tips, 438, 1000);
+        goPage.goPage("/student_general_report.fxml", tips);
     }
 
     @FXML
@@ -66,11 +67,15 @@ public class view_historyController implements Initializable {
         // TODO
         goPage = GoPage.getGoPage();
         goPage.getStudentHistoryRecordFromServe();
-        ObservableList<HistoryRecord> historyItems = FXCollections.observableArrayList(goPage.historyRecordItems);
-        historyListView.setItems(historyItems);
+        ObservableList<HistoryRecord> historyItems
+                = FXCollections.observableArrayList(goPage.historyRecordItems);
+        for (HistoryRecord h : historyItems) {
+            historyListView.getItems().add(0, h);
+        }
+
         tips.setVisible(false);
-        
-        if(goPage.userName.equals("instructor")){
+
+        if (goPage.userName.equals("instructor")) {
             backButton.setVisible(false);
         }
     }

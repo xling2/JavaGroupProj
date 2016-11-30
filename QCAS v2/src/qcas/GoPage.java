@@ -83,7 +83,8 @@ public class GoPage {
 			answerOfStudent[i] = new Answer();
 		}
 		Date startDate = new Date();
-		quizOfCurrentCheck = new QuizOfStudent(studentName, communicateWithServe.getRandomQuestionListOfQuiz(
+		System.out.println(studentName);
+                quizOfCurrentCheck = new QuizOfStudent(studentName, communicateWithServe.getRandomQuestionListOfQuiz(
 				quizDifficultyOfStudentSelect, questionNumberFromQuizSetting), answerOfStudent, startDate, startDate);
 		quizOfCurrentCheck.quizDifficulty = quizDifficultyOfStudentSelect;
 	}

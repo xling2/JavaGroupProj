@@ -21,6 +21,7 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.ToggleGroup;
 import qcas.GoPage;
+import qcas.popUpPage;
 import utilclass.Question;
 
 /**
@@ -64,6 +65,7 @@ public class questionController implements Initializable {
     @FXML
     private Button preview;
 
+    private popUpPage pup = new popUpPage();
     @FXML
     private void preview(ActionEvent event) {
         if (goPage.numberOfCurrentQuiz == 1) {
@@ -79,10 +81,9 @@ public class questionController implements Initializable {
         if (goPage.numberOfCurrentQuiz == goPage.questionNumberFromQuizSetting) {
             goPage.quizOfCurrentCheck.finishQuiz();
             goPage.recordQuizResultToServe();
-            goPage.back = "/student_panel.fxml";
-            goPage.backX = 600;
-            goPage.backY = 400;
-            goPage.goPage("/student_quiz_report_onetime.fxml", nextQuestion, 438, 800);
+            goPage.goPage("/student_panel.fxml",nextQuestion);
+            popUpPage.setParentScene(nextQuestion);
+            pup.open("/student_quiz_report_onetime.fxml");
         } else {
             goPage.numberOfCurrentQuiz += 1;
             goPage.goPage("/question.fxml", nextQuestion);

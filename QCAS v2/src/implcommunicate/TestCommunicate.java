@@ -2,7 +2,12 @@ package implcommunicate;
 
 import interfacewithserve.ICommunicate2;
 import java.io.File;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.sql.*;
 import java.util.ArrayList;
+import qcas.GoPage;
 import utilclass.HistoryRecord;
 import utilclass.Question;
 import utilclass.QuizOfStudent;
@@ -131,11 +136,13 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
 
     
 
+    @Override
     public ArrayList<String> getAllStudent() {
        
         return comm.getAllStudent();
     }
 
+    @Override
     public boolean deleteStudent(String andrewID) {
         
         comm.deleteStudent(andrewID);

@@ -27,12 +27,14 @@ import javafx.scene.chart.XYChart.Data;
 import javafx.scene.chart.XYChart.Series;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import pdfutil.PDFGeneral;
 import qcas.GoPage;
 import utilclass.Answer;
@@ -45,6 +47,8 @@ import utilclass.TableUse;
  */
 public class student_quiz_reportController implements Initializable {
 
+    @FXML
+    private ScrollPane wholeScrollPane;
     @FXML
     private Label tips;
     @FXML
@@ -72,6 +76,9 @@ public class student_quiz_reportController implements Initializable {
     @FXML
     private BarChart<Number, String> difficultyChart;
 
+    @FXML
+    private ScrollPane questionDetailScrollPane;
+
     private ObservableList<TableUse> scoreData = FXCollections.observableArrayList();
 
     private GoPage goPage;
@@ -83,12 +90,8 @@ public class student_quiz_reportController implements Initializable {
     @FXML
     private void hideAction(ActionEvent event) {
         hidebtn.setVisible(false);
+        questionDetailScrollPane.setVisible(false);
         questionLabel.setVisible(false);
-    }
-
-    @FXML
-    private void backAction(ActionEvent event) {
-        goPage.goPage(goPage.back, name, (int) goPage.backX, (int) goPage.backY);
     }
 
     @FXML
@@ -98,7 +101,7 @@ public class student_quiz_reportController implements Initializable {
             folder.mkdirs();
         }
         Document document = new Document();
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd-hh-mm");
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd-HH-mm");
         String documentName = goPage.studentName + df.format(goPage.quizOfCurrentCheck.finishDate)
                 + "_quiz_report" + ".PDF";
         File exportPDF = new File(folder + "/" + documentName);
@@ -111,7 +114,7 @@ public class student_quiz_reportController implements Initializable {
                 PdfWriter.getInstance(document, new FileOutputStream(folder + "/" + documentName));
                 document.open();
                 PDFGeneral.addTitleLine(document, "Quiz Report");
-                df = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+                df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
                 PDFGeneral.addContentLine(document,
                         String.format("%s%s", PDFGeneral.getFormatString("studentName:", 30), goPage.studentName));
                 PDFGeneral.addContentLine(document,
@@ -181,7 +184,7 @@ public class student_quiz_reportController implements Initializable {
         tips.setVisible(false);
         successedTips.setVisible(false);
         name.setText(goPage.quizOfCurrentCheck.studentName);
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         time.setText(df.format(goPage.quizOfCurrentCheck.finishDate));
         duration.setText(goPage.quizOfCurrentCheck.duration);
         // add score data
@@ -196,11 +199,23 @@ public class student_quiz_reportController implements Initializable {
             TableRow<TableUse> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 2 && (!row.isEmpty())) {
+                    wholeScrollPane.setVvalue(0.0);
                     hidebtn.setVisible(true);
+                    questionDetailScrollPane.setVisible(true);
                     questionLabel.setVisible(true);
+
                     TableUse rowData = row.getItem();
-                    Question currentQuestion = goPage.quizOfCurrentCheck.questionsOfQuiz[rowData.getNumber() - 1];
-                    questionLabel.setText(currentQuestion.toString() + "\nright answer : " + currentQuestion.correctAnswer);
+                    Question currentQuestion
+                            = goPage.quizOfCurrentCheck.questionsOfQuiz[rowData.getNumber() - 1];
+                    String questionDisplay = currentQuestion.toString();
+
+                    questionLabel.setText(questionDisplay
+                            + "\nCorrect Answer: " + currentQuestion.correctAnswer);
+
+                    int questionLength = questionDisplay.split("\n").length;
+                    questionLabel.setStyle("-fx-padding: 5px 30px 5px 5px;"
+                            + "-fx-text-alignment:justify;");
+                    questionLabel.setPrefHeight(questionLength * 20 < 198 ? 198 : questionLength * 20);
                 }
             });
             return row;
@@ -213,7 +228,7 @@ public class student_quiz_reportController implements Initializable {
         // table set data
         table.setItems(getTableData());
         // table red setting
-        answer.setCellFactory(column -> {
+        answer.setCellFactory(param -> {
             return new TableCell<TableUse, String>() {
                 @Override
                 protected void updateItem(String item, boolean empty) {
@@ -224,12 +239,21 @@ public class student_quiz_reportController implements Initializable {
                         setStyle("");
                     } else { // If the cell is not empty
                         TableUse currentTableUse = getTableView().getItems().get(getIndex());
-                        setText(currentTableUse.getAnswer());
-                        // Style all answer is correct
+
+                        Text text = new Text(currentTableUse.getAnswer());
+                        text.setStyle("-fx-padding: 5px 30px 5px 5px;"
+                                + "-fx-text-alignment:justify;");
+                        text.setWrappingWidth(param.getPrefWidth() - 10);
+                        setPrefHeight(30);
+
                         if (!currentTableUse.getAnswer()
                                 .equals(goPage.quizOfCurrentCheck.questionsOfQuiz[getIndex()].correctAnswer)) {
-                            setTextFill(Color.RED); // The text in red
+                            text.setFill(Color.RED); // The text in red
                         }
+                        
+                        setGraphic(text);
+                        
+
                     }
                 }
             };

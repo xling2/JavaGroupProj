@@ -230,12 +230,14 @@ public class DBConnection {
                         // if this quiz is of mixed level
                         else {
                             int originalNumber; // the unique quizID of this quiz in quiz history table
-                            String answer; // student's answer to a question in this quiz
+                            String studentAnswer; // student's answer to a question in this quiz
+                            String realAnswer;
                             String diffQ; // the difficulty level of a question in this quiz
                             // loop within all questions in this quiz
                             for (int i = 0; i < numberQ; i++) {
                                 originalNumber = rs.getInt(7 + 3 * i);
-                                answer = rs.getString(9 + 3 * i);
+                                studentAnswer = rs.getString(8 + 3 * i);
+                                realAnswer = rs.getString(9 + 3 * i);
                                 // connect to question table to get the difficulty level of a certain question in this quiz
                                 String getDiff = "SELECT DIFFICULTY FROM QUESTION WHERE NUMBER = " + originalNumber;
                                 ResultSet rsn;
@@ -271,7 +273,7 @@ public class DBConnection {
                                         }
                                         
                                         // if this student's answer to this question is correct
-                                        if (answer.equals("correct")) {
+                                        if (studentAnswer.equals(realAnswer)) {
                                             tsE++;
                                             if (examYear == thisYear && examMonth==lastMonth) {
                                                 tsELM++;
@@ -302,7 +304,7 @@ public class DBConnection {
                                             numberQMLY++;
                                         }
                                         // if this student's answer to this question is correct
-                                        if (answer.equals("correct")) {
+                                        if (studentAnswer.equals(realAnswer)) {
                                             tsM++;
                                             if (examYear==thisYear && examMonth==lastMonth) {
                                                 tsMLM++;
@@ -332,7 +334,7 @@ public class DBConnection {
                                             numberQHLY++;
                                         }
                                         // if this student's answer to this question is correct
-                                        if (answer.equals("correct")) {
+                                        if (studentAnswer.equals(realAnswer)) {
                                             tsH++;
                                             if (examYear==thisYear&& examMonth==lastMonth) {
                                                 tsHLM++;
@@ -392,7 +394,7 @@ public class DBConnection {
             e.printStackTrace();
         }
 
-        
+        // all scores below are scores out of 100
         avgScoreLM = (int) (tsLM / numberQLM * 100);
         avgScoreLQ = (int) (tsLQ / numberQLQ * 100);
         avgScoreLY = (int) (tsLY / numberQLY * 100);

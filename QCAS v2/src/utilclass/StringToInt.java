@@ -12,7 +12,7 @@ import java.util.ArrayList;
  * @author lingxingyu
  */
 public class StringToInt {
-
+    // convert the answer of MA from String to int
     public ArrayList<Integer> toIntMultipleAnswer(String answer) {
         String[] list = answer.split("");
         ArrayList<Integer> multipleChoices = new ArrayList();
@@ -29,7 +29,7 @@ public class StringToInt {
         }
         return multipleChoices;
     }
-
+    // convert the answer of Single Choice from String to int
     public int toIntSingleAnswer(String answer) {
         if (answer.equals("A")) {
             return 1;
@@ -43,7 +43,7 @@ public class StringToInt {
             return 4;
         }
     }
-
+    // convert the question type from String to int
     public int toIntType(String questionType) {
         int type = 0;
 
@@ -59,7 +59,7 @@ public class StringToInt {
 
         return type;
     }
-
+     // convert the difficulty level from String to int
     public int toIntDiff(String questionDiff) {
         int diff = 0;
 

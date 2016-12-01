@@ -88,7 +88,7 @@
             <Label fx:id="successTip" alignment="CENTER" layoutX="396.0" layoutY="80.0" prefHeight="25.0" prefWidth="150.0" text="Exported to desktop. " textFill="LIME" visible="false" wrapText="true" />
             <Label layoutX="25.0" layoutY="263.0" prefHeight="17.0" prefWidth="380.0" text="- Double click the question to check the detail" textFill="#b5b5b5" />
             <Label layoutX="374.0" layoutY="246.0" text="RED" textFill="RED" />
-            <ScrollPane fx:id="questionDetailScrollPane" layoutX="25.0" layoutY="98.0" prefHeight="187.0" prefViewportHeight="197.0" prefViewportWidth="446.0" prefWidth="427.0" style="-fx-background-color: rgba(243,244,212,20); -fx-background-radius: 5 5 0 0;" stylesheets="@dark-scroll-pane.css" visible="false">
+            <ScrollPane fx:id="questionDetailScrollPane" layoutX="25.0" layoutY="98.0" prefHeight="187.0" prefViewportHeight="197.0" prefViewportWidth="446.0" prefWidth="430.0" style="-fx-background-color: rgba(243,244,212,20); -fx-background-radius: 5 5 0 0;" stylesheets="@dark-scroll-pane.css" visible="false">
                <content>
                   <Label fx:id="questionLabel" alignment="TOP_LEFT" prefHeight="180.0" prefWidth="403.0" style="-fx-border-color: white; -fx-border-radius: 5;" visible="false" wrapText="true" />
                </content>

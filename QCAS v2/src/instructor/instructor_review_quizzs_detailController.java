@@ -210,7 +210,8 @@ public class instructor_review_quizzs_detailController implements Initializable 
                 }
             }
         });
-        wholeScrollPane.setVvalue(0.0);
+//        successTip.requestFocus();
+//        wholeScrollPane.setVvalue(0.0);
     }
 
 }

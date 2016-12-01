@@ -68,7 +68,8 @@ public class student_general_reportController implements Initializable {
         }
         Document document = new Document();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd-HH-mm");
-        String documentName = goPage.studentName + df.format(new Date()) + "_general_report" + ".PDF";
+        String documentName = goPage.studentName + 
+                " " + df.format(new Date()) + "_general_report" + ".PDF";
         File exportPDF = new File(folder + "/" + documentName);
         if (exportPDF.exists()) {
             failTip.setVisible(true);
@@ -148,11 +149,11 @@ public class student_general_reportController implements Initializable {
             totalScore += goPage.getOneStudentScoresOfAllRecord()[i];
         }
         averageScore.setText(totalScore / goPage.getOneStudentScoresOfAllRecord().length + "");
-        
-        System.out.println("goPage.getOneStudentScoresOfAllRecord().length: " 
+
+        System.out.println("goPage.getOneStudentScoresOfAllRecord().length: "
                 + goPage.getOneStudentScoresOfAllRecord().length);
-        
+
         initialBarChart();
-        initialLineChart();
+        //initialLineChart();
     }
 }

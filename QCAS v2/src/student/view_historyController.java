@@ -45,7 +45,8 @@ public class view_historyController implements Initializable {
     @FXML
     private void viewGenerateReport(ActionEvent event) {
         //System.out.println("view_historyController.viewGenerateReport");
-        goPage.goPage("/student_general_report.fxml", tips);
+        popUpPage.setParentScene(tips);
+        pup.open("/student_general_report.fxml");
     }
 
     @FXML

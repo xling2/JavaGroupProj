@@ -42,6 +42,7 @@ public class Communicate {
     private String userUsername = "user";
     private String userPassword = "user";
     private String passW;
+    TimeRecorder recorder = new TimeRecorder();
 
     public Question[] getRandomQuestion(int quizDifficulty, int questionNumber) {
 
@@ -99,7 +100,8 @@ public class Communicate {
 
             }
         } catch (SQLException se) {
-            System.out.println("Exception: " + se);
+            System.out.println("Exception @ Communicate : " + se);
+            se.printStackTrace();
 
         }
         // change Arraylist to array
@@ -115,9 +117,10 @@ public class Communicate {
             DatabaseMetaData dbmd = con.getMetaData();
             ResultSet rs = dbmd.getTables(null, null, quizResult.studentName.toUpperCase(), null);
             if (!rs.next()) {
+                //stmt.execute("drop table " + quizResult.studentName);
                 String sql = "create table " + quizResult.studentName
                         + "(quizID varchar(40), difficulty varchar(40), score int, "
-                        + "number int, startTime date, endTime date";
+                        + "number int, startTime varchar(40), endTime varchar(40)";
                 for (int i = 1; i < 51; i++) {
 
                     sql = sql + " , no" + i + " int, answer" + i + " varchar(40), correct" + i + " varchar(40)";
@@ -145,12 +148,14 @@ public class Communicate {
             }
             String quizID = quizResult.studentName + count;
             quizResult.quizId = quizID;
-            java.sql.Date startDate = new java.sql.Date(quizResult.startDate.getTime());
-            java.sql.Date endDate = new java.sql.Date(quizResult.finishDate.getTime());
+            String startDate = recorder.convertTimeToString(quizResult.startDate);
+            String endDate = recorder.convertTimeToString(quizResult.finishDate);
+            System.out.println(endDate);
             sql = "insert into " + quizResult.studentName + " values ('"
                     + quizResult.quizId + "', '"
                     + its.toStringDiff(quizResult.quizDifficulty) + "', " + quizResult.totalScore
-                    + ", " + quizResult.questionsOfQuiz.length + ", ?, ?, ";
+                    + ", " + quizResult.questionsOfQuiz.length + ", '" + startDate
+                    + "', '" + endDate + "', ";
 
             for (int i = 0; i < quizResult.answerOfStudent.length; i++) {
                 String correct = "";
@@ -176,10 +181,9 @@ public class Communicate {
             }
 
             sql = sql + 0 + ", '', '')";
-            PreparedStatement pstmt = con.prepareStatement(sql);
-            pstmt.setDate(1, startDate);
-            pstmt.setDate(2, endDate);
-            pstmt.executeUpdate();
+            System.out.println(sql);
+
+            stmt.execute(sql);
 
         } catch (SQLException se) {
             System.out.println("Exception: " + se);
@@ -341,8 +345,8 @@ public class Communicate {
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 quizID.add(rs.getString(1));
-                date.add(rs.getDate(2));
-
+                date.add(recorder.convertStringToTime(rs.getString(2)));
+                System.out.println(recorder.convertStringToTime(rs.getString(2)));
             }
         } catch (SQLException se) {
             System.out.println("Exception: " + se);
@@ -379,8 +383,8 @@ public class Communicate {
                 for (int i = 0; i < num; i++) {
                     no.add(rs.getInt(4 + 3 * (i + 1)));
                     answers.add(rs.getString(5 + 3 * (i + 1)));
-                    startDate = rs.getDate("startTime");
-                    finishDate = rs.getDate("endTime");
+                    startDate = recorder.convertStringToTime(rs.getString("startTime"));
+                    finishDate = recorder.convertStringToTime(rs.getString("endTime"));
                     totalDiff = sti.toIntDiff(rs.getString("difficulty"));
 
                 }
@@ -447,7 +451,7 @@ public class Communicate {
 
     public int[] getStudentAllRecordScore(String studentName) {
 
-         ArrayList<Integer> score = new ArrayList();
+        ArrayList<Integer> score = new ArrayList();
         try (Connection con = DriverManager.getConnection(quizUrl,
                 quizUsername, quizPassword)) {
             Statement stmt = con.createStatement();
@@ -473,10 +477,10 @@ public class Communicate {
         try (Connection con = DriverManager.getConnection(quizUrl,
                 quizUsername, quizPassword)) {
             Statement stmt = con.createStatement();
-            String sql = "Select endDate from " + studentName;
+            String sql = "Select endtime from " + studentName;
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
-                date.add(sdf.format(rs.getDate(1)));
+                date.add(sdf.format(rs.getString(1)));
             }
 
         } catch (SQLException se) {
@@ -484,7 +488,7 @@ public class Communicate {
         }
         String[] endDate = new String[date.size()];
         for (int i = 0; i < date.size(); i++) {
-            endDate[i] = date.get(i).toString();
+            endDate[i] = recorder.convertStringToTime(date.get(i).toString()).toString();
         }
         return endDate;
     }

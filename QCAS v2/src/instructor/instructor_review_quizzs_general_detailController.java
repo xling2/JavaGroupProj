@@ -16,6 +16,7 @@ import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.io.FileNotFoundException;
+import javafx.animation.PauseTransition;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -25,6 +26,7 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Data;
 import javafx.scene.chart.XYChart.Series;
 import javafx.scene.control.Label;
+import javafx.util.Duration;
 import qcas.GoPage;
 import pdfutil.PDFGeneral;
 
@@ -48,26 +50,35 @@ public class instructor_review_quizzs_general_detailController implements Initia
     private Label averageScoreOfLastYear;
 
     @FXML
-    private Label successedTips;
+    private Label successTip;
     @FXML
-    private Label tips;
+    private Label failTip;
+    @FXML
+    private Label existLabel;
 
     private GoPage goPage;
 
     @FXML
     private void export(ActionEvent event) {
-        File folder = new File("./Ouptput");
+        File folder = new File(System.getProperty("user.home"), "Desktop");
         if (!folder.exists()) {
             folder.mkdirs();
         }
         Document document = new Document();
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd-hh-mm");
-        String documentName = goPage.userName + df.format(new Date()) + "general_report" + ".PDF";
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd-HH-mm");
+        String documentName = goPage.userName + 
+                " " + df.format(new Date()) + "_general_report" + ".PDF";
         File exportPDF = new File(folder + "/" + documentName);
         if (exportPDF.exists()) {
-            successedTips.setVisible(false);
-            tips.setText("Export failed, report already exist.");
-            tips.setVisible(true);
+            failTip.setVisible(true);
+            existLabel.setVisible(true);
+            PauseTransition visiblePause
+                    = new PauseTransition(Duration.seconds(3));
+            visiblePause.setOnFinished(e -> {
+                failTip.setVisible(false);
+                existLabel.setVisible(false);
+            });
+            visiblePause.play();
         } else {
             try {
                 PdfWriter.getInstance(document, new FileOutputStream(folder + "/" + documentName));
@@ -88,19 +99,29 @@ public class instructor_review_quizzs_general_detailController implements Initia
                 PDFGeneral.addContentLine(document, PDFGeneral.getFormatString("Last year", 22)
                         + averageScoreOfLastYear.getText());
                 document.close();
-                successedTips.setText("Export successed, file in " + folder.getAbsolutePath() + "/" + documentName);
-                tips.setVisible(false);
-                successedTips.setVisible(true);
-            } catch (DocumentException | FileNotFoundException e) {
-                tips.setText("Export failed, Please check your config is right.");
-                successedTips.setVisible(false);
-                tips.setVisible(true);
+                successTip.setVisible(true);
+                PauseTransition visiblePause
+                        = new PauseTransition(Duration.seconds(3));
+                visiblePause.setOnFinished(e -> {
+                    successTip.setVisible(false);
+                });
+                visiblePause.play();
+            } catch (Exception e) {
+                e.printStackTrace();
+                failTip.setVisible(true);
+                PauseTransition visiblePause
+                        = new PauseTransition(Duration.seconds(3));
+                visiblePause.setOnFinished(E -> {
+                    failTip.setVisible(false);
+                });
+                visiblePause.play();
             }
         }
     }
 
     @FXML
     private LineChart<String, Number> lineChart;
+
     private void initialLineChart() {
         Series<String, Number> series1 = new XYChart.Series<String, Number>();
         Series<String, Number> series2 = new XYChart.Series<String, Number>();
@@ -127,8 +148,6 @@ public class instructor_review_quizzs_general_detailController implements Initia
         lineChart.getData().add(series3);
 
     }
-    
-    
 
     @SuppressWarnings("unchecked")
     private void initialBarChart() {
@@ -164,7 +183,7 @@ public class instructor_review_quizzs_general_detailController implements Initia
         hardAverageScoreOfThreeLastTime = goPage.communicateWithServe.getHardAverageScoreOfThreeLastTime();
         //initial some widget rely on serve data
         initialBarChart();
-        initialLineChart();
+        //initialLineChart();
         numberOfLastMouth.setText(goPage.numberOfQuizzesTakenOfAll[0] + "");
         numberOfLastQuater.setText(goPage.numberOfQuizzesTakenOfAll[1] + "");
         numberOfLastYear.setText(goPage.numberOfQuizzesTakenOfAll[2] + "");

@@ -150,21 +150,21 @@ public class DBConnection {
                             numberTestPLY++;
                             tsLY += score / 100.0 * numberQ;
                             numberQLY += numberQ;
-                            tsPLY += score / 100.0 * numberQ;
+                            tsPLY += score;
                         }
                         if (examYear.equals(String.valueOf(thisYear)) && examMonth.equals(lastMonth)) {
                             numberTestLM++;
                             numberTestPLM++;
                             tsLM += score / 100.0 * numberQ;
                             numberQLM += numberQ;
-                            tsPLM += score / 100.0 * numberQ;
+                            tsPLM += score;
                         }
                         if (examYear.equals(String.valueOf(thisYear)) && examMonth.equals(lastQuarter)) {
                             numberTestLQ++;
                             numberTestPLQ++;
                             tsLQ += score / 100.0 * numberQ;
                             numberQLQ += numberQ;
-                            tsPLQ += score / 100.0 * numberQ;
+                            tsPLQ += score;
                         }
 
                         // check for Scores by level of difficulty. AVG SCORE FOR EACH QUESTION!!!
@@ -227,7 +227,8 @@ public class DBConnection {
                                 String getDiff = "SELECT DIFFICULTY FROM QUESTION WHERE NUMBER = " + originalNumber;
                                 // Added by Ethan
                                 //con.setAutoCommit(false);
-                                ResultSet rsn = stmt.executeQuery(getDiff);
+                                Statement stmt1 = con.createStatement();
+                                ResultSet rsn = stmt1.executeQuery(getDiff);
 
                                 //************* need check
                                 while (rsn.next()) {
@@ -326,24 +327,24 @@ public class DBConnection {
                     avgScoreLM_P = tsPLM / numberTestPLM;
                     avgScoreLQ_P = tsPLQ / numberTestPLQ;
                     avgScoreLY_P = tsPLY / numberTestPLY;
-                    if (avgScoreLM_P >= 0.6 && numberTestPLM != 0) {
+                    if (avgScoreLM_P >= 60 && numberTestPLM != 0) {
                         getStudentPassLM().add(a);
                     }
-                    if (avgScoreLM_P < 0.6 && numberTestPLM != 0) {
+                    if (avgScoreLM_P < 60 && numberTestPLM != 0) {
                         getStudentFailLM().add(a);
                     }
 
-                    if (avgScoreLQ_P >= 0.6 && numberTestPLQ != 0) {
+                    if (avgScoreLQ_P >= 60 && numberTestPLQ != 0) {
                         getStudentPassLQ().add(a);
                     }
-                    if (avgScoreLQ_P < 0.6 && numberTestPLQ != 0) {
+                    if (avgScoreLQ_P < 60 && numberTestPLQ != 0) {
                         getStudentFailLQ().add(a);
                     }
 
-                    if (avgScoreLY_P >= 0.6 && numberTestPLY != 0) {
+                    if (avgScoreLY_P >= 60 && numberTestPLY != 0) {
                         getStudentPassLY().add(a);
                     }
-                    if (avgScoreLY_P < 0.6 && numberTestPLY != 0) {
+                    if (avgScoreLY_P < 60 && numberTestPLY != 0) {
                         getStudentFailLY().add(a);
                     }
                 }

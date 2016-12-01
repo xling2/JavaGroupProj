@@ -61,12 +61,12 @@
                </font>
             </Label>
             <Label fx:id="questionLabel" alignment="TOP_LEFT" layoutX="28.0" layoutY="39.0" prefHeight="197.0" prefWidth="385.0" style="-fx-background-color: rgb(51,51,51); -fx-border-color: white; -fx-border-radius: 5;" textFill="WHITE" visible="false" />
-            <BarChart fx:id="difficultyChart" focusTraversable="false" horizontalGridLinesVisible="true" horizontalZeroLineVisible="true" layoutX="-254.0" layoutY="133.0" legendVisible="false" mouseTransparent="false" prefHeight="297.0" prefWidth="738.0" verticalGridLinesVisible="false" verticalZeroLineVisible="true">
+            <BarChart fx:id="difficultyChart" focusTraversable="false" horizontalGridLinesVisible="true" horizontalZeroLineVisible="true" layoutX="38.0" layoutY="244.0" legendVisible="false" mouseTransparent="false" prefHeight="186.0" prefWidth="446.0" verticalGridLinesVisible="false" verticalZeroLineVisible="true">
                <xAxis>
-                  <NumberAxis animated="false" autoRanging="false" minorTickCount="2" minorTickLength="2.0" prefHeight="125.0" prefWidth="28.0" side="TOP" tickLabelFill="WHITE" tickUnit="50.0" />
+                  <NumberAxis animated="false" autoRanging="false" minorTickCount="2" minorTickLength="2.0" prefHeight="13.0" prefWidth="369.0" side="TOP" tickLabelFill="#8a8a8a" tickUnit="50.0" />
                </xAxis>
                <yAxis>
-                  <CategoryAxis prefHeight="26.0" prefWidth="311.0" side="LEFT" tickLabelFill="WHITE" />
+                  <CategoryAxis prefHeight="143.0" prefWidth="22.0" side="LEFT" tickLabelFill="#8a8a8a" />
                </yAxis>
             </BarChart>
             <LineChart fx:id="quizRecord" layoutX="33.0" layoutY="519.0" legendVisible="false" prefHeight="204.0" prefWidth="448.0">

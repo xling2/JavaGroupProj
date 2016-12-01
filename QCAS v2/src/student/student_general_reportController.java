@@ -71,6 +71,8 @@ public class student_general_reportController implements Initializable {
         String documentName = goPage.studentName + 
                 " " + df.format(new Date()) + "_general_report" + ".PDF";
         File exportPDF = new File(folder + "/" + documentName);
+        String chartName = goPage.studentName + "_chart" + ".png";
+        File chartFile = new File(folder + "/" + chartName);
         if (exportPDF.exists()) {
             failTip.setVisible(true);
             existLabel.setVisible(true);
@@ -87,14 +89,16 @@ public class student_general_reportController implements Initializable {
                 document.open();
                 PDFGeneral.addTitleLine(document, "Quiz Report");
                 df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                
                 PDFGeneral.addContentLine(document, String.format("%s%s",
-                        "studentName:", goPage.studentName));
-                PDFGeneral.addContentLine(document, String.format("%s%s",
-                        "StudentName:", goPage.studentName));
+                        "Student name:", goPage.studentName));
                 PDFGeneral.addContentLine(document, String.format("%s%s",
                         "Number of quizzes taken:", quizzesNumber.getText()));
                 PDFGeneral.addContentLine(document, String.format("%s%s",
                         "Average score:", averageScore.getText()));
+                PDFGeneral.addSubtitleLine(document, "Score vs. Difficulty");
+                PDFGeneral.addChartGraph(document, difficultyChart, chartFile);
+                
                 document.close();
                 successTip.setVisible(true);
                 PauseTransition visiblePause
@@ -117,6 +121,7 @@ public class student_general_reportController implements Initializable {
     }
 
     private void initialBarChart() {
+        difficultyChart.setAnimated(false);
         Series<Number, String> series = new XYChart.Series<Number, String>();
         String[] difficulty = new String[]{"Easy", "Medium", "Hard"};
         int[] scores = goPage.getStudentAverageScoreOfAllDifficulty();
@@ -127,6 +132,7 @@ public class student_general_reportController implements Initializable {
     }
 
     private void initialLineChart() {
+        quizRecord.setAnimated(false);
         Series<String, Number> series = new XYChart.Series<String, Number>();
         String[] date = goPage.getOneStudentRecordDate();
         int[] scoresOfAllRecord = goPage.getOneStudentScoresOfAllRecord();

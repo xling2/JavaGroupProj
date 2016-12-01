@@ -112,10 +112,10 @@
             <Button fx:id="export" layoutX="428.0" layoutY="49.0" mnemonicParsing="false" onAction="#export" stylesheets="@red-button-on-hover.css" text="Export to PDF" />
             <LineChart fx:id="lineChart" layoutX="38.0" layoutY="533.0" prefHeight="204.0" prefWidth="489.0">
                <xAxis>
-                  <CategoryAxis side="BOTTOM" tickLabelFill="WHITE" />
+                  <CategoryAxis side="BOTTOM" tickLabelFill="#8a8a8a" />
                </xAxis>
                <yAxis>
-                  <NumberAxis animated="false" autoRanging="false" minorTickCount="50" minorTickLength="0.0" side="LEFT" tickLabelFill="WHITE" tickUnit="20.0" />
+                  <NumberAxis animated="false" autoRanging="false" minorTickCount="50" minorTickLength="0.0" side="LEFT" tickLabelFill="#8a8a8a" tickUnit="20.0" />
                </yAxis>
             </LineChart>
             <GridPane layoutX="54.0" layoutY="333.0" prefHeight="109.0" prefWidth="160.0" style="-fx-border-color: white;">

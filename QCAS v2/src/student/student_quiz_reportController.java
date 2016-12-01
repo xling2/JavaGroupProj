@@ -111,6 +111,8 @@ public class student_quiz_reportController implements Initializable {
         String documentName = goPage.studentName + df.format(goPage.quizOfCurrentCheck.finishDate)
                 + "_quiz_report" + ".PDF";
         File exportPDF = new File(folder + "/" + documentName);
+        String chartName = goPage.studentName + "_chart" + ".png";
+        File chartFile = new File(folder + "/" + chartName);
         if (exportPDF.exists()) {
             failTip.setVisible(true);
             existLabel.setVisible(true);
@@ -140,8 +142,11 @@ public class student_quiz_reportController implements Initializable {
                 PDFGeneral.addSubtitleLine(document, "Score:" + goPage.quizOfCurrentCheck.totalScore);
                 PDFGeneral.addTableOfAnswer(document, goPage.quizOfCurrentCheck.answerOfStudent,
                         new ArrayList<Question>(Arrays.asList(goPage.quizOfCurrentCheck.questionsOfQuiz)));
+                PDFGeneral.addSubtitleLine(document, "Score vs. Difficulty");
+                PDFGeneral.addChartGraph(document, difficultyChart, chartFile);
                 PDFGeneral.addQuestionList(document,
                         new ArrayList<Question>(Arrays.asList(goPage.quizOfCurrentCheck.questionsOfQuiz)));
+                
                 document.close();
                 successTip.setVisible(true);
                 PauseTransition visiblePause
@@ -165,6 +170,7 @@ public class student_quiz_reportController implements Initializable {
 
     // initialChart ans score
     private void initialChart() {
+        difficultyChart.setAnimated(false);
         Series<Number, String> series = new XYChart.Series<Number, String>();
         int[] totalNumber = new int[]{0, 0, 0};
         int[] correctNumber = new int[]{0, 0, 0};

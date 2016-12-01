@@ -36,10 +36,13 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
 
     @Override
     public Question[] getRandomQuestionListOfQuiz(int quizDifficulty, int questionNumber) {
-
         return comm.getRandomQuestion(quizDifficulty, questionNumber);
     }
-
+    
+    @Override
+    public boolean checkQuestions(int quizDifficulty, int questionNumber){
+        return comm.checkQuestions(quizDifficulty, questionNumber);
+    }
     @Override
     public void recordQuizResultToServe(QuizOfStudent quizResult) {
 
@@ -55,7 +58,7 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
             MessageDigest md = MessageDigest.getInstance("MD5");
             md.update(password.getBytes(), 0, password.length());
             encryptedPwd = new BigInteger(1, md.digest()).toString(16);
-            System.out.println("Encrypted: " + encryptedPwd);
+            //System.out.println("Encrypted: " + encryptedPwd);
         } catch (NoSuchAlgorithmException nae) {
             System.out.println("NoSuchAlgorithmException @ login: " + nae);
         }
@@ -71,12 +74,12 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
                 GoPage.getGoPage().studentName = userName;
                 GoPage.getGoPage().userName = 
                         (userName.equals("instructor")) ? "instructor" : "student";             
-                System.out.println("GoPage.getGoPage().userName: " + 
-                        GoPage.getGoPage().userName);
+                //System.out.println("GoPage.getGoPage().userName: " + 
+                       // GoPage.getGoPage().userName);
                 loginSuccess = true;
-                System.out.println(loginSuccess);
-                System.out.println("GoPage.getGoPage().studentName: " +
-                        GoPage.getGoPage().studentName);
+               // System.out.println(loginSuccess);
+               // System.out.println("GoPage.getGoPage().studentName: " +
+                      //  GoPage.getGoPage().studentName);
             }
         } catch (SQLException e) {
             System.out.println("SQL Exception @ login: " + e);

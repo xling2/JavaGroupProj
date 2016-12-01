@@ -43,5 +43,6 @@ public interface ICommunicate2 {
     public abstract ArrayList<String> getAllStudent();
 
     public abstract Question[] getAllQuestions();
-
+   
+    public abstract boolean checkQuestions(int quizDifficulty, int questionNumber);
 }

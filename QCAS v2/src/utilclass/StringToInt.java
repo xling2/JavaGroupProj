@@ -18,13 +18,13 @@ public class StringToInt {
         ArrayList<Integer> multipleChoices = new ArrayList();
         for (String a : list) {
             if (a.equals("A")) {
-                multipleChoices.add(0);
-            } else if (a.equals("B")) {
                 multipleChoices.add(1);
-            } else if (a.equals("C")) {
+            } else if (a.equals("B")) {
                 multipleChoices.add(2);
-            } else {
+            } else if (a.equals("C")) {
                 multipleChoices.add(3);
+            } else {
+                multipleChoices.add(4);
             }
         }
         return multipleChoices;
@@ -32,15 +32,15 @@ public class StringToInt {
 
     public int toIntSingleAnswer(String answer) {
         if (answer.equals("A")) {
-            return 0;
-        }
-        if (answer.equals("B")) {
             return 1;
         }
-        if (answer.equals("C")) {
+        if (answer.equals("B")) {
             return 2;
-        } else {
+        }
+        if (answer.equals("C")) {
             return 3;
+        } else {
+            return 4;
         }
     }
 

@@ -11,8 +11,8 @@ package utilclass;
  */
 public class Question {
 
-    public static final String[] TYPENAME = new String[]{"MA", "MC", "TF", "FIB"};
-    public final static String[] DIFFICULTY = new String[]{"Easy", "Medium", "Hard", "Mixed"};
+    public static final String[] TYPENAME = new String[]{"MA", "MC", "TF", "FIB", ""};
+    public final static String[] DIFFICULTY = new String[]{"Easy", "Medium", "Hard", "Mixed", ""};
     public int questionType;//0-multipleAnswers 1-mulipleChoice 2-trueOrFalse 3-essayQuestion
     public int questionID;//id of question in database\
     public int questionDifficult;

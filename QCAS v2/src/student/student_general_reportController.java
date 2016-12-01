@@ -98,7 +98,8 @@ public class student_general_reportController implements Initializable {
                         "Average score:", averageScore.getText()));
                 PDFGeneral.addSubtitleLine(document, "Score vs. Difficulty");
                 PDFGeneral.addChartGraph(document, difficultyChart, chartFile);
-                
+                PDFGeneral.addSubtitleLine(document, "Quiz Record");
+                PDFGeneral.addChartGraph(document, quizRecord, chartFile);
                 document.close();
                 successTip.setVisible(true);
                 PauseTransition visiblePause
@@ -160,6 +161,6 @@ public class student_general_reportController implements Initializable {
                 + goPage.getOneStudentScoresOfAllRecord().length);
 
         initialBarChart();
-        //initialLineChart();
+        initialLineChart();
     }
 }

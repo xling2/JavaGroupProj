@@ -41,6 +41,7 @@ public class Communicate {
     private String userUsername = "user";
     private String userPassword = "user";
     private String passW;
+
     TimeRecorder recorder = new TimeRecorder();
 
     public Question[] getRandomQuestion(int quizDifficulty, int questionNumber) {
@@ -432,7 +433,7 @@ public class Communicate {
 
         Question[] allQuestions = getAllQuestions();
         ArrayList<Question> ques = new ArrayList<Question>();
-        
+
         boolean delete = true;
         for (int j = 0; j < no.size(); j++) {
             for (int i = 0; i < allQuestions.length; i++) {
@@ -442,8 +443,10 @@ public class Communicate {
                 }
             }
             if (delete) {
-                Question deletedQuestion = new Question(4, 0, 4,
-                        "This question was deleted.", null, "");
+                String[] choices = {"", "", "", ""};
+                
+                Question deletedQuestion = new Question(0, 0, 0,
+                        "This question was deleted.", choices, "");
                 ques.add(deletedQuestion);
             }
         }
@@ -513,14 +516,13 @@ public class Communicate {
 
     public String[] getStudentRecordDate(String studentName) {
         ArrayList date = new ArrayList();
-        SimpleDateFormat sdf = new SimpleDateFormat("YYYY/MM/dd");
         try (Connection con = DriverManager.getConnection(quizUrl,
                 quizUsername, quizPassword)) {
             Statement stmt = con.createStatement();
             String sql = "Select endTime from " + studentName;
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
-                date.add(sdf.format(rs.getString(1)));
+                date.add(rs.getString(1));
             }
 
         } catch (SQLException se) {
@@ -531,6 +533,7 @@ public class Communicate {
             endDate[i] = recorder.convertStringToTime(date.get(i).toString()).toString();
         }
         return endDate;
+
     }
 
     public int[] getStudentAverageScoreOfThreeDifficulty(String studentName) {
@@ -552,6 +555,19 @@ public class Communicate {
                     }
                 }
             }
+            Question[] allQuestions = getAllQuestions();
+            boolean delete = true;
+            for (int j = 0; j < num.size(); j++) {
+                for (int i = 0; i < allQuestions.length; i++) {
+                    if (allQuestions[i].questionID == num.get(j)) {
+                        delete = false;
+                    }
+                }
+                if (delete) {
+                    num.remove(j);
+                }
+            }
+
             for (int i = 0; i < num.size(); i++) {
                 sql = "Select difficulty from Question where number = " + num.get(i);
                 rs = stmt.executeQuery(sql);

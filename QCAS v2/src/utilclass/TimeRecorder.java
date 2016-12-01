@@ -44,6 +44,5 @@ public class TimeRecorder {
             e.printStackTrace();
         }
         return date;
-
     }
 }

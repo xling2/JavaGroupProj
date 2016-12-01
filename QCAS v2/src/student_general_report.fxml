@@ -39,12 +39,12 @@
                   <Font size="16.0" />
                </font>
             </Label>
-            <Label fx:id="quizzesNumber" layoutX="167.0" layoutY="127.0" style="-fx-text-fill: rgb(187,0,0);" text="3" textFill="WHITE">
+            <Label fx:id="quizzesNumber" layoutX="167.0" layoutY="128.0" style="-fx-text-fill: rgb(187,0,0);" text="3" textFill="WHITE">
                <font>
                   <Font size="16.0" />
                </font>
             </Label>
-            <Label fx:id="averageScore" layoutX="167.0" layoutY="157.0" style="-fx-text-fill: rgb(187,0,0);" text="3" textFill="WHITE">
+            <Label fx:id="averageScore" layoutX="167.0" layoutY="158.0" style="-fx-text-fill: rgb(187,0,0);" text="3" textFill="WHITE">
                <font>
                   <Font size="16.0" />
                </font>

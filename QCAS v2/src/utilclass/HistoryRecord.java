@@ -16,7 +16,7 @@ public class HistoryRecord {
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		return df.format(this.finishDate);
 	}
 }

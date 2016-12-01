@@ -66,9 +66,12 @@ public class instructor_review_quizzs_general_detailController implements Initia
         }
         Document document = new Document();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd-HH-mm");
-        String documentName = goPage.userName + 
-                " " + df.format(new Date()) + "_general_report" + ".PDF";
+        String documentName = goPage.userName
+                + " " + df.format(new Date()) + "_general_report" + ".PDF";
         File exportPDF = new File(folder + "/" + documentName);
+        String chartName = goPage.userName + "quizzes_review " + ".png";
+
+        File chartFile = new File(folder + "/" + chartName);
         if (exportPDF.exists()) {
             failTip.setVisible(true);
             existLabel.setVisible(true);
@@ -98,6 +101,8 @@ public class instructor_review_quizzs_general_detailController implements Initia
                         + averageScoreOfLastQuater.getText());
                 PDFGeneral.addContentLine(document, PDFGeneral.getFormatString("Last year", 22)
                         + averageScoreOfLastYear.getText());
+                PDFGeneral.addSubtitleLine(document, "Score vs. Difficulty");
+                PDFGeneral.addChartGraph(document, lineChart, chartFile);
                 document.close();
                 successTip.setVisible(true);
                 PauseTransition visiblePause
@@ -151,13 +156,14 @@ public class instructor_review_quizzs_general_detailController implements Initia
 
     @SuppressWarnings("unchecked")
     private void initialBarChart() {
+        lineChart.setAnimated(false);
         Series<String, Number> seriesEasy = new XYChart.Series<>();
         Series<String, Number> seriesMedium = new XYChart.Series<>();
         Series<String, Number> seriesHard = new XYChart.Series<>();
         seriesEasy.setName("Easy");
         seriesMedium.setName("Medium");
         seriesHard.setName("Hard");
-        String[] lastTimeType = new String[]{"Last mouth", "Last Quater", "Last Year"};
+        String[] lastTimeType = new String[]{"Last month", "Last Quater", "Last Year"};
         for (int i = 0; i < 3; i++) {
             seriesEasy.getData().add(new Data<>(lastTimeType[i], easyAverageScoreOfThreeLastTime[i]));
             seriesMedium.getData().add(new Data<>(lastTimeType[i], mediumAverageScoreOfThreeLastTime[i]));

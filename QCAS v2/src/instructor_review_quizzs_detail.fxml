@@ -12,12 +12,12 @@
    <content>
       <Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="799.0" prefWidth="551.0" style="-fx-background-color: rgb(51,51,51);" stylesheets="@no-divider.css">
          <children>
-            <BarChart fx:id="difficultyChart" focusTraversable="false" horizontalGridLinesVisible="true" horizontalZeroLineVisible="true" layoutX="-245.0" layoutY="111.0" legendVisible="false" mouseTransparent="false" prefHeight="283.0" prefWidth="725.0" verticalGridLinesVisible="false" verticalZeroLineVisible="true">
+            <BarChart fx:id="difficultyChart" focusTraversable="false" horizontalGridLinesVisible="true" horizontalZeroLineVisible="true" layoutX="35.0" layoutY="222.0" legendVisible="false" mouseTransparent="false" prefHeight="172.0" prefWidth="445.0" verticalGridLinesVisible="false" verticalZeroLineVisible="true">
                <xAxis>
-                  <NumberAxis animated="false" autoRanging="false" minorTickCount="2" minorTickLength="2.0" prefHeight="125.0" prefWidth="28.0" side="TOP" tickLabelFill="WHITE" tickUnit="50.0" />
+                  <NumberAxis animated="false" autoRanging="false" minorTickCount="2" minorTickLength="2.0" prefHeight="12.0" prefWidth="384.0" side="TOP" tickLabelFill="#8a8a8a" tickUnit="50.0" />
                </xAxis>
                <yAxis>
-                  <CategoryAxis prefHeight="26.0" prefWidth="311.0" side="LEFT" tickLabelFill="WHITE" />
+                  <CategoryAxis prefHeight="130.0" prefWidth="42.0" side="LEFT" tickLabelFill="#8a8a8a" />
                </yAxis>
             </BarChart>
             <Label layoutX="35.0" layoutY="44.0" text="Quizzes review" textFill="WHITE">

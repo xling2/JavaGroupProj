@@ -32,9 +32,11 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.WritableImage;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
+import static pdfutil.ChartManipulation.*;
 import qcas.GoPage;
 import pdfutil.PDFGeneral;
 import qcas.popUpPage;
@@ -83,7 +85,10 @@ public class instructor_review_quizzs_detailController implements Initializable 
 
     @FXML
     private Label reviewTimeLabel;
-    
+
+    @FXML
+    private BarChart<Number, String> difficultyChart;
+
     private popUpPage pup = new popUpPage();
 
     private GoPage goPage;
@@ -99,11 +104,19 @@ public class instructor_review_quizzs_detailController implements Initializable 
         if (!folder.exists()) {
             folder.mkdirs();
         }
+
         Document document = new Document();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd-HH-mm");
         String documentName = goPage.userName + df.format(new Date()) + "quizzes_review "
                 + TIMESTRING[GoPage.getGoPage().quizzsReviewSelectOfInstructor] + ".PDF";
+
+        String chartName = goPage.userName + "quizzes_review "
+                + TIMESTRING[GoPage.getGoPage().quizzsReviewSelectOfInstructor] + ".png";
+
+        File chartFile = new File(folder + "/" + chartName);
+        
         File exportPDF = new File(folder + "/" + documentName);
+        
         if (exportPDF.exists()) {
             failTip.setVisible(true);
             existLabel.setVisible(true);
@@ -119,8 +132,20 @@ public class instructor_review_quizzs_detailController implements Initializable 
                 PdfWriter.getInstance(document, new FileOutputStream(folder + "/" + documentName));
                 document.open();
                 PDFGeneral.addTitleLine(document, TIMESTRING[GoPage.getGoPage().quizzsReviewSelectOfInstructor]);
-                PDFGeneral.addContentLine(document, "Number of quizzes taken : " + quizzesNumber.getText());
-                PDFGeneral.addSubtitleLine(document, "Average Score : " + averageScore.getText());
+                PDFGeneral.addContentLine(document, "Quizzes taken : " + quizzesNumber.getText());
+                PDFGeneral.addContentLine(document, "Average score : " + averageScore.getText());
+                PDFGeneral.addSubtitleLine(document, "Score vs. Difficulty");
+                PDFGeneral.addChartGraph(document, difficultyChart, chartFile);
+                PDFGeneral.addSubtitleLine(document, "Student Passed");
+                goPage.getPassedList(GoPage.getGoPage().quizzsReviewSelectOfInstructor);
+                for(String s : goPage.studentViewListForInstructor){
+                    PDFGeneral.addContentLine(document, s);
+                }
+                PDFGeneral.addSubtitleLine(document, "Student failed");
+                goPage.getFailedList(GoPage.getGoPage().quizzsReviewSelectOfInstructor);
+                for(String s : goPage.studentViewListForInstructor){
+                    PDFGeneral.addContentLine(document, s);
+                }
                 document.close();
                 successTip.setVisible(true);
                 PauseTransition visiblePause
@@ -155,10 +180,8 @@ public class instructor_review_quizzs_detailController implements Initializable 
         }
     }
 
-    @FXML
-    private BarChart<Number, String> difficultyChart;
-
     private void initialBarChart() {
+        difficultyChart.setAnimated(false);
         Series<Number, String> series = new XYChart.Series<Number, String>();
         String[] difficulty = new String[]{"Easy", "Medium", "Hard"};
         int[][] scores = new int[][]{goPage.getAllQuizAverageScoreOfEachDifficultyLastMouth(),
@@ -205,18 +228,12 @@ public class instructor_review_quizzs_detailController implements Initializable 
                 checkTips.setText("Select to check student's quiz report.");
                 checkTips.setTextFill(Color.WHITE);
                 if (new_value.intValue() == 0) {
-                    System.out.println("0");
                     goPage.getPassedList(GoPage.getGoPage().quizzsReviewSelectOfInstructor);
-
                     System.out.println("goPage.studentViewListForInstructor.length: " + goPage.studentViewListForInstructor.length);
-
                     studentList.setItems(FXCollections.observableArrayList(goPage.studentViewListForInstructor));
                 } else if (new_value.intValue() == 1) {
-                    System.out.println("1");
                     goPage.getFailedList(GoPage.getGoPage().quizzsReviewSelectOfInstructor);
-                    
                     System.out.println("goPage.studentViewListForInstructor.length: " + goPage.studentViewListForInstructor.length);
-
                     studentList.setItems(FXCollections.observableArrayList(goPage.studentViewListForInstructor));
                 }
             }

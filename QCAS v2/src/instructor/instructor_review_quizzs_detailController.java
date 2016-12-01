@@ -37,6 +37,7 @@ import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import qcas.GoPage;
 import pdfutil.PDFGeneral;
+import qcas.popUpPage;
 
 /**
  *
@@ -82,6 +83,8 @@ public class instructor_review_quizzs_detailController implements Initializable 
 
     @FXML
     private Label reviewTimeLabel;
+    
+    private popUpPage pup = new popUpPage();
 
     private GoPage goPage;
 
@@ -142,8 +145,9 @@ public class instructor_review_quizzs_detailController implements Initializable 
     @FXML
     private void checkStudent(ActionEvent event) {
         if (studentList.getSelectionModel().getSelectedIndex() != -1) {
+            popUpPage.setParentScene(pane);
             goPage.studentName = studentList.getSelectionModel().getSelectedItem();
-            goPage.goPage("/view_history.fxml", pane);
+            pup.open("/view_history.fxml");
         } else {
             checkTips.setTextFill(Color.RED);
             checkTips.setText("Check failed, Please select a student first");
@@ -172,10 +176,10 @@ public class instructor_review_quizzs_detailController implements Initializable 
 
         goPage = GoPage.getGoPage();
         //get some data from serve
-        String period = (GoPage.getGoPage().quizzsReviewSelectOfInstructor == 0) ? 
-                "-last month" : 
-                (GoPage.getGoPage().quizzsReviewSelectOfInstructor == 1) ? 
-                "-last quarter" : "-last year";
+        String period = (GoPage.getGoPage().quizzsReviewSelectOfInstructor == 0)
+                ? "-last month"
+                : (GoPage.getGoPage().quizzsReviewSelectOfInstructor == 1)
+                        ? "-last quarter" : "-last year";
 
         reviewTimeLabel.setText(period);
 
@@ -192,6 +196,7 @@ public class instructor_review_quizzs_detailController implements Initializable 
         // ListView default
         passOrFail.getSelectionModel().select(0);
         goPage.getPassedList(GoPage.getGoPage().quizzsReviewSelectOfInstructor);
+
         studentList.setItems(FXCollections.observableArrayList(goPage.studentViewListForInstructor));
 
         // Fail or Pass list initial
@@ -202,16 +207,22 @@ public class instructor_review_quizzs_detailController implements Initializable 
                 if (new_value.intValue() == 0) {
                     System.out.println("0");
                     goPage.getPassedList(GoPage.getGoPage().quizzsReviewSelectOfInstructor);
+
+                    System.out.println("goPage.studentViewListForInstructor.length: " + goPage.studentViewListForInstructor.length);
+
                     studentList.setItems(FXCollections.observableArrayList(goPage.studentViewListForInstructor));
                 } else if (new_value.intValue() == 1) {
                     System.out.println("1");
                     goPage.getFailedList(GoPage.getGoPage().quizzsReviewSelectOfInstructor);
+                    
+                    System.out.println("goPage.studentViewListForInstructor.length: " + goPage.studentViewListForInstructor.length);
+
                     studentList.setItems(FXCollections.observableArrayList(goPage.studentViewListForInstructor));
                 }
             }
         });
 //        successTip.requestFocus();
-//        wholeScrollPane.setVvalue(0.0);
+        wholeScrollPane.setVvalue(0.0);
     }
 
 }

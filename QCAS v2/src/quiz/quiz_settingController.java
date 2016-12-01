@@ -62,7 +62,19 @@ public class quiz_settingController implements Initializable {
                     tips.setVisible(false);
                 });
                 visiblePause.play();
+            } else if (goPage.communicateWithServe.checkQuestions(goPage.quizDifficultyOfStudentSelect, Integer.parseInt(number.getText()))) {
+
+                tips.setText("The number of questions of that difficulty is not enough.");
+                tips.setVisible(true);
+                PauseTransition visiblePause
+                        = new PauseTransition(Duration.seconds(3));
+                visiblePause.setOnFinished(e -> {
+                    tips.setVisible(false);
+                });
+                visiblePause.play();
+
             } else {
+
                 goPage.numberOfCurrentQuiz = 1;
                 goPage.questionNumberFromQuizSetting = Integer.parseInt(number.getText());
                 goPage.getRandomQuiz();
@@ -71,7 +83,6 @@ public class quiz_settingController implements Initializable {
                 pup.closeToOpen("/question.fxml");
 
                 startTime = TimeRecorder.getTime();
-                
 
             }
         }
@@ -84,7 +95,7 @@ public class quiz_settingController implements Initializable {
         // TODO
         goPage = GoPage.getGoPage();
         difficulty.setItems(FXCollections.observableArrayList("Easy", "Mediem ", "Hard", "Mixed"));
-		goPage.quizDifficultyOfStudentSelect = -1;
+        goPage.quizDifficultyOfStudentSelect = -1;
         tips.setVisible(false);
         // set only number
         number.textProperty().addListener(new ChangeListener<String>() {

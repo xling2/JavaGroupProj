@@ -54,6 +54,7 @@ public class loginController implements Initializable {
         login();
     }
 
+    // Action to enter key
     @FXML
     private void enterPressed(KeyEvent event) throws NoSuchAlgorithmException, IOException {
         if (event.getCode() == KeyCode.ENTER) {
@@ -63,13 +64,14 @@ public class loginController implements Initializable {
 
     private void login() {
 
+        // get login information
         String username = examIDTextField.getText();
         String passwd = passwordField.getText();
         
         System.out.println(passwd);
 
-        //loginDetector detector = new loginDetector(username, passwd);
         if (GoPage.getGoPage().communicateWithServe.login(username, passwd)) {
+            // If instructor loged in, go to instructor panel
             if (username.equals("instructor")) {
                 goPage.goPage("/Instructer_panel.fxml", loginButton);
             } else {

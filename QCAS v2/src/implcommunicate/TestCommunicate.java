@@ -23,6 +23,10 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.Statement;
 import qcas.GoPage;
 
+/*
+This class implements the interface ICommunicate2 and extends the Communicate1
+*/
+
 public class TestCommunicate extends Communicate1 implements ICommunicate2 {
 
     private String quizUrl = "jdbc:derby:QuizDB;"
@@ -45,7 +49,7 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
     }
     @Override
     public void recordQuizResultToServe(QuizOfStudent quizResult) {
-
+        
         comm.createTableQuiz(quizResult);
         comm.insertTableQuiz(quizResult);
     }
@@ -133,10 +137,12 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
 
     @Override
     public boolean addStudent(String text) {
+        
         boolean success = false;
         comm.createTable();
-
+        // check if the ID exsits in database
         if (!comm.checkID(text)) {
+            // if not, then send main, and insert information.
             comm.createPassword();
             comm.sendMail(text);
             comm.insertStudent(comm.encryptPassW(), text);
@@ -160,13 +166,13 @@ public class TestCommunicate extends Communicate1 implements ICommunicate2 {
         return true;
 
     }
-
+    @Override
     public void deleteById(int questionID) {
+        // delete questions by question ID
         String sql = "DELETE FROM QUESTION WHERE NUMBER = " + questionID;
         try (Connection con = DriverManager.getConnection(quizUrl, quizUsername, quizPassword)) {
             Statement stmt = con.createStatement();
             stmt.execute(sql);
-            // add a check, whether successfully deleted?
         } catch (SQLException e) {
             System.out.println("Exception creating connection: " + e);
 

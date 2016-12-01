@@ -23,19 +23,18 @@ public class TimeRecorder {
     }
 
     public String convertTimeToString(Date date) {
-
+        // convert time to string so that could be inserted into database
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/ddHHmmss");
 
         return sdf.format(date.getTime());
     }
 
     public Date convertStringToTime(String time) {
-
+        // convert string to time 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         String formatter = time.substring(0, 10) + " " + time.substring(10, 12) + ":" + 
          time.substring(12, 14) + ":" + time.substring(14, 16);
-        
-        System.out.println(formatter);
+        // add splitters 
         Date date = new Date();
         try {
             date = sdf.parse(formatter);

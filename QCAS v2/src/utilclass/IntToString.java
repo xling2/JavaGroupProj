@@ -10,7 +10,9 @@ package utilclass;
  * @author lingxingyu
  */
 public class IntToString {
-     public String toStringDiff(int questionDiff) {
+     
+    // convert difficulty from E M H Mixed to 1 2 3 4
+    public String toStringDiff(int questionDiff) {
         String diff = null;
 
         if (questionDiff == 0) {

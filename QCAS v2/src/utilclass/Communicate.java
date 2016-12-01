@@ -30,6 +30,8 @@ import java.util.Collections;
 /**
  *
  * @author lingxingyu
+ *
+ * Communicate with database, save data from serve, and provide data for serve
  */
 public class Communicate {
 
@@ -55,7 +57,9 @@ public class Communicate {
             Statement stmt = con.createStatement();
             String sql = "";
             if (quizDifficulty < 3) {// select E\M\H
+                // convert difficulty to int
                 String diff = its.toStringDiff(quizDifficulty);
+                // randomly select questions in specific difficulty levels
                 sql = "Select * from Question where difficulty = '" + diff
                         + "' order by Random() fetch first " + questionNumber + " rows only";
             } else {// Select mixed
@@ -109,6 +113,10 @@ public class Communicate {
         return question;
     }
 
+    /*
+    check if the questions that users choosed are more than the questions in
+    database
+     */
     public boolean checkQuestions(int quizDifficulty, int questionNumber) {
         boolean exception = false;
         int count = 0;
@@ -117,6 +125,7 @@ public class Communicate {
         try (Connection con = DriverManager.getConnection(quizUrl,
                 quizUsername, quizPassword)) {
             Statement stmt = con.createStatement();
+            // for questions in specific difficulty level
             if (quizDifficulty < 3) {
                 String sql = "Select * from Question where difficulty = '" + diff + "'";
                 ResultSet rs = stmt.executeQuery(sql);
@@ -127,6 +136,7 @@ public class Communicate {
                     exception = true;
                 }
             } else {
+                // for questions mixed 
                 String sql = "Select * from Question";
                 ResultSet rs = stmt.executeQuery(sql);
                 while (rs.next()) {
@@ -148,8 +158,10 @@ public class Communicate {
         try (Connection con = DriverManager.getConnection(quizUrl,
                 quizUsername, quizPassword)) {
             Statement stmt = con.createStatement();
+            // check if already have table 
             DatabaseMetaData dbmd = con.getMetaData();
             ResultSet rs = dbmd.getTables(null, null, quizResult.studentName.toUpperCase(), null);
+            // if not, then create one
             if (!rs.next()) {
                 //stmt.execute("drop table " + quizResult.studentName);
                 String sql = "create table " + quizResult.studentName
@@ -176,13 +188,14 @@ public class Communicate {
             String sql = "Select quizID from " + quizResult.studentName;
             ResultSet rs = stmt.executeQuery(sql);
             int count = 1;
+            // check the quizID to caculate the number of total quizzes
             while (rs.next()) {
                 count++;
-                //System.out.println(rs.getString(1));
             }
+            // quizID = andrewID + times (to make it unique)
             String quizID = quizResult.studentName + count;
-            //System.out.println(quizID);
             quizResult.quizId = quizID;
+            // convert time to String
             String startDate = recorder.convertTimeToString(quizResult.startDate);
             String endDate = recorder.convertTimeToString(quizResult.finishDate);
             sql = "insert into " + quizResult.studentName + " values ('"
@@ -195,15 +208,11 @@ public class Communicate {
                 String correct = "";
 
                 if (quizResult.questionsOfQuiz[i].questionType == 2) {// TF
-                    if (quizResult.answerOfStudent[i].toString().equals(quizResult.questionsOfQuiz[i].correctAnswer.toLowerCase())) {
-                        correct = "correct";
-                    } else {
-                        correct = "incorrect";
-                    }
-                } else if (quizResult.answerOfStudent[i].toString().equals(quizResult.questionsOfQuiz[i].correctAnswer)) {
-                    correct = "correct";
+                    // save correct answer into database
+                    correct = quizResult.questionsOfQuiz[i].correctAnswer.toLowerCase();
+
                 } else {
-                    correct = "incorrect";
+                    correct = quizResult.questionsOfQuiz[i].correctAnswer;
                 }
                 sql = sql + quizResult.questionsOfQuiz[i].questionID
                         + ", '" + quizResult.answerOfStudent[i].toString() + "', '"
@@ -234,7 +243,6 @@ public class Communicate {
             ResultSet rs = dbmd.getTables(null, null, "Question".toUpperCase(), null);
             if (!rs.next()) {
                 // create the table question
-                // stmt.execute("drop table Question");
                 stmt.execute("create table Question(number int, type varchar(40), "
                         + "difficulty varchar(40), description long varchar, "
                         + "choice1 varchar(255), correct1 varchar(40), "
@@ -254,6 +262,7 @@ public class Communicate {
         try (Connection con = DriverManager.getConnection(quizUrl,
                 quizUsername, quizPassword)) {
             Statement stmt = con.createStatement();
+            // read questions from csv file
             CSVReader reader = new CSVReader(new FileReader(csvFile));
             String[] line;
             int count = 0;
@@ -266,10 +275,9 @@ public class Communicate {
                 count = rs.getInt("number");
             }
             count++;
-            System.out.println(count);
             while ((line = reader.readNext()) != null) {
-                // import data from file into database
-                // import MA and MC
+
+                // check if the questions exist in database      
                 for (Question q : questionBank) {
                     if (line[2].equals(q.content)) {
                         exist = true;
@@ -277,6 +285,8 @@ public class Communicate {
                 }
 
                 if (!exist) {
+
+                    // if not,import data from file into database
                     if (line[0].equals("MA") | line[0].equals("MC")) {
                         sql = "insert into Question values (" + count + ", '";
                         for (int i = 0; i < line.length - 1; i++) {
@@ -291,6 +301,7 @@ public class Communicate {
                                 answer = line[i - 1];
                             }
                         }
+                        // construct question object
                         Question question = new Question(sti.toIntType(line[0]),
                                 count, sti.toIntDiff(line[1]),
                                 line[2], choice, answer);
@@ -308,6 +319,7 @@ public class Communicate {
                         sql = sql + line[3] + "')";
                         String[] choice = {"", "", "", ""};
                         stmt.execute(sql);
+                        // construct question object
                         Question question = new Question(sti.toIntType(line[0]),
                                 count, sti.toIntDiff(line[1]),
                                 line[2], choice, line[3]);
@@ -325,11 +337,16 @@ public class Communicate {
         }
 
         Question[] questions = new Question[ques.size()];
+        // change Questions Arraylist to array
         questions = ques.toArray(new Question[ques.size()]);
         return questions;
     }
 
+    /*
+    get all current questions in database for questionbank
+    */
     public Question[] getAllQuestions() {
+        
         ArrayList<Question> allQuestion = new ArrayList();
 
         String answer = "";
@@ -344,15 +361,16 @@ public class Communicate {
                 String[] key = {"A", "B", "C", "D"};
                 if (rs.getString("type").equals("MC") | rs.getString("type").equals("MA")) {
                     for (int i = 0; i < 4; i++) {
-
+                       // get choices from database
                         choice[i] = rs.getString(3 + 2 * (i + 1));
                     }
                     for (int i = 0; i < 4; i++) {
                         if (rs.getString(2 * (i + 1) + 4).equals("correct")) {
+                           // compare to get answers from database
                             answer = answer + key[i];
                         }
                     }
-
+                    // construct Question Object
                     Question ques = new Question(sti.toIntType(rs.getString("type")),
                             rs.getInt("number"), sti.toIntDiff(rs.getString("difficulty")),
                             rs.getString("description"), choice, answer);
@@ -364,6 +382,7 @@ public class Communicate {
                             rs.getString("description"), choices, rs.getString("answer"));
                     allQuestion.add(ques);
                 }
+                // resset answer
                 answer = "";
 
             }
@@ -390,7 +409,7 @@ public class Communicate {
         } catch (SQLException se) {
             System.out.println("Exception: " + se);
         }
-
+        
         HistoryRecord[] record = new HistoryRecord[quizID.size()];
         for (int i = 0; i < quizID.size(); i++) {
             record[i] = new HistoryRecord(quizID.get(i).toString(), date.get(i));
@@ -400,13 +419,14 @@ public class Communicate {
     }
 
     public QuizOfStudent getQuiz(String quizId, String studentName) {
-        int num;// the number of question of this quiz
-        System.out.println(quizId);
-        ArrayList<Integer> no = new ArrayList();// question number in question bank
+        int num;// the number of questions of this quiz
+        ArrayList<Integer> no = new ArrayList();// question ID in the Question table
         ArrayList answers = new ArrayList();
+        ArrayList correctAnswers = new ArrayList();
         Date startDate = new Date();
         Date finishDate = new Date();
         StringToInt sti = new StringToInt();
+
         int totalDiff = 0;
         try (Connection con = DriverManager.getConnection(quizUrl,
                 quizUsername, quizPassword)) {
@@ -416,14 +436,16 @@ public class Communicate {
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 num = rs.getInt("number");
-                //System.out.println(num);
+                // convert String to time
+                startDate = recorder.convertStringToTime(rs.getString("startTime"));
+                finishDate = recorder.convertStringToTime(rs.getString("endTime"));
+                totalDiff = sti.toIntDiff(rs.getString("difficulty"));
+               
                 for (int i = 0; i < num; i++) {
-                    //System.out.println(rs.getInt(4 + 3 * (i + 1)));
+                    
                     no.add(rs.getInt(4 + 3 * (i + 1)));
                     answers.add(rs.getString(5 + 3 * (i + 1)));
-                    startDate = recorder.convertStringToTime(rs.getString("startTime"));
-                    finishDate = recorder.convertStringToTime(rs.getString("endTime"));
-                    totalDiff = sti.toIntDiff(rs.getString("difficulty"));
+                    correctAnswers.add(rs.getString(6 + 3 * (i + 1)));
                 }
             }
 
@@ -433,58 +455,67 @@ public class Communicate {
 
         Question[] allQuestions = getAllQuestions();
         ArrayList<Question> ques = new ArrayList<Question>();
-        int count = 0;
+        // check if questions have been deleted
         boolean delete = true;
         for (int j = 0; j < no.size(); j++) {
             for (int i = 0; i < allQuestions.length; i++) {
                 if (allQuestions[i].questionID == no.get(j)) {
-                    ques.add(allQuestions[i]);
+                    // if ID matches, then construct Question Object for quiz
+                    Question question = new Question(allQuestions[i].questionType,
+                            allQuestions[i].questionID, allQuestions[i].questionDifficult,
+                            allQuestions[i].content, allQuestions[i].choices, correctAnswers.get(j).toString());
+                    ques.add(question);
                     delete = false;
                 }
-              }
-            if(delete){
-                  count ++;
-            }            
             }
+            if (delete) {
+                // if questions have been deleted, then warn users
+                String[] choices = {"", "", "", ""};
+                Question deletedQuestion = new Question(0, 0, 0,
+                        "This question was deleted.", choices, "");
+                ques.add(deletedQuestion);
+            }
+        }
         Question[] questionsOfQuiz = ques.toArray(new Question[ques.size()]);
 
         Answer[] answerOfStudent = new Answer[questionsOfQuiz.length];
         for (int i = 0; i < questionsOfQuiz.length; i++) {
 
             switch (questionsOfQuiz[i].questionType) {
-                case 0:
+                case 0:// for MA
                     answerOfStudent[i] = new Answer(no.get(i),
                             questionsOfQuiz[i].questionType,
                             sti.toIntMultipleAnswer(answers.get(i).toString()));
+                    // if the question is answered, set the boolean true
                     answerOfStudent[i].isAnswer = true;
                     break;
-                case 1:
+                case 1:// for MC
                     answerOfStudent[i] = new Answer(no.get(i), questionsOfQuiz[i].questionType,
                             sti.toIntSingleAnswer(answers.get(i).toString()));
                     answerOfStudent[i].isAnswer = true;
 
                     break;
-                case 2:
+                case 2:// for TF
                     answerOfStudent[i] = new Answer(no.get(i),
                             questionsOfQuiz[i].questionType, Boolean.valueOf(answers.get(i).toString()));
                     answerOfStudent[i].isAnswer = true;
                     break;
-                case 3:
+                case 3:// for FIB
                     answerOfStudent[i] = new Answer(no.get(i),
                             questionsOfQuiz[i].questionType, answers.get(i).toString());
                     answerOfStudent[i].isAnswer = true;
                     break;
-                default:
+                default: // for questions not answered by users
                     answerOfStudent[i] = new Answer();
                     break;
             }
 
         }
+        // construct the object quiz
         QuizOfStudent quizOfStudent = new QuizOfStudent(studentName, questionsOfQuiz,
                 answerOfStudent, startDate, finishDate);
         quizOfStudent.quizId = quizId;
         quizOfStudent.quizDifficulty = totalDiff;
-        quizOfStudent.setDeletedQuestion(count);
 
         return quizOfStudent;
     }
@@ -548,12 +579,15 @@ public class Communicate {
             while (rs.next()) {
                 num.add(rs.getInt("number"));
                 for (int i = 0; i < 50; i++) {
-                    if (rs.getString(6 + 3 * (i + 1)).equals("correct")) {
+                   // compare to define if the answer is correct
+                    if (rs.getString(6 + 3 * (i + 1)).equals(rs.getString(5 + 3 * (i + 1)))) {
                         numCorrect.add(rs.getInt("number"));
                     }
                 }
             }
+            // get all questions from database
             Question[] allQuestions = getAllQuestions();
+            // check if there are questions deleted
             boolean delete = true;
             for (int j = 0; j < num.size(); j++) {
                 for (int i = 0; i < allQuestions.length; i++) {
@@ -561,11 +595,12 @@ public class Communicate {
                         delete = false;
                     }
                 }
+                // remove the ID of deleted questions
                 if (delete) {
                     num.remove(j);
                 }
             }
-
+           // total number of questions in three difficulty
             for (int i = 0; i < num.size(); i++) {
                 sql = "Select difficulty from Question where number = " + num.get(i);
                 rs = stmt.executeQuery(sql);
@@ -579,6 +614,7 @@ public class Communicate {
                     }
                 }
             }
+            // correct questions in three difficulty
             for (int i = 0; i < numCorrect.size(); i++) {
                 sql = "Select difficulty from Question where number = " + numCorrect.get(i);
                 rs = stmt.executeQuery(sql);
@@ -607,11 +643,12 @@ public class Communicate {
     public void createTable() {
         try (Connection con = DriverManager.getConnection(userUrl, userUsername,
                 userPassword)) {
+            // check if the table Students exist
             Statement stmt = con.createStatement();
             DatabaseMetaData dbmd = con.getMetaData();
             ResultSet rs = dbmd.getTables(null, null, "Students".toUpperCase(), null);
             if (!rs.next()) {
-                // create the table question
+                // if not, create the table Students
                 stmt.execute("create table Students(andrewID varchar(40), "
                         + "password varchar(40))");
             }
@@ -621,6 +658,7 @@ public class Communicate {
     }
 
     public boolean checkID(String id) {
+        // check if the students exsit in database
         ArrayList allStudent = getAllStudent();
         boolean exist = false;
         for (int i = 0; i < allStudent.size(); i++) {
@@ -632,7 +670,7 @@ public class Communicate {
     }
 
     public void createPassword() {
-
+         // create password
         Random rand = new Random();
         int num = rand.nextInt(8999) + 1000;
         String letters = "";
@@ -643,7 +681,11 @@ public class Communicate {
         passW = letters + num;
     }
 
+     /*
+    Send e-mail to students to inform them their password
+    */
     public void sendMail(String text) {
+       
         String from = "lxy125@gmail.com";
         String pass = "lingxingyu125";
         String[] to = {text + "@andrew.cmu.edu"}; // list of recipient email addresses
@@ -693,9 +735,11 @@ public class Communicate {
             me.printStackTrace();
         }
     }
-
+    
+    /*encrypt the password using MD5
+    
+    */
     public String encryptPassW() {
-
         String pass = "";
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");

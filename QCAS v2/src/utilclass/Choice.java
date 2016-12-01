@@ -12,16 +12,16 @@ package utilclass;
 public class Choice {
     private String content;
     private String correct;
-    
+    // match the content and correct
     public Choice(String cont, String corr){
         this.content = cont;
         this.correct = corr;
     }
-    
+    // get content of the choice
     public String getContent(){
         return this.content;
     }
-    
+    // get correct of the choice
     public String getCorrect(){
         return this.correct;
     }

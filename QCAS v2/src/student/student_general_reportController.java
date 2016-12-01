@@ -60,22 +60,29 @@ public class student_general_reportController implements Initializable {
         GoPage.getGoPage().goPage("/view_history.fxml", studentID);
     }
 
+    // export pdf to desktop
     @FXML
     private void export(ActionEvent event) {
         File folder = new File(System.getProperty("user.home"), "Desktop");
         if (!folder.exists()) {
             folder.mkdirs();
         }
+        // get the pdf document 
         Document document = new Document();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd-HH-mm");
+        // name the pdf
         String documentName = goPage.studentName + 
                 " " + df.format(new Date()) + "_general_report" + ".PDF";
+        // define the location
         File exportPDF = new File(folder + "/" + documentName);
+        // name the chart pic
         String chartName = goPage.studentName + "_chart" + ".png";
+        // define the location for chart pic export
         File chartFile = new File(folder + "/" + chartName);
         if (exportPDF.exists()) {
             failTip.setVisible(true);
             existLabel.setVisible(true);
+            // transition
             PauseTransition visiblePause
                     = new PauseTransition(Duration.seconds(3));
             visiblePause.setOnFinished(e -> {
@@ -85,6 +92,7 @@ public class student_general_reportController implements Initializable {
             visiblePause.play();
         } else {
             try {
+                // write to pdf
                 PdfWriter.getInstance(document, new FileOutputStream(folder + "/" + documentName));
                 document.open();
                 PDFGeneral.addTitleLine(document, "Quiz Report");
@@ -101,6 +109,7 @@ public class student_general_reportController implements Initializable {
                 PDFGeneral.addSubtitleLine(document, "Quiz Record");
                 PDFGeneral.addChartGraph(document, quizRecord, chartFile);
                 document.close();
+                // show success msg
                 successTip.setVisible(true);
                 PauseTransition visiblePause
                         = new PauseTransition(Duration.seconds(3));
@@ -155,6 +164,7 @@ public class student_general_reportController implements Initializable {
         for (int i = 0; i < goPage.getOneStudentScoresOfAllRecord().length; i++) {
             totalScore += goPage.getOneStudentScoresOfAllRecord()[i];
         }
+        // calculate the average score
         averageScore.setText(totalScore / goPage.getOneStudentScoresOfAllRecord().length + "");
 
         System.out.println("goPage.getOneStudentScoresOfAllRecord().length: "

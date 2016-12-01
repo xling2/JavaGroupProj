@@ -30,6 +30,7 @@ public class popUpPage {
 
     }
 
+    // simply open a new window from the parent scene
     public void open(String FXMLName) {
         try {
             Stage stage = new Stage();
@@ -44,11 +45,13 @@ public class popUpPage {
         }
     }
 
+    // close the pop up window
     public void close() {
         Stage popUpWindow = (Stage) popUpScene.getWindow();
         popUpWindow.close();
     }
 
+    // close the pop up window and open a new scene in mother window
     public void closeToOpen(String FXMLName) {
         Stage popUpWindow = (Stage) popUpScene.getWindow();
 
@@ -65,10 +68,12 @@ public class popUpPage {
         popUpWindow.close();
     }
 
+    // set the parent scene
     public static void setParentScene(Node node) {
         parentScene = node.getScene();
     }
 
+    // set the pop up scene
     public static void setpopUpScene(Node node) {
         popUpScene = node.getScene();
     }

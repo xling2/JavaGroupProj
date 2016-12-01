@@ -16,6 +16,7 @@ public class studentInTable {
 
     private SimpleStringProperty andrewID;
     
+    // create studentInTable object from student's ID to store data for table view
     public studentInTable(String andrewID){
         this.andrewID = new SimpleStringProperty(andrewID);
     }

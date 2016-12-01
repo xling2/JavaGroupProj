@@ -16,9 +16,11 @@ import java.util.HashSet;
 import java.sql.Date;
 import java.sql.DatabaseMetaData;
 
+/**
+ *
+ * @author Yuhao HE
+ */
 public class DBConnection {
-
-    // URL needs to be consistent with Xingyu
     private String stuUrl = "jdbc:derby:UserDB;create = true";
     private String userUsername = "user";
     private String userPassword = "user";
@@ -36,20 +38,20 @@ public class DBConnection {
     private ArrayList<String> studentFailLQ = new ArrayList();
     private ArrayList<String> studentFailLY = new ArrayList();
 
+    /**
+     *
+     * @return a hashset which stores andrewID of all students
+     */
     public Set<String> getAndrewID() {
         Set<String> AndrewIDs = new HashSet();
         try (java.sql.Connection con = DriverManager.getConnection(stuUrl, userUsername,
                 userPassword)) {
-
             Statement stmt = con.createStatement();
             String query = "SELECT * FROM STUDENTS";
-            // Added by Ethan
-            //con.setAutoCommit(false);
-
             ResultSet rs = stmt.executeQuery(query);
             while (rs.next()) {
                 String andrewID = rs.getString(1);
-                // check whethr aleady contains this ID
+                // check whether aleady contains this ID. if contains, add it into the hashset
                 AndrewIDs.add(andrewID);
             }
         } catch (SQLException e) {
@@ -60,106 +62,102 @@ public class DBConnection {
 
     }
 
+    /**
+     * This method is to calculate all statistical figures
+     * @param AndrewIDs is the hashset that stores andrewID of all students
+     */
     public void getResult(Set<String> AndrewIDs) {
-        // get today's date
+        // get today's date and related date data
         LocalDate today = LocalDate.now();
-        //**************************
-        //System.out.println(today);
         int thisYear = today.getYear();
         int thisMonth = today.getMonth().getValue();
-        String lastYear = String.valueOf(thisYear - 1);
-
-        String lastMonth = String.valueOf(thisMonth - 1);
-
-        String lastQuarter = String.valueOf(thisMonth - 3);
-        double tsLY = 0;
-        double tsLM = 0;
-        double tsLQ = 0;
-        double tsE = 0;
-        double tsM = 0;
-        double tsH = 0;
-        double tsELM = 0;
-        double tsELQ = 0;
-        double tsELY = 0;
-        double tsMLM = 0;
-        double tsMLQ = 0;
-        double tsMLY = 0;
-        double tsHLM = 0;
-        double tsHLQ = 0;
-        double tsHLY = 0;
-        int numberQELM = 0;
-        int numberQELQ = 0;
-        int numberQELY = 0;
-        int numberQMLM = 0;
-        int numberQMLQ = 0;
-        int numberQMLY = 0;
-        int numberQHLM = 0;
-        int numberQHLQ = 0;
-        int numberQHLY = 0;
-        int numberQLM = 0;
-        int numberQLQ = 0;
-        int numberQLY = 0;
+        int lastYear = thisYear - 1;
+        int lastMonth = thisMonth - 1;
+        int lastQuarter = thisMonth - 3;
+        double tsLY = 0; // total score of quizzes taken in last year
+        double tsLM = 0; // total score of quizzes taken in last month
+        double tsLQ = 0; // total score of quizzes taken in last quarter
+        double tsE = 0; // total score of quizzes of easy level
+        double tsM = 0; // total score of quizzes of medium level
+        double tsH = 0; // total score of quizzes of hard level
+        double tsELM = 0; // total score of quizzes of easy level taken in last month
+        double tsELQ = 0; // total score of quizzes of easy level taken in last quarter
+        double tsELY = 0; // total score of quizzes of easy level taken in last year
+        double tsMLM = 0; // total score of quizzes of meidum level taken in last month
+        double tsMLQ = 0; // total score of quizzes of medium level taken in last month
+        double tsMLY = 0; // total score of quizzes of medium level taken in last month
+        double tsHLM = 0; // total score of quizzes of hard level taken in last month
+        double tsHLQ = 0; // total score of quizzes of hard level taken in last month
+        double tsHLY = 0; // total score of quizzes of hard level taken in last month
+        int numberQELM = 0; // the number of questions of easy level taken in last month
+        int numberQELQ = 0; // the number of questions of easy level taken in last quarter
+        int numberQELY = 0; // the number of questions of easy level taken in last year
+        int numberQMLM = 0; // the number of questions of medium level taken in last month
+        int numberQMLQ = 0; // the number of questions of medium level taken in last quarter
+        int numberQMLY = 0; // the number of questions of medium level taken in last year
+        int numberQHLM = 0; // the number of questions of hard level taken in last month
+        int numberQHLQ = 0; // the number of questions of hard level taken in last quarter
+        int numberQHLY = 0; // the number of questions of hard level taken in last year
+        int numberQLM = 0; // the number of questions taken in last month
+        int numberQLQ = 0; // the number of questions taken in last quarter
+        int numberQLY = 0; // the number of questions taken in last year
 
         try (java.sql.Connection con
                 = DriverManager.getConnection(resUrl, quizUsername, quizPassword)) {
-
-            // Added by Ethan
-            //con.setAutoCommit(false);
+            // each student has a table named its AndrewID, this table is to store its quiz history
             for (String a : AndrewIDs) {
                 // check whether this andrewID table exists
                 DatabaseMetaData meta = con.getMetaData();
                 ResultSet res = meta.getTables(null, null, a.toUpperCase(), null);
-
-                // ******** how to check if a student hasn't taken any quiz
-                /*if (res.next() == false)
-                    System.out.println(a + " hasn't taken any quiz");*/
+                // do calculation only when this table exists
                 while (res.next()) {
+                    // connect to the quiz history table of this student
                     Statement stmt = con.createStatement();
                     String query = "SELECT * FROM" + " " + a;
-                    // Added by Ethan
-                    //con.setAutoCommit(false);
                     ResultSet rs = stmt.executeQuery(query);
 
-                    double avgScoreLM_P = 0;
-                    double avgScoreLQ_P = 0;
-                    double avgScoreLY_P = 0;
-                    int numberTestPLM = 0;
-                    int numberTestPLQ = 0;
-                    int numberTestPLY = 0;
-                    double tsPLM = 0;
-                    double tsPLQ = 0;
-                    double tsPLY = 0;
-                    // use endTime to get year and month
+                    double avgScoreLM_P = 0; // average score in last month of this student 
+                    double avgScoreLQ_P = 0; // average score in last quarter of this student 
+                    double avgScoreLY_P = 0; // average score in last year of this student 
+                    int numberTestPLM = 0; // the number of quizzes that this student took in last month
+                    int numberTestPLQ = 0; // the number of quizzes that this student took in last quarter
+                    int numberTestPLY = 0; // the number of quizzes that this student took in last year
+                    double tsPLM = 0; // total score of quizzes took in last month by this student
+                    double tsPLQ = 0; // total score of quizzes took in last quarter by this student
+                    double tsPLY = 0; // total score of quizzes took in last year by this student
+                    
+                    // read the data in the quiz history table of this student
+                    // each row in the table is a quiz record
                     while (rs.next()) {
-                        // convert Date to String
                         String entimeS = rs.getString(6); //"YYYY/MM/DD HH:mm:ss"
+                        String ey = entimeS.substring(0, 4); // get "YYYY"
+                        int examYear = Integer.parseInt(ey); 
+                        String em = entimeS.substring(5, 7); // get "MM"
+                        int examMonth = Integer.parseInt(em);
+                        String diffLevel = rs.getString(2); // the difficulty level of this quiz
+                        int score = rs.getInt(3); // the score of this quiz(out of 100)
+                        int numberQ = rs.getInt(4); // the number of questions in this quiz
 
-                        String examYear = entimeS.substring(0, 4);
-
-                        String examMonth = entimeS.substring(5, 7);
-
-                        String diffLevel = rs.getString(2);
-
-                        int score = rs.getInt(3);
-
-                        int numberQ = rs.getInt(4);
-
-                        // check for number of Tests and Scores by quiz time
-                        if (examYear.equals(lastYear)) {
+                        // check for the number of quizzes and total scores in different periods
+                        // assume each questin worths 1 score
+                        // if this quiz was taken in last year
+                        if (examYear == lastYear) {
                             numberTestLY++;
                             numberTestPLY++;
-                            tsLY += score / 100.0 * numberQ;
+                            tsLY += score / 100.0 * numberQ; // get the number (or score) of correct questions
                             numberQLY += numberQ;
-                            tsPLY += score;
+                            tsPLY += score; // use the score out of 100 to do calculation for a single students
                         }
-                        if (examYear.equals(String.valueOf(thisYear)) && examMonth.equals(lastMonth)) {
+                        // if this quiz was taken in last month
+                        if (examYear == thisYear && examMonth == lastMonth) {
                             numberTestLM++;
                             numberTestPLM++;
                             tsLM += score / 100.0 * numberQ;
                             numberQLM += numberQ;
                             tsPLM += score;
                         }
-                        if (examYear.equals(String.valueOf(thisYear)) && examMonth.equals(lastQuarter)) {
+                        // if this quiz was taken in last quarter
+                        if (examYear == thisYear && examMonth == lastQuarter) {
                             numberTestLQ++;
                             numberTestPLQ++;
                             tsLQ += score / 100.0 * numberQ;
@@ -167,150 +165,182 @@ public class DBConnection {
                             tsPLQ += score;
                         }
 
-                        // check for Scores by level of difficulty. AVG SCORE FOR EACH QUESTION!!!
+                        // check for Scores by level of difficulty. 
+                        // if this quiz is of easy level
                         if (diffLevel.equals("E")) {
                             numberQE += numberQ;
                             tsE += score / 100.0 * numberQ;
-                            if (examYear.equals(String.valueOf(thisYear)) && examMonth.equals(lastMonth)) {
+                            // if this quiz is of easy level and was taken in last month
+                            if (examYear == thisYear && examMonth == lastMonth) {
                                 numberQELM += numberQ;
                                 tsELM += score / 100.0 * numberQ;
                             }
-                            if (examYear.equals(String.valueOf(thisYear)) && examMonth.equals(lastQuarter)) {
+                            // if this quiz is of easy level and was taken in last quarter
+                            if (examYear == thisYear && examMonth == lastQuarter) {
                                 numberQELQ += numberQ;
                                 tsELQ += score / 100.0 * numberQ;
                             }
-                            if (examYear.equals(lastYear)) {
+                            // if this quiz is of easy level and was taken in last year
+                            if (examYear == lastYear) {
                                 numberQELY += numberQ;
                                 tsELY += score / 100.0 * numberQ;
                             }
-                        } else if (diffLevel.equals("M")) {
+                        } 
+                        // if this quiz is of medium level
+                        else if (diffLevel.equals("M")) {
                             numberQM += numberQ;
                             tsM += score / 100.0 * numberQ;
-                            // add
-                            if (examYear.equals(String.valueOf(thisYear)) && examMonth.equals(lastMonth)) {
+                            // if this quiz is of medium level and was taken in last month
+                            if (examYear == thisYear && examMonth == lastMonth) {
                                 numberQMLM += numberQ;
                                 tsMLM += score / 100.0 * numberQ;
                             }
-                            if (examYear.equals(String.valueOf(thisYear)) && examMonth.equals(lastQuarter)) {
+                            // if this quiz is of medium level and was taken in last quarter
+                            if (examYear == thisYear && examMonth == lastQuarter) {
                                 numberQMLQ += numberQ;
                                 tsMLQ += score / 100.0 * numberQ;
                             }
-                            if (examYear.equals(lastYear)) {
+                            // if this quiz is of medium level and was taken in last year
+                            if (examYear == lastYear) {
                                 numberQMLY += numberQ;
                                 tsMLY += score / 100.0 * numberQ;
                             }
 
-                        } else if (diffLevel.equals("H")) {
+                        }
+                        // if this quiz is of hard level
+                        else if (diffLevel.equals("H")) {
                             numberQH += numberQ;
                             tsH += score / 100.0 * numberQ;
-                            //add
-                            if (examYear.equals(String.valueOf(thisYear)) && examMonth.equals(lastMonth)) {
+                            // if this quiz is of hard level and was taken in last month
+                            if (examYear == thisYear && examMonth == lastMonth) {
                                 numberQHLM += numberQ;
                                 tsHLM += score / 100.0 * numberQ;
                             }
-                            if (examYear.equals(String.valueOf(thisYear)) && examMonth.equals(lastQuarter)) {
+                            // if this quiz is of hard level and was taken in last quarter
+                            if (examYear == thisYear && examMonth == lastQuarter) {
                                 numberQHLQ += numberQ;
                                 tsHLQ += score / 100.0 * numberQ;
                             }
-                            if (examYear.equals(lastYear)) {
+                            // if this quiz is of hard level and was taken in last year
+                            if (examYear == lastYear) {
                                 numberQHLY += numberQ;
                                 tsHLY += score / 100.0 * numberQ;
                             }
-                        } else {
-                            // mixed exam
-                            int originalNumber;
-                            String answer;
-                            String diffQ;
+                        }
+                        // if this quiz is of mixed level
+                        else {
+                            int originalNumber; // the unique quizID of this quiz in quiz history table
+                            String answer; // student's answer to a question in this quiz
+                            String diffQ; // the difficulty level of a question in this quiz
+                            // loop within all questions in this quiz
                             for (int i = 0; i < numberQ; i++) {
                                 originalNumber = rs.getInt(7 + 3 * i);
                                 answer = rs.getString(9 + 3 * i);
+                                // connect to question table to get the difficulty level of a certain question in this quiz
                                 String getDiff = "SELECT DIFFICULTY FROM QUESTION WHERE NUMBER = " + originalNumber;
-                                // Added by Ethan
-                                //con.setAutoCommit(false);
+                                ResultSet rsn;
                                 Statement stmt1 = con.createStatement();
-                                ResultSet rsn = stmt1.executeQuery(getDiff);
+                                // allQuestion contains all current questions in question bank
+                                Question[] allQuestion = new Communicate().getAllQuestions();
+                                // check whether this question is deleted by the instructor
+                                boolean qExist = false;
+                                for (Question q: allQuestion){
+                                    if (q.questionID == originalNumber){
+                                        qExist = true;    
+                                    }     
+                                }     
+                                rsn = stmt1.executeQuery(getDiff);
+                                // do the calculation only when this question is not deleted
+                                while (rsn.next() && qExist) {
+                                    diffQ = rsn.getString(1); // the difficulty level of this question
 
-                                //************* need check
-                                while (rsn.next()) {
-                                    diffQ = rsn.getString(1);
-
-                                    // check if Easy question
+                                    // if this question is of easy level 
                                     if (diffQ.equals("E")) {
                                         numberQE++;
-                                        if (examYear.equals(String.valueOf(thisYear)) && examMonth.equals(lastMonth)) {
+                                        // if this question is of easy level and was contained in a quiz of last month
+                                        if (examYear == thisYear&& examMonth == lastMonth) {
                                             numberQELM++;
                                         }
-                                        if (examYear.equals(String.valueOf(thisYear)) && examMonth.equals(lastQuarter)) {
+                                        // if this question is of easy level and was contained in a quiz of last quarter
+                                        if (examYear == thisYear && examMonth == lastQuarter) {
                                             numberQELQ++;
                                         }
-                                        if (examYear.equals(lastYear)) {
+                                        // if this question is of easy level and was contained in a quiz of last year
+                                        if (examYear == lastYear) {
                                             numberQELY++;
                                         }
-
+                                        
+                                        // if this student's answer to this question is correct
                                         if (answer.equals("correct")) {
                                             tsE++;
-                                            if (examYear.equals(String.valueOf(thisYear)) && examMonth.equals(lastMonth)) {
+                                            if (examYear == thisYear && examMonth==lastMonth) {
                                                 tsELM++;
                                             }
-                                            if (examYear.equals(String.valueOf(thisYear)) && examMonth.equals(lastQuarter)) {
+                                            if (examYear == thisYear && examMonth==lastQuarter) {
                                                 tsELQ++;
                                             }
-                                            if (examYear.equals(lastYear)) {
+                                            if (examYear==lastYear) {
                                                 tsELY++;
                                             }
                                         }
 
                                     }
 
-                                    // check if Medium question
+                                    // if this question is of medium level 
                                     if (diffQ.equals("M")) {
                                         numberQM++;
-                                        if (examYear.equals(String.valueOf(thisYear)) && examMonth.equals(lastMonth)) {
+                                        // if this question is of medium level and was contained in a quiz of last month
+                                        if (examYear==thisYear && examMonth==lastMonth) {
                                             numberQMLM++;
                                         }
-                                        if (examYear.equals(String.valueOf(thisYear)) && examMonth.equals(lastQuarter)) {
+                                        // if this question is of medium level and was contained in a quiz of last quarter
+                                        if (examYear==thisYear && examMonth==lastQuarter) {
                                             numberQMLQ++;
                                         }
-                                        if (examYear.equals(lastYear)) {
+                                        // if this question is of medium level and was contained in a quiz of last year
+                                        if (examYear==lastYear) {
                                             numberQMLY++;
                                         }
-
+                                        // if this student's answer to this question is correct
                                         if (answer.equals("correct")) {
                                             tsM++;
-                                            if (examYear.equals(String.valueOf(thisYear)) && examMonth.equals(lastMonth)) {
+                                            if (examYear==thisYear && examMonth==lastMonth) {
                                                 tsMLM++;
                                             }
-                                            if (examYear.equals(String.valueOf(thisYear)) && examMonth.equals(lastQuarter)) {
+                                            if (examYear==thisYear && examMonth==lastQuarter) {
                                                 tsMLQ++;
                                             }
-                                            if (examYear.equals(lastYear)) {
+                                            if (examYear==lastYear) {
                                                 tsMLY++;
                                             }
                                         }
                                     }
 
-                                    // check if Hard question
+                                    // if this question is of hard level 
                                     if (diffQ.equals("H")) {
                                         numberQH++;
-                                        if (examYear.equals(String.valueOf(thisYear)) && examMonth.equals(lastMonth)) {
+                                        // if this question is of medium level and was contained in a quiz of last month
+                                        if (examYear==thisYear && examMonth==lastMonth) {
                                             numberQHLM++;
                                         }
-                                        if (examYear.equals(String.valueOf(thisYear)) && examMonth.equals(lastQuarter)) {
+                                        // if this question is of medium level and was contained in a quiz of last quarter
+                                        if (examYear==thisYear&& examMonth==lastQuarter) {
                                             numberQHLQ++;
                                         }
-                                        if (examYear.equals(lastYear)) {
+                                        // if this question is of medium level and was contained in a quiz of last year
+                                        if (examYear==lastYear) {
                                             numberQHLY++;
                                         }
-
+                                        // if this student's answer to this question is correct
                                         if (answer.equals("correct")) {
                                             tsH++;
-                                            if (examYear.equals(thisYear) && examMonth.equals(lastMonth)) {
+                                            if (examYear==thisYear&& examMonth==lastMonth) {
                                                 tsHLM++;
                                             }
-                                            if (examYear.equals(thisYear) && examMonth.equals(lastQuarter)) {
+                                            if (examYear==thisYear && examMonth==lastQuarter) {
                                                 tsHLQ++;
                                             }
-                                            if (examYear.equals(lastYear)) {
+                                            if (examYear==lastYear) {
                                                 tsHLY++;
                                             }
                                         }
@@ -327,9 +357,15 @@ public class DBConnection {
                     avgScoreLM_P = tsPLM / numberTestPLM;
                     avgScoreLQ_P = tsPLQ / numberTestPLQ;
                     avgScoreLY_P = tsPLY / numberTestPLY;
+                    /* if this student took a quiz in last month, and the average score is more than 60,
+                    ** include this student into the list of students passed last month
+                    */
                     if (avgScoreLM_P >= 60 && numberTestPLM != 0) {
                         getStudentPassLM().add(a);
                     }
+                    /* if this student took a quiz in last month, and the average score is more than 60,
+                    ** include this student into the list of students failed last month
+                    */
                     if (avgScoreLM_P < 60 && numberTestPLM != 0) {
                         getStudentFailLM().add(a);
                     }
@@ -356,11 +392,8 @@ public class DBConnection {
             e.printStackTrace();
         }
 
-        // no need to CHECK IF NUMBERTESTLM, LQ, LY  = 0
-        // SHOULD DIVEDED BY NUMBER OF QUESTIONS
+        
         avgScoreLM = (int) (tsLM / numberQLM * 100);
-        //System.out.println("tsE LM: " + tsELM);
-        //System.out.println("NumberTestLM: " + numberTestLM);
         avgScoreLQ = (int) (tsLQ / numberQLQ * 100);
         avgScoreLY = (int) (tsLY / numberQLY * 100);
 

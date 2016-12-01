@@ -433,7 +433,7 @@ public class Communicate {
 
         Question[] allQuestions = getAllQuestions();
         ArrayList<Question> ques = new ArrayList<Question>();
-
+        int count = 0;
         boolean delete = true;
         for (int j = 0; j < no.size(); j++) {
             for (int i = 0; i < allQuestions.length; i++) {
@@ -441,15 +441,11 @@ public class Communicate {
                     ques.add(allQuestions[i]);
                     delete = false;
                 }
+              }
+            if(delete){
+                  count ++;
+            }            
             }
-            if (delete) {
-                String[] choices = {"", "", "", ""};
-                
-                Question deletedQuestion = new Question(0, 0, 0,
-                        "This question was deleted.", choices, "");
-                ques.add(deletedQuestion);
-            }
-        }
         Question[] questionsOfQuiz = ques.toArray(new Question[ques.size()]);
 
         Answer[] answerOfStudent = new Answer[questionsOfQuiz.length];
@@ -488,6 +484,7 @@ public class Communicate {
                 answerOfStudent, startDate, finishDate);
         quizOfStudent.quizId = quizId;
         quizOfStudent.quizDifficulty = totalDiff;
+        quizOfStudent.setDeletedQuestion(count);
 
         return quizOfStudent;
     }
@@ -516,6 +513,7 @@ public class Communicate {
 
     public String[] getStudentRecordDate(String studentName) {
         ArrayList date = new ArrayList();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         try (Connection con = DriverManager.getConnection(quizUrl,
                 quizUsername, quizPassword)) {
             Statement stmt = con.createStatement();
@@ -530,7 +528,7 @@ public class Communicate {
         }
         String[] endDate = new String[date.size()];
         for (int i = 0; i < date.size(); i++) {
-            endDate[i] = recorder.convertStringToTime(date.get(i).toString()).toString();
+            endDate[i] = sdf.format(recorder.convertStringToTime(date.get(i).toString()).getTime());
         }
         return endDate;
 

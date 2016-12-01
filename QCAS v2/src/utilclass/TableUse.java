@@ -11,6 +11,7 @@ public class TableUse {
     private StringProperty questionType;
     private StringProperty difficulty;
     private StringProperty answer;
+    
     // Added by Ethan
     private StringProperty description;
 

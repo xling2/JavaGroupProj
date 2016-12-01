@@ -44,7 +44,6 @@ public class view_historyController implements Initializable {
 
     @FXML
     private void viewGenerateReport(ActionEvent event) {
-        //System.out.println("view_historyController.viewGenerateReport");
         popUpPage.setParentScene(tips);
         pup.open("/student_general_report.fxml");
     }
@@ -68,14 +67,17 @@ public class view_historyController implements Initializable {
         // TODO
         goPage = GoPage.getGoPage();
         goPage.getStudentHistoryRecordFromServe();
+        // get history record of this student and set them in the list view
         ObservableList<HistoryRecord> historyItems
                 = FXCollections.observableArrayList(goPage.historyRecordItems);
         for (HistoryRecord h : historyItems) {
+            // add from the bottom
             historyListView.getItems().add(0, h);
         }
 
         tips.setVisible(false);
 
+        // when instructor check student, no back button needed.
         if (goPage.userName.equals("instructor")) {
             backButton.setVisible(false);
         }

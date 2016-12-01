@@ -32,10 +32,13 @@ import utilclass.TimeRecorder;
  */
 public class quiz_settingController implements Initializable {
 
+    // tips to show error msg
     @FXML
     private Label tips;
+    // to get the question number 
     @FXML
     private TextField number;
+    // to get the difficulty
     @FXML
     private ChoiceBox<String> difficulty;
 
@@ -94,7 +97,9 @@ public class quiz_settingController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         goPage = GoPage.getGoPage();
-        difficulty.setItems(FXCollections.observableArrayList("Easy", "Mediem ", "Hard", "Mixed"));
+        // set the choice box
+        difficulty.setItems(FXCollections.observableArrayList("Easy", "Medium", "Hard", "Mixed"));
+        // initialize the choice box selection to -1
         goPage.quizDifficultyOfStudentSelect = -1;
         tips.setVisible(false);
         // set only number

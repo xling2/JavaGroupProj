@@ -58,6 +58,7 @@ public class instructor_review_quizzs_general_detailController implements Initia
 
     private GoPage goPage;
 
+    // export the pdf to desktop
     @FXML
     private void export(ActionEvent event) {
         File folder = new File(System.getProperty("user.home"), "Desktop");
@@ -127,34 +128,8 @@ public class instructor_review_quizzs_general_detailController implements Initia
     @FXML
     private LineChart<String, Number> lineChart;
 
-    private void initialLineChart() {
-        Series<String, Number> series1 = new XYChart.Series<String, Number>();
-        Series<String, Number> series2 = new XYChart.Series<String, Number>();
-        Series<String, Number> series3 = new XYChart.Series<String, Number>();
-        series1.setName("Easy");
-        series2.setName("Medium");
-        series3.setName("Hard");
-        String[] diff = {"Last Month", "Last Quarter", "Last Year"};
-        //String[] date = goPage.getOneStudentRecordDate();
-        int[] scoreEasy = goPage.geteasyAverageScoreOfThreeLastTime();
-        int[] scoreMedium = goPage.getMediumAverageScoreOfThreeLastTime();
-        int[] scoreHard = goPage.getHardAverageScoreOfThreeLastTime();
-        for (int i = 0; i < scoreEasy.length; i++) {
-            series1.getData().add(new Data<String, Number>(diff[i], scoreEasy[i]));
-        }
-        lineChart.getData().add(series1);
-        for (int i = 0; i < scoreMedium.length; i++) {
-            series2.getData().add(new Data<String, Number>(diff[i], scoreMedium[i]));
-        }
-        lineChart.getData().add(series2);
-        for (int i = 0; i < scoreHard.length; i++) {
-            series3.getData().add(new Data<String, Number>(diff[i], scoreHard[i]));
-        }
-        lineChart.getData().add(series3);
+    
 
-    }
-
-    @SuppressWarnings("unchecked")
     private void initialBarChart() {
         lineChart.setAnimated(false);
         Series<String, Number> seriesEasy = new XYChart.Series<>();
@@ -172,6 +147,7 @@ public class instructor_review_quizzs_general_detailController implements Initia
         lineChart.getData().addAll(seriesEasy, seriesMedium, seriesHard);
     }
 
+    // to acquire the average score of each difficulty
     private int[] easyAverageScoreOfThreeLastTime;
     private int[] mediumAverageScoreOfThreeLastTime;
     private int[] hardAverageScoreOfThreeLastTime;
@@ -189,7 +165,6 @@ public class instructor_review_quizzs_general_detailController implements Initia
         hardAverageScoreOfThreeLastTime = goPage.communicateWithServe.getHardAverageScoreOfThreeLastTime();
         //initial some widget rely on serve data
         initialBarChart();
-        //initialLineChart();
         numberOfLastMouth.setText(goPage.numberOfQuizzesTakenOfAll[0] + "");
         numberOfLastQuater.setText(goPage.numberOfQuizzesTakenOfAll[1] + "");
         numberOfLastYear.setText(goPage.numberOfQuizzesTakenOfAll[2] + "");

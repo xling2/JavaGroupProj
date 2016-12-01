@@ -44,6 +44,7 @@ public class instructer_review_quizzsController implements Initializable {
     @FXML
     private void enterButtonAction(ActionEvent ae) {
 
+        // decide which report to show
         popUpPage.setParentScene(pane);
         if (goPage.quizzsReviewSelectOfInstructor == 3) {
             pup.open("/instructor_review_quizzs_general.fxml");

@@ -41,14 +41,7 @@ public class import_questionController implements Initializable {
 	private Label failedTips;
 	@FXML
 	private Label noFileTips;
-//	@FXML
-//	private VBox showQuestion;
-	
-	
-//	@FXML
-//	private void backAction(ActionEvent event) {
-//		GoPage.getGoPage().goPage("Instructer_panel.fxml", importButton, 0);
-//	}
+
 
 	@FXML
 	private void selectCSV(ActionEvent event) {
@@ -57,6 +50,7 @@ public class import_questionController implements Initializable {
 
 	private File CSVFile;
 
+        // use file chooser to get the absolute path to the csv file
 	private void selectCSV() {
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Open Resource File");
@@ -78,44 +72,18 @@ public class import_questionController implements Initializable {
 		if (CSVFile != null) {
 			filePath.setText(CSVFile.getAbsolutePath());
 			Question[] questions = goPage.communicateWithServe.importQuestionFromCSV(CSVFile);
-			if (questions != null) {
+			// no question returned means import failed
+                        if (questions != null) {
 				failedTips.setVisible(false);
 				noFileTips.setVisible(false);
 				successedTips.setVisible(true);
-//				for (int i = 0; i < questions.length; i++) {
-//					Question question =  questions[i];
-//					HBox hBox = new HBox();
-//					hBox.setMinSize(332, 300);
-//					hBox.setPadding(new Insets(10));
-//					hBox.setPadding(new Insets(15, 12, 15, 12));
-//					hBox.setStyle("-fx-border-width: 10;");
-//					hBox.setStyle("-fx-border-color: black;");
-//					Button button = new Button("delete");
-//					Label label = new Label("question" + (i+1) + "." + questions[i]);
-//					label.setMinSize(200, 200);
-//					
-//					label.setAlignment(Pos.TOP_LEFT);
-//					hBox.getChildren().add(label);
-//					hBox.getChildren().add(button);
-//					showQuestion.getChildren().add(hBox);
-//					button.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-//						@Override
-//						public void handle(MouseEvent event) {
-//							// TODO Auto-generated method stub
-//							goPage.communicateWithServe.deleteById(question.questionID);
-//							System.out.println(question.questionID);
-//							showQuestion.getChildren().remove(hBox);
-//						}
-//					});
-//					
-//				}
-//				showQuestion.setVisible(true);
+
 			} else {
 				noFileTips.setVisible(false);
 				successedTips.setVisible(false);
 				failedTips.setVisible(true);
 			}
-
+                // if no csv file, show a no file msg
 		} else {
 			successedTips.setVisible(false);
 			failedTips.setVisible(false);

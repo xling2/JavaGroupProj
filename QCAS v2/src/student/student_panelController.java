@@ -47,7 +47,7 @@ public class student_panelController implements Initializable {
 
     @FXML
     private void quiz(ActionEvent event){
-
+        // open the page in new window
         popUpPage.setParentScene(logout);
         pup.open("/quiz_setting.fxml");
         

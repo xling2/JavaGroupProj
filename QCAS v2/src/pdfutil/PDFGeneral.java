@@ -106,10 +106,13 @@ public class PDFGeneral {
         }
     }
 
+    // Add a chart to pdf file
     public static void addChartGraph(Document document, Chart chart, File file) {
+        // save the chart to file
         saveChart(chart, file);
         Image image = null;
 
+        // Make the image file to image object
         try {
             image = Image.getInstance(file.getAbsolutePath());
         } catch (BadElementException ex) {
@@ -117,13 +120,14 @@ public class PDFGeneral {
         } catch (IOException ex) {
             Logger.getLogger(PDFGeneral.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+        // add the image to document
         try {
             document.add(image);
         } catch (DocumentException ex) {
             Logger.getLogger(PDFGeneral.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+        // delete the saved chart
         deleteSavedChart(file);
     }
 

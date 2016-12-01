@@ -19,6 +19,7 @@ import javax.imageio.ImageIO;
  */
 public abstract class ChartManipulation {
 
+    //save any chart to given location
     public static void saveChart(Chart chart, File file) {
         WritableImage chartImage = chart.snapshot(new SnapshotParameters(), null);
 
@@ -30,6 +31,7 @@ public abstract class ChartManipulation {
         }
     }
 
+    // delete the saved Chart File
     public static void deleteSavedChart(File file) {
         String stringPath = file.getAbsolutePath();
         Path path = Paths.get(stringPath);

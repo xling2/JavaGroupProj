@@ -33,6 +33,7 @@ public class Delete_confirmController implements Initializable {
 
     @FXML
     private void OKButtonAction(ActionEvent ae) {
+        // OK button pressed, close the window, pass the enterPressed
         enterPressed = true;
         Stage popUpWindow = (Stage) OKButton.getScene().getWindow();
         popUpWindow.close();

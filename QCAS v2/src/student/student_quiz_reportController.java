@@ -77,6 +77,8 @@ public class student_quiz_reportController implements Initializable {
     private Button hidebtn;
     @FXML
     private Label existLabel;
+    @FXML
+    private Label score;
 
     @FXML
     private BarChart<Number, String> difficultyChart;
@@ -92,6 +94,7 @@ public class student_quiz_reportController implements Initializable {
         return scoreData;
     }
 
+    // hide the scroll pane and question content
     @FXML
     private void hideAction(ActionEvent event) {
         hidebtn.setVisible(false);
@@ -100,6 +103,7 @@ public class student_quiz_reportController implements Initializable {
 
     }
 
+    // export the pdf to desktop
     @FXML
     private void export(ActionEvent event) {
         File folder = new File(System.getProperty("user.home"), "Desktop");
@@ -129,8 +133,6 @@ public class student_quiz_reportController implements Initializable {
                 document.open();
                 PDFGeneral.addTitleLine(document, "Quiz Report");
                 df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-                PDFGeneral.addContentLine(document,
-                        String.format("%s%s", PDFGeneral.getFormatString("studentName:", 30), goPage.studentName));
                 PDFGeneral.addContentLine(document,
                         String.format("%s%s", PDFGeneral.getFormatString("StudentName:", 26), goPage.studentName));
                 PDFGeneral.addContentLine(document, String.format("%s%s",
@@ -168,7 +170,6 @@ public class student_quiz_reportController implements Initializable {
         }
     }
 
-    // initialChart ans score
     private void initialChart() {
         difficultyChart.setAnimated(false);
         Series<Number, String> series = new XYChart.Series<Number, String>();
@@ -182,7 +183,15 @@ public class student_quiz_reportController implements Initializable {
                 correctNumber[question.questionDifficult]++;
             }
         }
+        // caculate the score of this test
         score.setText((int) ((float) total(correctNumber) / (float) total(totalNumber) * 100.0) + "");
+        
+        System.out.println("total(correctNumber): " + total(correctNumber));
+        System.out.println("(float) total(correctNumber): " + (float) total(correctNumber));
+        System.out.println("total(totalNumber): " + total(totalNumber));
+        System.out.println("(float) total(totalNumber): " + (float) total(totalNumber));
+        
+        
         for (int i = 0; i < 3; i++) {
             double x = (float) correctNumber[i] / (float) (totalNumber[i] == 0 ? 1 : totalNumber[i]) * 100.0;
             series.getData().add(new Data<Number, String>(x, Question.DIFFICULTY[i]));
@@ -200,8 +209,6 @@ public class student_quiz_reportController implements Initializable {
         return j;
     }
 
-    @FXML
-    private Label score;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -212,6 +219,10 @@ public class student_quiz_reportController implements Initializable {
         time.setText(df.format(goPage.quizOfCurrentCheck.finishDate));
         duration.setText(goPage.quizOfCurrentCheck.duration);
         // add score data
+        // if a question in this quiz is deleted, show a msg at the top of the table
+        if(goPage.quizOfCurrentCheck.getDeletedQuestion() > 0){
+            scoreData.add(0, new TableUse(0, "N/A", "N/A", "N/A", "N/A"));
+        }
         for (int i = 0; i < goPage.quizOfCurrentCheck.answerOfStudent.length; i++) {
             scoreData.add(
                     new TableUse(i + 1, Question.TYPENAME[goPage.quizOfCurrentCheck.answerOfStudent[i].questionType],
@@ -237,9 +248,11 @@ public class student_quiz_reportController implements Initializable {
                             + "\nCorrect Answer: " + currentQuestion.correctAnswer);
 
                     int questionLength = questionDisplay.split("\n").length;
+                    System.out.println("questionDisplay.split(\"\\n\").length: " + questionDisplay.split("\n").length);
                     questionLabel.setStyle("-fx-padding: 5px 30px 5px 5px;"
                             + "-fx-text-alignment:justify;");
-                    questionLabel.setPrefHeight(questionLength * 20 < 198 ? 198 : questionLength * 20);
+                    // set the length of questionLabel 
+                    questionLabel.setPrefHeight(questionLength * 50);
                 }
             });
             return row;
@@ -251,7 +264,7 @@ public class student_quiz_reportController implements Initializable {
         answer.setCellValueFactory(new PropertyValueFactory<TableUse, String>("answer"));
         // table set data
         table.setItems(getTableData());
-        // table red setting
+        // wrap text in answer column, and set red if not correct
         answer.setCellFactory(param -> {
             return new TableCell<TableUse, String>() {
                 @Override

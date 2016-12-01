@@ -98,6 +98,7 @@ public class instructor_review_quizzs_detailController implements Initializable 
         GoPage.getGoPage().goPage("/Instructer_panel.fxml", pane);
     }
 
+    // export pdf to desktop
     @FXML
     private void export(ActionEvent event) {
         File folder = new File(System.getProperty("user.home"), "Desktop");
@@ -167,6 +168,7 @@ public class instructor_review_quizzs_detailController implements Initializable 
         }
     }
 
+    // check the student selected, and open a new window
     @FXML
     private void checkStudent(ActionEvent event) {
         if (studentList.getSelectionModel().getSelectedIndex() != -1) {
@@ -199,19 +201,25 @@ public class instructor_review_quizzs_detailController implements Initializable 
 
         goPage = GoPage.getGoPage();
         //get some data from serve
+        
         String period = (GoPage.getGoPage().quizzsReviewSelectOfInstructor == 0)
                 ? "-last month"
                 : (GoPage.getGoPage().quizzsReviewSelectOfInstructor == 1)
                         ? "-last quarter" : "-last year";
 
+        // set the title for the report
         reviewTimeLabel.setText(period);
 
-        goPage.numberOfQuizzesTakenOfAll = goPage.communicateWithServe.getLastNumberOfALLQuizzes();
-        goPage.averageScoreOfAll = goPage.communicateWithServe.getlastAverageOfALLQuizzes();
-        //some initial
+        // set the number of quiz taken and average score in this period
+        goPage.numberOfQuizzesTakenOfAll = 
+                goPage.communicateWithServe.getLastNumberOfALLQuizzes();
+        goPage.averageScoreOfAll = 
+                goPage.communicateWithServe.getlastAverageOfALLQuizzes();
+        
         quizzesNumber.setText(goPage.numberOfQuizzesTakenOfAll[goPage.quizzsReviewSelectOfInstructor] + "");
         averageScore.setText(goPage.averageScoreOfAll[goPage.quizzsReviewSelectOfInstructor] + "");
 
+        // set the choice box selection
         passOrFail.setItems(FXCollections.observableArrayList("Students Passed", "Students Failed"));
 
         // select initial
@@ -238,7 +246,7 @@ public class instructor_review_quizzs_detailController implements Initializable 
                 }
             }
         });
-//        successTip.requestFocus();
+        // initial the page at the top of the scroll pane
         wholeScrollPane.setVvalue(0.0);
     }
 

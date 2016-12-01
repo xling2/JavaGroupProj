@@ -53,8 +53,11 @@ public class add_studentController implements Initializable {
     private TableColumn<studentInTable, String> andrewIDColumn;
 
     @FXML
+    // select a student to see his/her performance
     private void viewAction(ActionEvent event) {
+ 
         popUpPage.setParentScene(backButton);
+        // get the selected student
         ObservableList<studentInTable> studentListSelected;
         studentListSelected = studentTable.getSelectionModel().getSelectedItems();
         
@@ -68,7 +71,7 @@ public class add_studentController implements Initializable {
         popUpPage.setParentScene(backButton);
         pup.open("/add_student_input.fxml");
         if (Add_student_inputController.addSuccess) {
-            // If the table doesn't renew, enable the method below
+            //renew the table
             studentData = FXCollections.observableArrayList(createStudentTableList(GoPage.getGoPage().communicateWithServe.getAllStudent()));
             studentTable.setItems(studentData);
         }
@@ -90,6 +93,8 @@ public class add_studentController implements Initializable {
             pup.open("/delete_confirm.fxml");
             if (Delete_confirmController.enterPressed) {
                 if (GoPage.getGoPage().communicateWithServe.deleteStudent(studentListSelected.get(0).getAndrewID())) {
+                    // only when successfulll deleted the student from database, 
+                    //will the table remove the student selected
                     studentListSelected.forEach(studentData::remove);
                 }
             }
@@ -101,6 +106,7 @@ public class add_studentController implements Initializable {
 
         studentData = FXCollections.observableArrayList(createStudentTableList(GoPage.getGoPage().communicateWithServe.getAllStudent()));
 
+        // use the cell value factory to populate the table, tho only one column
         andrewIDColumn.setCellValueFactory(
                 new PropertyValueFactory<>("AndrewID"));
         studentTable.setItems(studentData);
@@ -108,6 +114,7 @@ public class add_studentController implements Initializable {
 
     private ArrayList<studentInTable> createStudentTableList(ArrayList<String> studentIDList) {
 
+        //Use studentID to create studentInTable list
         ArrayList<studentInTable> studentList = new ArrayList<>();
         for (String s : studentIDList) {
             if (!s.equals("instructor")) {

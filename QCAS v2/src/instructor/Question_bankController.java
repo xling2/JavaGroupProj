@@ -64,7 +64,7 @@ public class Question_bankController implements Initializable {
     private void importButtonAction(ActionEvent ae) {
         popUpPage.setParentScene(importButton);
         pup.open("/import_question.fxml");
-        // If table doesn't renew, enable the following
+        // after import, renew the questionTable
         questionData = FXCollections.observableArrayList(
                 createQuestionTableList(
                         GoPage.getGoPage().communicateWithServe.getAllQuestions()));
@@ -76,12 +76,15 @@ public class Question_bankController implements Initializable {
     private void deleteAction(ActionEvent ae) {
         ObservableList<TableUse> questionListSelected;
 
+        // select a question
         questionListSelected = questionTable.getSelectionModel().getSelectedItems();
         if (!questionListSelected.isEmpty()) {
             popUpPage.setParentScene(backButton);
             pup.open("/delete_confirm.fxml");
             if (Delete_confirmController.enterPressed) {
+                // delete the question in the database once OK button pressed
                 GoPage.getGoPage().communicateWithServe.deleteById(questionListSelected.get(0).getNumber());
+                // delete the question from table after database
                 questionListSelected.forEach(questionData::remove);
             }
         }
@@ -103,6 +106,7 @@ public class Question_bankController implements Initializable {
 
         questionData = FXCollections.observableArrayList(questionTableList);
 
+        // use cell value factory to find the cell value
         difficultyColumn.setCellValueFactory(
                 new PropertyValueFactory<>("difficulty"));
         typeColumn.setCellValueFactory(
@@ -113,6 +117,7 @@ public class Question_bankController implements Initializable {
                 new PropertyValueFactory<>("answer"));
         questionTable.setItems(questionData);
 
+        // wrap text in description column
         descriptionColumn.setCellFactory(param -> {
             return new TableCell<TableUse, String>() {
                 @Override
@@ -134,6 +139,7 @@ public class Question_bankController implements Initializable {
             };
         });
 
+        // wrap text in answer column
         answerColumn.setCellFactory(param -> {
             return new TableCell<TableUse, String>() {
                 @Override
@@ -167,6 +173,7 @@ public class Question_bankController implements Initializable {
                 description += "\n\n" + q.toString().split("\n\n")[2];
             }
 
+            // create the list of TableUse
             questionTableList.add(0,
                     new TableUse(q.questionID,
                             Question.TYPENAME[q.questionType],

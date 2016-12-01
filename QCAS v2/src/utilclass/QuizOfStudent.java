@@ -14,6 +14,7 @@ public class QuizOfStudent {
     public String duration;
     public int totalScore;
     public int[] scoreOfDifficulty = new int[3];
+    private int deletedQuestions = 0;
 
     public QuizOfStudent(String student, Question[] questions, Answer[] answerOfStudent, Date startDate,
             Date finishDate) {
@@ -68,4 +69,14 @@ public class QuizOfStudent {
         }
         return j;
     }
+    
+    public void setDeletedQuestion(int delete){
+        this.deletedQuestions = delete;
+    }
+    
+    public int getDeletedQuestion(){
+        return this.deletedQuestions;
+    }
+            
+    
 }

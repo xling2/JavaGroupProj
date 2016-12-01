@@ -46,9 +46,11 @@ public class Add_student_inputController implements Initializable {
         msgLabel.setVisible(true);
 
         String andrewID = andrewIDTextField.getText();
+        // when andrew ID text field is not empty, add this student
         if (!andrewID.isEmpty()) {
             addSuccess = GoPage.getGoPage().communicateWithServe.addStudent(andrewID);
             if (addSuccess) {
+                // when success, set the label and trasition
                 msgLabel.setText("Add success, email with password sent.");
                 msgLabel.setVisible(true);
                 PauseTransition visiblePause
@@ -59,6 +61,7 @@ public class Add_student_inputController implements Initializable {
                 });
                 visiblePause.play();
             } else {
+                // when failed, set the label and trasition
                 msgLabel.setText("Add failed.");
                 msgLabel.setTextFill(Color.rgb(187, 0, 0));
                 msgLabel.setVisible(true);

@@ -78,6 +78,7 @@ public class loginController implements Initializable {
                 goPage.goPage("/student_panel.fxml", loginButton);
             }
         } else {
+            // When passwd/ID faulted, show error msg
             incorrectMsg.setVisible(true);
             PauseTransition visiblePause
                     = new PauseTransition(Duration.seconds(3));

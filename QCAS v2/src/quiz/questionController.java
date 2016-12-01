@@ -198,7 +198,7 @@ public class questionController implements Initializable {
         title.setText("No." + goPage.numberOfCurrentQuiz + " " + Question.TYPENAME[currentQuestion.questionType]);
 
         if (goPage.numberOfCurrentQuiz == goPage.questionNumberFromQuizSetting) {
-            nextQuestion.setText("submit");
+            nextQuestion.setText("Submit");
         }
         if (goPage.numberOfCurrentQuiz == 1) {
             preview.setVisible(false);

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<SplitPane id="SplitPane" dividerPositions="0.3411371237458194" prefHeight="400.0" prefWidth="600.0" stylesheets="@no-divider.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="instructor.add_studentController">
+   <items>
+      <AnchorPane id="AnchorPane" maxHeight="400.0" maxWidth="190.0" minHeight="400.0" minWidth="190.0" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: rgb(187,0,0);">
+         <children>
+            <ImageView fitHeight="498.0" fitWidth="527.0" layoutX="-56.0" layoutY="-31.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@bg-seal.png" />
+               </image>
+            </ImageView>
+            
+            <Label alignment="TOP_RIGHT" layoutX="26.0" layoutY="79.0" prefHeight="33.0" prefWidth="131.0" text="Students" textFill="WHITE">
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="28.0" />
+               </font>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </Label>
+            <Button fx:id="backButton" layoutX="76.0" layoutY="317.0" mnemonicParsing="false" onAction="#backButtonAction" stylesheets="@white-button-on-hover.css" text="Back" />
+         </children>
+      </AnchorPane>
+      <AnchorPane prefHeight="400.0" prefWidth="341.0" style="-fx-background-color: rgb(51,51,51);">
+         <children>
+            <Button fx:id="addButton" layoutX="42.0" layoutY="45.0" mnemonicParsing="false" onAction="#addAction" prefHeight="30.0" prefWidth="62.0" stylesheets="@white-button-on-hover.css" text="Add" />
+            <Button fx:id="deleteButton" layoutX="114.0" layoutY="44.0" mnemonicParsing="false" onAction="#deleteAction" prefHeight="33.0" prefWidth="65.0" stylesheets="@small-black-button-on-hover.css" text="Delete" />
+            <Button fx:id="viewButton" layoutX="229.0" layoutY="44.0" mnemonicParsing="false" onAction="#viewAction" prefHeight="33.0" prefWidth="131.0" stylesheets="@red-button-on-hover.css" text="View performance" />
+            <TableView fx:id="studentTable" layoutX="42.0" layoutY="107.0" prefHeight="261.0" prefWidth="318.0">
+              <columns>
+                <TableColumn fx:id="andrewIDColumn" prefWidth="317.0" text="Andrew ID" />
+              </columns>
+            </TableView>
+         </children>
+      </AnchorPane>
+   </items>
+</SplitPane>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="211.0" prefWidth="406.0" style="-fx-background-color: rgb(51,51,51);" stylesheets="@no-divider.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="instructor.import_questionController">
+   <children>
+      <Label layoutX="30.0" layoutY="33.0" text="Import questions" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="31.0" />
+         </font>
+      </Label>
+      <TextField fx:id="filePath" editable="false" layoutX="30.0" layoutY="124.0" prefHeight="27.0" prefWidth="261.0" promptText="......" text="Click to choose a csv file" />
+      <Button fx:id="importButton" layoutX="315.0" layoutY="124.0" mnemonicParsing="false" onAction="#importCSV" stylesheets="@red-button-on-hover.css" text="Import" />
+      <Label fx:id="successedTips" layoutX="31.0" layoutY="169.0" text="Import successed" textFill="#98ff98" visible="false" />
+      <Label fx:id="failedTips" layoutX="31.0" layoutY="169.0" text="Import Failed" textFill="RED" visible="false" />
+      <Label fx:id="noFileTips" layoutX="32.0" layoutY="169.0" text="Please select a CSV file" textFill="RED" visible="false" />
+   </children>
+</Pane>

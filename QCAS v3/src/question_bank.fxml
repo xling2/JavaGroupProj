@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<SplitPane id="SplitPane" dividerPositions="0.32608695652173914" prefHeight="400.0" prefWidth="600.0" stylesheets="@no-divider.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="instructor.Question_bankController">
+   <items>
+      <AnchorPane id="AnchorPane" maxHeight="400.0" maxWidth="190.0" minHeight="400.0" minWidth="190.0" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: rgb(187,0,0);">
+         <children>
+            <ImageView fitHeight="498.0" fitWidth="527.0" layoutX="-56.0" layoutY="-31.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@bg-seal.png" />
+               </image>
+            </ImageView>
+            <Label alignment="TOP_RIGHT" layoutX="26.0" layoutY="79.0" prefHeight="33.0" prefWidth="141.0" text="Questions" textFill="WHITE">
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="28.0" />
+               </font>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </Label>
+            <Button fx:id="backButton" layoutX="76.0" layoutY="317.0" mnemonicParsing="false" onAction="#backButtonAction" stylesheets="@white-button-on-hover.css" text="Back" textFill="WHITE" />
+         </children>
+      </AnchorPane>
+      <AnchorPane prefHeight="400.0" prefWidth="341.0" style="-fx-background-color: rgb(51,51,51);">
+         <children>
+            <Button fx:id="deleteButton" layoutX="21.0" layoutY="14.0" mnemonicParsing="false" onAction="#deleteAction" prefHeight="33.0" prefWidth="65.0" stylesheets="@small-black-button-on-hover.css" text="Delete" />
+            <Button fx:id="importButton" layoutX="249.0" layoutY="14.0" mnemonicParsing="false" onAction="#importButtonAction" prefHeight="33.0" prefWidth="131.0" stylesheets="@red-button-on-hover.css" text="Import questions" />
+            <TableView fx:id="questionTable" layoutX="19.0" layoutY="60.0" prefHeight="325.0" prefWidth="364.0">
+               <columns>
+                  <TableColumn fx:id="difficultyColumn" editable="false" maxWidth="64.0" minWidth="64.0" prefWidth="64.0" resizable="false" text="Difficulty" />
+                  <TableColumn fx:id="typeColumn" editable="false" maxWidth="39.0" minWidth="39.0" prefWidth="39.0" resizable="false" text="Type" />
+                  <TableColumn fx:id="descriptionColumn" editable="false" maxWidth="199.0" minWidth="168.0" prefWidth="199.0" resizable="false" sortable="false" text="Description" />
+                  <TableColumn fx:id="answerColumn" editable="false" maxWidth="90.0" minWidth="90.0" prefWidth="90.0" resizable="false" sortable="false" style="-fx-text-fill: darkgray;" text="Answer" />
+               </columns>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
+            </TableView>
+         </children>
+      </AnchorPane>
+   </items>
+</SplitPane>

@@ -1,0 +1,12 @@
+.split-pane .split-pane-divider {
+   -fx-border-color:  white;
+   -fx-background-color: transparent;
+   -fx-background-insets: 0;
+}
+.button{
+	-fx-background-color:  rgb(187,0,0);
+	-fx-text-fill:	white;
+}
+.pane{
+	-fx-background-color: rgb(51,51,51);
+}

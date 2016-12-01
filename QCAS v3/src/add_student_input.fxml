@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="100.0" prefWidth="300.0" style="-fx-background-color: rgb(51,51,51);" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="instructor.Add_student_inputController">
+   <children>
+      <TextField fx:id="andrewIDTextField" layoutX="29.0" layoutY="26.0" prefHeight="27.0" prefWidth="164.0" promptText="Input Andrew ID" style="-fx-background-color: white;" />
+      <Button fx:id="addButton" layoutX="222.0" layoutY="27.0" mnemonicParsing="false" onAction="#addButtonAction" stylesheets="@red-button-on-hover.css" text="Add" />
+      <Label fx:id="msgLabel" layoutX="27.0" layoutY="66.0" text="Processing, please wait..." textFill="#7dffe3" visible="false" />
+      <Label fx:id="hintLabel" layoutX="28.0" layoutY="66.0" style="-fx-text-fill: rgb(187,0,0);" text="Please input Andrew ID" />
+   </children>
+</AnchorPane>
